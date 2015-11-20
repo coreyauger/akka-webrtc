@@ -38,7 +38,7 @@ lazy val server =
   (project in file("server"))
     .settings(serverSettings:_*)
     .settings(sharedDirSettings:_*)
-    .dependsOn(clientWebRTC)
+ //   .dependsOn(clientWebRTC)
     .aggregate(clientWebRTC)
 
 lazy val clientWebRTC =

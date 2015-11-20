@@ -27,8 +27,9 @@ object WebSocket {
             // create user actor as a child of the subscriber
             println(s"$id joined!")
           case msg: ReceivedMessage =>
+            println(s"Got message ${msg}")
             // broadcast to all...
-            subscribers.foreach(_ ! msg.toCoreMessage)
+            subscribers.foreach(_ ! msg.toApiMessage)
           case Disconnect(id) =>
             println(s"$id left!")
             println(s"Kill actor ${id}")
@@ -60,6 +61,6 @@ object WebSocket {
   private case class Connect(id: String, subscriber: ActorRef) extends SocketEvent
   private case class Disconnect(id: String) extends SocketEvent
   private case class ReceivedMessage(id: String, data: String) extends SocketEvent {
-    def toCoreMessage: ApiMessage = ApiMessage(id, upickle.default.read[Model](data))
+    def toApiMessage: ApiMessage = ApiMessage(id, upickle.default.read[m.Model](data))
   }
 }
