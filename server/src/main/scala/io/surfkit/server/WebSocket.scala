@@ -30,18 +30,18 @@ object WebSocket {
             // create user actor as a child of the subscriber
             println(s"$id joined!")
           case msg: ReceivedMessage =>
-            println(s"Got message ${msg}")
-            // broadcast to all...
+            //println(s"Got message ${msg}")
             val api = msg.toApiMessage
-            println(s"Api ${api}")
             api.data match{
-              case Join(name, peer) =>
-                println(s"Join ${peer}")
-                rooms += name -> (rooms.get(name).getOrElse(Set.empty[PeerInfo]) + peer)
-                val r = Room(name = name, peer = peer, config = Set(), rooms(name))
-                subscribers.get(msg.id)foreach(_ ! r)
-              case _ =>
-                subscribers.values.foreach(_ ! api.data)
+              case Join(remote, local, name) =>
+                println(s"Join ${local}")
+                rooms += name -> (rooms.get(name).getOrElse(Set.empty[PeerInfo]) + local)
+                val r = Room(remote, local, name = name, config = Set(), rooms(name))
+                subscribers.get(local.id) foreach(_ ! r)
+              case s:m.RTCSignal =>
+                subscribers.get(s.remote.id) foreach(_ ! s)
+              case a =>
+                println(s"[WORN] - Ignoring message ${a}")
             }
           case Disconnect(id) =>
             // FIXME:..

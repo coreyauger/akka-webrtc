@@ -1188,7 +1188,34 @@ $c_Lio_surfkit_clientlib_webrtc_LocalMedia$Config$.prototype.$classData = $d_Lio
 function $s_Lio_surfkit_clientlib_webrtc_LocalMedia$class__$$init$__Lio_surfkit_clientlib_webrtc_LocalMedia__V($$this) {
   $$this.hardMuted$1 = false;
   $$this.localStreams$1 = $m_sci_Set$EmptySet$();
-  $$this.localScreens$1 = $m_sci_Set$EmptySet$()
+  $$this.localScreens$1 = $m_sci_Set$EmptySet$();
+  $$this.localStream$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(stream$2) {
+    var this$4 = $m_s_Console$();
+    var this$5 = this$4.outVar$2;
+    $as_Ljava_io_PrintStream(this$5.tl$1.get__O()).println__O__V("localStream")
+  }));
+  $$this.localStreamStopped$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(stream$2$1) {
+    var this$7 = $m_s_Console$();
+    var this$8 = this$7.outVar$2;
+    $as_Ljava_io_PrintStream(this$8.tl$1.get__O()).println__O__V("localStreamStopped")
+  }));
+  $$this.localScreenStopped$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(stream$2$2) {
+    var this$10 = $m_s_Console$();
+    var this$11 = this$10.outVar$2;
+    $as_Ljava_io_PrintStream(this$11.tl$1.get__O()).println__O__V("localScreenStopped")
+  }));
+  $$this.audioOff$1 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function() {
+    return (void 0)
+  }));
+  $$this.audioOn$1 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function() {
+    return (void 0)
+  }));
+  $$this.videoOff$1 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function() {
+    return (void 0)
+  }));
+  $$this.videoOn$1 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function() {
+    return (void 0)
+  }))
 }
 function $s_Lio_surfkit_clientlib_webrtc_LocalMedia$class__startLocalMedia__Lio_surfkit_clientlib_webrtc_LocalMedia__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__s_concurrent_Future($$this, constraints) {
   var this$2 = $m_s_Console$();
@@ -1206,15 +1233,16 @@ function $s_Lio_surfkit_clientlib_webrtc_LocalMedia$class__startLocalMedia__Lio_
 function $c_Lio_surfkit_clientlib_webrtc_Peer() {
   $c_O.call(this);
   this.io$surfkit$clientlib$webrtc$Peer$$p$f = null;
-  this.id$1 = null;
+  this.local$1 = null;
+  this.remote$1 = null;
   this.sid$1 = null;
-  this.info$1 = null;
   this.io$surfkit$clientlib$webrtc$Peer$$streamPromise$1 = null;
   this.stream$1 = null;
   this.pc$1 = null;
   this.addStream$1 = null;
   this.removeStream$1 = null;
-  this.onAddStream$1 = null
+  this.onAddStream$1 = null;
+  this.onRemoveStream$1 = null
 }
 $c_Lio_surfkit_clientlib_webrtc_Peer.prototype = new $h_O();
 $c_Lio_surfkit_clientlib_webrtc_Peer.prototype.constructor = $c_Lio_surfkit_clientlib_webrtc_Peer;
@@ -1225,9 +1253,9 @@ function $h_Lio_surfkit_clientlib_webrtc_Peer() {
 $h_Lio_surfkit_clientlib_webrtc_Peer.prototype = $c_Lio_surfkit_clientlib_webrtc_Peer.prototype;
 $c_Lio_surfkit_clientlib_webrtc_Peer.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$Props = (function(p) {
   this.io$surfkit$clientlib$webrtc$Peer$$p$f = p;
-  this.id$1 = p.id$1;
+  this.local$1 = p.local$1;
+  this.remote$1 = p.remote$1;
   this.sid$1 = p.sid$1;
-  this.info$1 = new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(this.id$1, p.type$1);
   this.io$surfkit$clientlib$webrtc$Peer$$streamPromise$1 = new $c_s_concurrent_impl_Promise$DefaultPromise().init___();
   var this$2 = this.io$surfkit$clientlib$webrtc$Peer$$streamPromise$1;
   this.stream$1 = this$2;
@@ -1251,25 +1279,31 @@ $c_Lio_surfkit_clientlib_webrtc_Peer.prototype.init___Lio_surfkit_clientlib_webr
       return f.apply__O__O(arg1)
     })
   })(new $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3().init___Lio_surfkit_clientlib_webrtc_Peer(this));
-  this.onAddStream$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(arg$outer$2) {
-    return (function(stream$2$2) {
-      return (void 0)
-    })
-  })(this));
-  this.pc$1["onicecandidate"] = (function(arg$outer$3) {
+  this.pc$1["onremovestream"] = (function(arg$outer$2) {
     return (function(evt$2) {
-      if ((evt$2["candidate"] !== null)) {
-        arg$outer$3.io$surfkit$clientlib$webrtc$Peer$$p$f.signaler$1.send__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(new $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCIceCandidate(arg$outer$3.info$1, evt$2["candidate"]))
+      arg$outer$2.onRemoveStream$1.apply__O__O(evt$2["stream"])
+    })
+  })(this);
+  this.onAddStream$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(stream$2$2) {
+    return (void 0)
+  }));
+  this.onRemoveStream$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(stream$2$3) {
+    return (void 0)
+  }));
+  this.pc$1["onicecandidate"] = (function(arg$outer$3) {
+    return (function(evt$2$1) {
+      if ((evt$2$1["candidate"] !== null)) {
+        arg$outer$3.io$surfkit$clientlib$webrtc$Peer$$p$f.signaler$1.send__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(new $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCIceCandidate(arg$outer$3.remote$1, arg$outer$3.local$1, evt$2$1["candidate"]))
       }
     })
   })(this);
-  this.pc$1["onnegotiationneeded"] = (function(evt$2$1) {
+  this.pc$1["onnegotiationneeded"] = (function(evt$2$2) {
     var this$6 = $m_s_Console$();
     var this$7 = this$6.outVar$2;
     $as_Ljava_io_PrintStream(this$7.tl$1.get__O()).println__O__V("onNegotiationneeded")
   });
   this.pc$1["oniceconnectionstatechange"] = (function(arg$outer$4) {
-    return (function(evt$2$2) {
+    return (function(evt$2$3) {
       var this$9 = $m_s_Console$();
       var this$10 = this$9.outVar$2;
       $as_Ljava_io_PrintStream(this$10.tl$1.get__O()).println__O__V("oniceconnectionstatechange");
@@ -1279,19 +1313,27 @@ $c_Lio_surfkit_clientlib_webrtc_Peer.prototype.init___Lio_surfkit_clientlib_webr
           var this$12 = $m_s_Console$();
           var this$13 = this$12.outVar$2;
           $as_Ljava_io_PrintStream(this$13.tl$1.get__O()).println__O__V("iceFailed ");
-          arg$outer$4.io$surfkit$clientlib$webrtc$Peer$$p$f.signaler$1.send__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(new $c_Lio_surfkit_clientlib_webrtc_Peer$Error().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__T(arg$outer$4.info$1, "connectivityError ICE FAILED"))
+          arg$outer$4.io$surfkit$clientlib$webrtc$Peer$$p$f.signaler$1.send__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(new $c_Lio_surfkit_clientlib_webrtc_Peer$Error().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__T(arg$outer$4.remote$1, arg$outer$4.local$1, "connectivityError ICE FAILED"))
         }
+      } else if (($m_Lorg_scalajs_dom_experimental_webrtc_IceConnectionState$().disconnected$1 === x1)) {
+        var this$14 = arg$outer$4.stream$1;
+        var f$1 = arg$outer$4.onRemoveStream$1;
+        var executor = $m_s_concurrent_ExecutionContext$Implicits$().global__s_concurrent_ExecutionContextExecutor();
+        $s_s_concurrent_Future$class__foreach__s_concurrent_Future__F1__s_concurrent_ExecutionContext__V(this$14, f$1, executor)
       } else {
-        throw new $c_s_MatchError().init___O(x1)
+        var x = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["IceConnectionState ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([x1]));
+        var this$16 = $m_s_Console$();
+        var this$17 = this$16.outVar$2;
+        $as_Ljava_io_PrintStream(this$17.tl$1.get__O()).println__O__V(x)
       }
     })
   })(this);
   this.pc$1["onsignalingstatechange"] = (function(arg$outer$5) {
-    return (function(evt$2$3) {
-      var x = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["onsignalingstatechange: ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([$as_T(arg$outer$5.pc$1["signalingState"])]));
-      var this$15 = $m_s_Console$();
-      var this$16 = this$15.outVar$2;
-      $as_Ljava_io_PrintStream(this$16.tl$1.get__O()).println__O__V(x)
+    return (function(evt$2$4) {
+      var x$1 = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["onsignalingstatechange: ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([$as_T(arg$outer$5.pc$1["signalingState"])]));
+      var this$19 = $m_s_Console$();
+      var this$20 = this$19.outVar$2;
+      $as_Ljava_io_PrintStream(this$20.tl$1.get__O()).println__O__V(x$1)
     })
   })(this);
   return this
@@ -1304,6 +1346,23 @@ $c_Lio_surfkit_clientlib_webrtc_Peer.prototype.start__V = (function() {
   var jsx$1 = new $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$start$1().init___Lio_surfkit_clientlib_webrtc_Peer(this);
   var value = this.io$surfkit$clientlib$webrtc$Peer$$p$f.receiveMedia$1;
   jsx$2["createOffer"]((function(f) {
+    return (function(arg1) {
+      return f.apply__O__O(arg1)
+    })
+  })(jsx$1), (function(arg$outer) {
+    return (function(err$2) {
+      arg$outer.handleError__Lorg_scalajs_dom_raw_DOMError__V(err$2)
+    })
+  })(this), value)
+});
+$c_Lio_surfkit_clientlib_webrtc_Peer.prototype.answer__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription__V = (function(offer) {
+  var this$2 = $m_s_Console$();
+  var this$3 = this$2.outVar$2;
+  $as_Ljava_io_PrintStream(this$3.tl$1.get__O()).println__O__V("creating an answer..");
+  var jsx$2 = this.pc$1;
+  var jsx$1 = new $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1().init___Lio_surfkit_clientlib_webrtc_Peer(this);
+  var value = this.io$surfkit$clientlib$webrtc$Peer$$p$f.receiveMedia$1;
+  jsx$2["createAnswer"]((function(f) {
     return (function(arg1) {
       return f.apply__O__O(arg1)
     })
@@ -1329,19 +1388,23 @@ $c_Lio_surfkit_clientlib_webrtc_Peer.prototype.handleMessage__Lio_surfkit_client
   matchEnd7: {
     if ($is_Lio_surfkit_clientlib_webrtc_Peer$Offer(message)) {
       var x2 = $as_Lio_surfkit_clientlib_webrtc_Peer$Offer(message);
-      var peer = x2.peer$1;
+      var l = x2.local$1;
       var offer = x2.offer$1;
-      if ((peer.id$1 === this.id$1)) {
+      if ((l.id$1 === this.remote$1.id$1)) {
+        var x$1 = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["Peer.Offer from: ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([l]));
         var this$5 = $m_s_Console$();
         var this$6 = this$5.outVar$2;
-        $as_Ljava_io_PrintStream(this$6.tl$1.get__O()).println__O__V("Peer.Offer");
-        this.pc$1["setRemoteDescription"](offer, (function(f) {
+        $as_Ljava_io_PrintStream(this$6.tl$1.get__O()).println__O__V(x$1);
+        this.pc$1["setRemoteDescription"](offer, (function(arg$outer, offer$1) {
           return (function() {
-            return f.apply__O()
+            var this$8 = $m_s_Console$();
+            var this$9 = this$8.outVar$2;
+            $as_Ljava_io_PrintStream(this$9.tl$1.get__O()).println__O__V("setRemoteDescription success");
+            arg$outer.answer__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription__V(offer$1)
           })
-        })(new $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1().init___Lio_surfkit_clientlib_webrtc_Peer(this)), (function(arg$outer) {
+        })(this, offer), (function(arg$outer$1) {
           return (function(err$2) {
-            arg$outer.handleError__Lorg_scalajs_dom_raw_DOMError__V(err$2)
+            arg$outer$1.handleError__Lorg_scalajs_dom_raw_DOMError__V(err$2)
           })
         })(this));
         break matchEnd7
@@ -1349,19 +1412,20 @@ $c_Lio_surfkit_clientlib_webrtc_Peer.prototype.handleMessage__Lio_surfkit_client
     };
     if ($is_Lio_surfkit_clientlib_webrtc_Peer$Answer(message)) {
       var x3 = $as_Lio_surfkit_clientlib_webrtc_Peer$Answer(message);
-      var peer$2 = x3.peer$1;
+      var l$2 = x3.local$1;
       var answer = x3.answer$1;
-      if ((peer$2.id$1 === this.id$1)) {
-        var this$8 = $m_s_Console$();
-        var this$9 = this$8.outVar$2;
-        $as_Ljava_io_PrintStream(this$9.tl$1.get__O()).println__O__V("Peer.Answer");
+      if ((l$2.id$1 === this.remote$1.id$1)) {
+        var x$2 = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["Peer.Answer from: ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([l$2]));
+        var this$11 = $m_s_Console$();
+        var this$12 = this$11.outVar$2;
+        $as_Ljava_io_PrintStream(this$12.tl$1.get__O()).println__O__V(x$2);
         this.pc$1["setRemoteDescription"](answer, (function() {
-          var this$11 = $m_s_Console$();
-          var this$12 = this$11.outVar$2;
-          $as_Ljava_io_PrintStream(this$12.tl$1.get__O()).println__O__V("setRemoteDescription. success")
-        }), (function(arg$outer$1) {
+          var this$14 = $m_s_Console$();
+          var this$15 = this$14.outVar$2;
+          $as_Ljava_io_PrintStream(this$15.tl$1.get__O()).println__O__V("setRemoteDescription. success")
+        }), (function(arg$outer$2) {
           return (function(err$2$1) {
-            arg$outer$1.handleError__Lorg_scalajs_dom_raw_DOMError__V(err$2$1)
+            arg$outer$2.handleError__Lorg_scalajs_dom_raw_DOMError__V(err$2$1)
           })
         })(this));
         break matchEnd7
@@ -1369,20 +1433,20 @@ $c_Lio_surfkit_clientlib_webrtc_Peer.prototype.handleMessage__Lio_surfkit_client
     };
     if ($is_Lio_surfkit_clientlib_webrtc_Peer$Candidate(message)) {
       var x4 = $as_Lio_surfkit_clientlib_webrtc_Peer$Candidate(message);
-      var peer$3 = x4.peer$1;
+      var l$3 = x4.local$1;
       var candidate = x4.candidate$1;
-      if ((peer$3.id$1 === this.id$1)) {
-        var x$1 = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["Peer.Candidate ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([$objectToString(candidate)]));
-        var this$14 = $m_s_Console$();
-        var this$15 = this$14.outVar$2;
-        $as_Ljava_io_PrintStream(this$15.tl$1.get__O()).println__O__V(x$1);
+      if ((l$3.id$1 === this.remote$1.id$1)) {
+        var x$3 = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["Peer.Candidate ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([$objectToString(candidate)]));
+        var this$17 = $m_s_Console$();
+        var this$18 = this$17.outVar$2;
+        $as_Ljava_io_PrintStream(this$18.tl$1.get__O()).println__O__V(x$3);
         this.pc$1["addIceCandidate"](candidate, (function() {
-          var this$17 = $m_s_Console$();
-          var this$18 = this$17.outVar$2;
-          $as_Ljava_io_PrintStream(this$18.tl$1.get__O()).println__O__V("addIceCandidate. success")
-        }), (function(arg$outer$2) {
+          var this$20 = $m_s_Console$();
+          var this$21 = this$20.outVar$2;
+          $as_Ljava_io_PrintStream(this$21.tl$1.get__O()).println__O__V("addIceCandidate. success")
+        }), (function(arg$outer$3) {
           return (function(err$2$2) {
-            arg$outer$2.handleError__Lorg_scalajs_dom_raw_DOMError__V(err$2$2)
+            arg$outer$3.handleError__Lorg_scalajs_dom_raw_DOMError__V(err$2$2)
           })
         })(this));
         break matchEnd7
@@ -1390,20 +1454,20 @@ $c_Lio_surfkit_clientlib_webrtc_Peer.prototype.handleMessage__Lio_surfkit_client
     };
     if ($is_Lio_surfkit_clientlib_webrtc_Peer$Error(message)) {
       var x5 = $as_Lio_surfkit_clientlib_webrtc_Peer$Error(message);
-      var peer$4 = x5.peer$1;
+      var l$4 = x5.local$1;
       var reason = x5.reason$1;
-      if ((peer$4.id$1 === this.id$1)) {
-        var x$2 = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["Peer sent you error: ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([reason]));
-        var this$20 = $m_s_Console$();
-        var this$21 = this$20.outVar$2;
-        $as_Ljava_io_PrintStream(this$21.tl$1.get__O()).println__O__V(x$2);
+      if ((l$4.id$1 === this.remote$1.id$1)) {
+        var x$4 = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["Peer sent you error: ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([reason]));
+        var this$23 = $m_s_Console$();
+        var this$24 = this$23.outVar$2;
+        $as_Ljava_io_PrintStream(this$24.tl$1.get__O()).println__O__V(x$4);
         break matchEnd7
       }
     };
-    var x$3 = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["Unkown peer handleMessage ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([message]));
-    var this$23 = $m_s_Console$();
-    var this$24 = this$23.outVar$2;
-    $as_Ljava_io_PrintStream(this$24.tl$1.get__O()).println__O__V(x$3);
+    var x$5 = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["Unkown peer handleMessage ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([message]));
+    var this$26 = $m_s_Console$();
+    var this$27 = this$26.outVar$2;
+    $as_Ljava_io_PrintStream(this$27.tl$1.get__O()).println__O__V(x$5);
     break matchEnd7
   }
 });
@@ -1824,6 +1888,31 @@ function $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__
   })($$this, rw, n, evidence$6));
   return new $c_Lupickle_Types$Writer$$anon$2().init___Lupickle_Types$Writer$__F1(this$2, _write)
 }
+function $s_Lupickle_Generated$class__Tuple5W__Lupickle_Generated__O__O__O__O__O__O($$this, evidence$21, evidence$22, evidence$23, evidence$24, evidence$25) {
+  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(arg$outer, evidence$21$1, evidence$22$1, evidence$23$1, evidence$24$1, evidence$25$1) {
+    return (function(x$2) {
+      var x = $as_T5(x$2);
+      var jsx$5 = $m_s_Predef$();
+      var t = x.$$und1$1;
+      var evidence$2 = $as_Lupickle_Types$Writer(evidence$21$1);
+      var jsx$4 = $s_Lupickle_Types$class__writeJs__Lupickle_Types__O__Lupickle_Types$Writer__Lupickle_Js$Value(arg$outer, t, evidence$2);
+      var t$1 = x.$$und2$1;
+      var evidence$2$1 = $as_Lupickle_Types$Writer(evidence$22$1);
+      var jsx$3 = $s_Lupickle_Types$class__writeJs__Lupickle_Types__O__Lupickle_Types$Writer__Lupickle_Js$Value(arg$outer, t$1, evidence$2$1);
+      var t$2 = x.$$und3$1;
+      var evidence$2$2 = $as_Lupickle_Types$Writer(evidence$23$1);
+      var jsx$2 = $s_Lupickle_Types$class__writeJs__Lupickle_Types__O__Lupickle_Types$Writer__Lupickle_Js$Value(arg$outer, t$2, evidence$2$2);
+      var t$3 = x.$$und4$1;
+      var evidence$2$3 = $as_Lupickle_Types$Writer(evidence$24$1);
+      var jsx$1 = $s_Lupickle_Types$class__writeJs__Lupickle_Types__O__Lupickle_Types$Writer__Lupickle_Js$Value(arg$outer, t$3, evidence$2$3);
+      var t$4 = x.$$und5$1;
+      var evidence$2$4 = $as_Lupickle_Types$Writer(evidence$25$1);
+      return new $c_Lupickle_Js$Arr().init___sc_Seq(jsx$5.genericWrapArray__O__scm_WrappedArray($makeNativeArrayWrapper($d_Lupickle_Js$Value.getArrayOf(), [jsx$4, jsx$3, jsx$2, jsx$1, $s_Lupickle_Types$class__writeJs__Lupickle_Types__O__Lupickle_Types$Writer__Lupickle_Js$Value(arg$outer, t$4, evidence$2$4)])))
+    })
+  })($$this, evidence$21, evidence$22, evidence$23, evidence$24, evidence$25));
+  var this$1 = $$this.Writer__Lupickle_Types$Writer$();
+  return new $c_Lupickle_Types$Writer$$anon$2().init___Lupickle_Types$Writer$__F1(this$1, f)
+}
 function $s_Lupickle_Generated$class__Tuple3W__Lupickle_Generated__O__O__O__O($$this, evidence$7, evidence$8, evidence$9) {
   var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(arg$outer, evidence$7$1, evidence$8$1, evidence$9$1) {
     return (function(x$2) {
@@ -1865,33 +1954,11 @@ function $s_Lupickle_Generated$class__Tuple2W__Lupickle_Generated__O__O__O($$thi
   var this$1 = $$this.Writer__Lupickle_Types$Writer$();
   return new $c_Lupickle_Types$Writer$$anon$2().init___Lupickle_Types$Writer$__F1(this$1, f)
 }
-function $s_Lupickle_Generated$class__Tuple4R__Lupickle_Generated__O__O__O__O__O($$this, evidence$17, evidence$18, evidence$19, evidence$20) {
-  var pf = new $c_Lupickle_Generated$$anonfun$Tuple4R$1().init___Lupickle_Generated__O__O__O__O($$this, evidence$17, evidence$18, evidence$19, evidence$20);
-  var pf$1 = $$this.Internal__Lupickle_Implicits$Internal$().validate__T__s_PartialFunction__s_PartialFunction("Array(4)", pf);
+function $s_Lupickle_Generated$class__Tuple5R__Lupickle_Generated__O__O__O__O__O__O($$this, evidence$26, evidence$27, evidence$28, evidence$29, evidence$30) {
+  var pf = new $c_Lupickle_Generated$$anonfun$Tuple5R$1().init___Lupickle_Generated__O__O__O__O__O($$this, evidence$26, evidence$27, evidence$28, evidence$29, evidence$30);
+  var pf$1 = $$this.Internal__Lupickle_Implicits$Internal$().validate__T__s_PartialFunction__s_PartialFunction("Array(5)", pf);
   var this$1 = $$this.Reader__Lupickle_Types$Reader$();
   return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$1, pf$1)
-}
-function $s_Lupickle_Generated$class__Tuple4W__Lupickle_Generated__O__O__O__O__O($$this, evidence$13, evidence$14, evidence$15, evidence$16) {
-  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(arg$outer, evidence$13$1, evidence$14$1, evidence$15$1, evidence$16$1) {
-    return (function(x$2) {
-      var x = $as_T4(x$2);
-      var jsx$4 = $m_s_Predef$();
-      var t = x.$$und1$1;
-      var evidence$2 = $as_Lupickle_Types$Writer(evidence$13$1);
-      var jsx$3 = $s_Lupickle_Types$class__writeJs__Lupickle_Types__O__Lupickle_Types$Writer__Lupickle_Js$Value(arg$outer, t, evidence$2);
-      var t$1 = x.$$und2$1;
-      var evidence$2$1 = $as_Lupickle_Types$Writer(evidence$14$1);
-      var jsx$2 = $s_Lupickle_Types$class__writeJs__Lupickle_Types__O__Lupickle_Types$Writer__Lupickle_Js$Value(arg$outer, t$1, evidence$2$1);
-      var t$2 = x.$$und3$1;
-      var evidence$2$2 = $as_Lupickle_Types$Writer(evidence$15$1);
-      var jsx$1 = $s_Lupickle_Types$class__writeJs__Lupickle_Types__O__Lupickle_Types$Writer__Lupickle_Js$Value(arg$outer, t$2, evidence$2$2);
-      var t$3 = x.$$und4$1;
-      var evidence$2$3 = $as_Lupickle_Types$Writer(evidence$16$1);
-      return new $c_Lupickle_Js$Arr().init___sc_Seq(jsx$4.genericWrapArray__O__scm_WrappedArray($makeNativeArrayWrapper($d_Lupickle_Js$Value.getArrayOf(), [jsx$3, jsx$2, jsx$1, $s_Lupickle_Types$class__writeJs__Lupickle_Types__O__Lupickle_Types$Writer__Lupickle_Js$Value(arg$outer, t$3, evidence$2$3)])))
-    })
-  })($$this, evidence$13, evidence$14, evidence$15, evidence$16));
-  var this$1 = $$this.Writer__Lupickle_Types$Writer$();
-  return new $c_Lupickle_Types$Writer$$anon$2().init___Lupickle_Types$Writer$__F1(this$1, f)
 }
 function $s_Lupickle_Generated$class__Tuple2R__Lupickle_Generated__O__O__O($$this, evidence$5, evidence$6) {
   var pf = new $c_Lupickle_Generated$$anonfun$Tuple2R$1().init___Lupickle_Generated__O__O($$this, evidence$5, evidence$6);
@@ -3326,7 +3393,7 @@ function $s_s_Product3$class__productElement__s_Product3__I__O($$this, n) {
     }
   }
 }
-function $s_s_Product4$class__productElement__s_Product4__I__O($$this, n) {
+function $s_s_Product5$class__productElement__s_Product5__I__O($$this, n) {
   switch (n) {
     case 0: {
       return $$this.$$und1$1;
@@ -3342,6 +3409,10 @@ function $s_s_Product4$class__productElement__s_Product4__I__O($$this, n) {
     }
     case 3: {
       return $$this.$$und4$1;
+      break
+    }
+    case 4: {
+      return $$this.$$und5$1;
       break
     }
     default: {
@@ -7287,6 +7358,7 @@ $c_Lio_surfkit_client_WebRTCMain$.prototype.main__V = (function() {
   var txtPeerId = $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument()["getElementById"]("peerId");
   txtPeerId["innerHTML"] = signaler.id$1;
   var webRTC = new $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC().init___Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler(signaler);
+  webRTC.peerStreamAdded$1 = new $c_Lio_surfkit_client_WebRTCMain$$anonfun$main$1().init___();
   var bGetMedia = $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument()["getElementById"]("bGetMedia");
   bGetMedia["onclick"] = (function(local$1, webRTC$1) {
     return (function(me$2) {
@@ -7298,7 +7370,7 @@ $c_Lio_surfkit_client_WebRTCMain$.prototype.main__V = (function() {
     return (function(arg1) {
       return f.apply__O__O(arg1)
     })
-  })(new $c_Lio_surfkit_client_WebRTCMain$$anonfun$main$2().init___Lio_surfkit_clientlib_webrtc_SimpleWebRTC(webRTC))
+  })(new $c_Lio_surfkit_client_WebRTCMain$$anonfun$main$3().init___Lio_surfkit_clientlib_webrtc_SimpleWebRTC(webRTC))
 });
 $c_Lio_surfkit_client_WebRTCMain$.prototype.$$js$exported$meth$main__O = (function() {
   this.main__V()
@@ -8341,17 +8413,17 @@ $c_sr_AbstractFunction3.prototype.init___ = (function() {
   return this
 });
 /** @constructor */
-function $c_sr_AbstractFunction4() {
+function $c_sr_AbstractFunction5() {
   $c_O.call(this)
 }
-$c_sr_AbstractFunction4.prototype = new $h_O();
-$c_sr_AbstractFunction4.prototype.constructor = $c_sr_AbstractFunction4;
+$c_sr_AbstractFunction5.prototype = new $h_O();
+$c_sr_AbstractFunction5.prototype.constructor = $c_sr_AbstractFunction5;
 /** @constructor */
-function $h_sr_AbstractFunction4() {
+function $h_sr_AbstractFunction5() {
   /*<skip>*/
 }
-$h_sr_AbstractFunction4.prototype = $c_sr_AbstractFunction4.prototype;
-$c_sr_AbstractFunction4.prototype.init___ = (function() {
+$h_sr_AbstractFunction5.prototype = $c_sr_AbstractFunction5.prototype;
+$c_sr_AbstractFunction5.prototype.init___ = (function() {
   return this
 });
 /** @constructor */
@@ -8470,7 +8542,7 @@ function $c_Lio_surfkit_client_WebSocketSignaler() {
   $c_O.call(this);
   this.id$1 = null;
   this.type$1 = null;
-  this.peerInfo$1 = null;
+  this.localPeer$1 = null;
   this.ws$1 = null;
   this.receivers$1 = null
 }
@@ -8481,15 +8553,12 @@ function $h_Lio_surfkit_client_WebSocketSignaler() {
   /*<skip>*/
 }
 $h_Lio_surfkit_client_WebSocketSignaler.prototype = $c_Lio_surfkit_client_WebSocketSignaler.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$75$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$75$lzy$1, derive$macro$57$lzy$1, bitmap$0$3) {
-  return (((1 & bitmap$0$3.elem$1) === 0) ? this.derive$macro$75$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$75$lzy$1, derive$macro$57$lzy$1, bitmap$0$3) : $as_Lupickle_Types$Writer(derive$macro$75$lzy$1.elem$1))
-});
 $c_Lio_surfkit_client_WebSocketSignaler.prototype.init___ = (function() {
   $s_Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler$class__$$init$__Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler__V(this);
   var this$2 = $doubleToInt((1000 * $uD($g["Math"]["random"]())));
   this.id$1 = ("" + this$2);
   this.type$1 = "video";
-  this.peerInfo$1 = new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(this.id$1, this.type$1);
+  this.localPeer$1 = new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(this.id$1, this.type$1);
   this.ws$1 = new $g["WebSocket"](new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["ws://localhost:8080/ws/", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([this.id$1])));
   this.ws$1["onmessage"] = (function(f) {
     return (function(arg1) {
@@ -8502,7 +8571,7 @@ $c_Lio_surfkit_client_WebSocketSignaler.prototype.init___ = (function() {
     $as_Ljava_io_PrintStream(this$6.tl$1.get__O()).println__O__V("WS connection connected")
   });
   this.ws$1["onerror"] = (function(x$2$1) {
-    var x = ("some error has   occured " + $as_T(x$2$1["message"]));
+    var x = ("some error has occured " + $as_T(x$2$1["message"]));
     var this$8 = $m_s_Console$();
     var this$9 = this$8.outVar$2;
     $as_Ljava_io_PrintStream(this$9.tl$1.get__O()).println__O__V(x)
@@ -8514,40 +8583,38 @@ $c_Lio_surfkit_client_WebSocketSignaler.prototype.init___ = (function() {
   });
   return this
 });
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$87$1__p1__Lupickle_Types$Writer = (function() {
-  var derive$macro$75$lzy = new $c_sr_ObjectRef().init___O(null);
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$96$1__p1__Lupickle_Types$Writer = (function() {
+  var derive$macro$73$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$62$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$61$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$67$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$80$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$92$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$70$lzy = new $c_sr_ObjectRef().init___O(null);
   var elem$1 = null;
   elem$1 = null;
-  var derive$macro$72$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$57$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$56$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$61$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$68$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$78$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$76$lzy = new $c_sr_ObjectRef().init___O(null);
   var derive$macro$84$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$80$lzy = new $c_sr_ObjectRef().init___O(null);
   var bitmap$0 = new $c_sr_VolatileByteRef().init___B(0);
   var bitmap$1 = new $c_sr_VolatileByteRef().init___B(0);
-  if (((2 & bitmap$0.elem$1) === 0)) {
-    if (((2 & bitmap$0.elem$1) === 0)) {
-      elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(arg$outer, derive$macro$75$lzy$1, derive$macro$72$lzy$1, derive$macro$57$lzy$1, derive$macro$56$lzy$1, derive$macro$61$lzy$1, derive$macro$68$lzy$1, derive$macro$78$lzy$1, derive$macro$84$lzy$1, derive$macro$80$lzy$1, bitmap$0$3, bitmap$1$2) {
+  if (((128 & bitmap$0.elem$1) === 0)) {
+    if (((128 & bitmap$0.elem$1) === 0)) {
+      elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(arg$outer, derive$macro$73$lzy$1, derive$macro$62$lzy$1, derive$macro$61$lzy$1, derive$macro$67$lzy$1, derive$macro$80$lzy$1, derive$macro$92$lzy$1, derive$macro$70$lzy$1, derive$macro$76$lzy$1, derive$macro$84$lzy$1, bitmap$0$2, bitmap$1$2) {
         return (function() {
-          var this$55 = $m_Lupickle_default$().Writer__Lupickle_Types$Writer$();
-          $m_Lupickle_default$().Internal__Lupickle_Implicits$Internal$();
-          $m_Lupickle_default$().Internal__Lupickle_Implicits$Internal$();
+          var this$43 = $m_Lupickle_default$().Writer__Lupickle_Types$Writer$();
           $m_Lupickle_default$().Internal__Lupickle_Implicits$Internal$();
           $m_Lupickle_default$().Internal__Lupickle_Implicits$Internal$();
           $m_Lupickle_default$().Internal__Lupickle_Implicits$Internal$();
           $m_Lupickle_default$().Internal__Lupickle_Implicits$Internal$();
           var jsx$2 = $m_Lupickle_default$().Internal__Lupickle_Implicits$Internal$();
-          var this$14 = arg$outer.io$surfkit$client$WebSocketSignaler$$derive$macro$56$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$57$lzy$1, derive$macro$56$lzy$1, bitmap$0$3);
+          var this$14 = arg$outer.io$surfkit$client$WebSocketSignaler$$derive$macro$61$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$62$lzy$1, derive$macro$61$lzy$1, bitmap$0$2);
           var jsx$1 = $s_Lupickle_Types$Writer$class__write__Lupickle_Types$Writer__F1(this$14);
-          var this$16 = arg$outer.io$surfkit$client$WebSocketSignaler$$derive$macro$61$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$57$lzy$1, derive$macro$61$lzy$1, bitmap$0$3);
-          var f = jsx$2.merge__F1__F1__s_reflect_ClassTag__s_reflect_ClassTag__F1(jsx$1, $s_Lupickle_Types$Writer$class__write__Lupickle_Types$Writer__F1(this$16), new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Error.getClassOf()), new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Room.getClassOf()));
-          var this$20 = arg$outer.io$surfkit$client$WebSocketSignaler$$derive$macro$68$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$68$lzy$1, bitmap$0$3);
+          var this$16 = arg$outer.io$surfkit$client$WebSocketSignaler$$derive$macro$67$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$62$lzy$1, derive$macro$67$lzy$1, derive$macro$70$lzy$1, bitmap$0$2);
+          var f = jsx$2.merge__F1__F1__s_reflect_ClassTag__s_reflect_ClassTag__F1(jsx$1, $s_Lupickle_Types$Writer$class__write__Lupickle_Types$Writer__F1(this$16), new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Join.getClassOf()), new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Answer.getClassOf()));
+          var this$20 = arg$outer.io$surfkit$client$WebSocketSignaler$$derive$macro$73$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$73$lzy$1, derive$macro$62$lzy$1, derive$macro$76$lzy$1, bitmap$0$2, bitmap$1$2);
           var g = $s_Lupickle_Types$Writer$class__write__Lupickle_Types$Writer__F1(this$20);
           var evidence$6 = $m_s_reflect_ManifestFactory$AnyManifest$();
-          var evidence$7 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$RTCIceCandidate.getClassOf());
+          var evidence$7 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Candidate.getClassOf());
           var f$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(f$3, g$2, evidence$6$1, evidence$7$1) {
             return (function(x0$2$2) {
               var o12 = $s_s_reflect_ClassTag$class__unapply__s_reflect_ClassTag__O__s_Option(evidence$7$1, x0$2$2);
@@ -8565,10 +8632,10 @@ $c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$87$1__p1__Lupickl
               throw new $c_s_MatchError().init___O(x0$2$2)
             })
           })(f, g, evidence$6, evidence$7));
-          var this$26 = arg$outer.io$surfkit$client$WebSocketSignaler$$derive$macro$72$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$72$lzy$1, derive$macro$57$lzy$1, derive$macro$68$lzy$1, bitmap$0$3);
+          var this$26 = arg$outer.io$surfkit$client$WebSocketSignaler$$derive$macro$80$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$62$lzy$1, derive$macro$80$lzy$1, derive$macro$70$lzy$1, bitmap$0$2);
           var g$1 = $s_Lupickle_Types$Writer$class__write__Lupickle_Types$Writer__F1(this$26);
           var evidence$6$2 = $m_s_reflect_ManifestFactory$AnyManifest$();
-          var evidence$7$2 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Candidate.getClassOf());
+          var evidence$7$2 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Offer.getClassOf());
           var f$2 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(f$3$1, g$2$1, evidence$6$1$1, evidence$7$1$1) {
             return (function(x0$2$2$1) {
               var o12$1 = $s_s_reflect_ClassTag$class__unapply__s_reflect_ClassTag__O__s_Option(evidence$7$1$1, x0$2$2$1);
@@ -8586,10 +8653,10 @@ $c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$87$1__p1__Lupickl
               throw new $c_s_MatchError().init___O(x0$2$2$1)
             })
           })(f$1, g$1, evidence$6$2, evidence$7$2));
-          var this$32 = arg$outer.io$surfkit$client$WebSocketSignaler$$derive$macro$75$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$75$lzy$1, derive$macro$57$lzy$1, bitmap$0$3);
+          var this$32 = arg$outer.io$surfkit$client$WebSocketSignaler$$derive$macro$84$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$62$lzy$1, derive$macro$84$lzy$1, bitmap$0$2, bitmap$1$2);
           var g$3 = $s_Lupickle_Types$Writer$class__write__Lupickle_Types$Writer__F1(this$32);
           var evidence$6$3 = $m_s_reflect_ManifestFactory$AnyManifest$();
-          var evidence$7$3 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Join.getClassOf());
+          var evidence$7$3 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Room.getClassOf());
           var f$4 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(f$3$2, g$2$2, evidence$6$1$2, evidence$7$1$2) {
             return (function(x0$2$2$2) {
               var o12$2 = $s_s_reflect_ClassTag$class__unapply__s_reflect_ClassTag__O__s_Option(evidence$7$1$2, x0$2$2$2);
@@ -8607,11 +8674,11 @@ $c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$87$1__p1__Lupickl
               throw new $c_s_MatchError().init___O(x0$2$2$2)
             })
           })(f$2, g$3, evidence$6$3, evidence$7$3));
-          var this$38 = arg$outer.io$surfkit$client$WebSocketSignaler$$derive$macro$78$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$57$lzy$1, derive$macro$78$lzy$1, derive$macro$80$lzy$1, bitmap$0$3, bitmap$1$2);
+          var this$38 = arg$outer.io$surfkit$client$WebSocketSignaler$$derive$macro$92$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$62$lzy$1, derive$macro$92$lzy$1, bitmap$0$2);
           var g$4 = $s_Lupickle_Types$Writer$class__write__Lupickle_Types$Writer__F1(this$38);
           var evidence$6$4 = $m_s_reflect_ManifestFactory$AnyManifest$();
-          var evidence$7$4 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Answer.getClassOf());
-          var f$5 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(f$3$3, g$2$3, evidence$6$1$3, evidence$7$1$3) {
+          var evidence$7$4 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Error.getClassOf());
+          var _write = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(f$3$3, g$2$3, evidence$6$1$3, evidence$7$1$3) {
             return (function(x0$2$2$3) {
               var o12$3 = $s_s_reflect_ClassTag$class__unapply__s_reflect_ClassTag__O__s_Option(evidence$7$1$3, x0$2$2$3);
               if ((!o12$3.isEmpty__Z())) {
@@ -8628,102 +8695,48 @@ $c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$87$1__p1__Lupickl
               throw new $c_s_MatchError().init___O(x0$2$2$3)
             })
           })(f$4, g$4, evidence$6$4, evidence$7$4));
-          var this$44 = arg$outer.io$surfkit$client$WebSocketSignaler$$derive$macro$80$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$80$lzy$1, bitmap$1$2);
-          var g$5 = $s_Lupickle_Types$Writer$class__write__Lupickle_Types$Writer__F1(this$44);
-          var evidence$6$5 = $m_s_reflect_ManifestFactory$AnyManifest$();
-          var evidence$7$5 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$RTCSessionDescription.getClassOf());
-          var f$6 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(f$3$4, g$2$4, evidence$6$1$4, evidence$7$1$4) {
-            return (function(x0$2$2$4) {
-              var o12$4 = $s_s_reflect_ClassTag$class__unapply__s_reflect_ClassTag__O__s_Option(evidence$7$1$4, x0$2$2$4);
-              if ((!o12$4.isEmpty__Z())) {
-                if ((o12$4.get__O() !== null)) {
-                  return g$2$4.apply__O__O(x0$2$2$4)
-                }
-              };
-              var o14$4 = $s_s_reflect_ClassTag$class__unapply__s_reflect_ClassTag__O__s_Option(evidence$6$1$4, x0$2$2$4);
-              if ((!o14$4.isEmpty__Z())) {
-                if ((o14$4.get__O() !== null)) {
-                  return f$3$4.apply__O__O(x0$2$2$4)
-                }
-              };
-              throw new $c_s_MatchError().init___O(x0$2$2$4)
-            })
-          })(f$5, g$5, evidence$6$5, evidence$7$5));
-          var this$50 = arg$outer.io$surfkit$client$WebSocketSignaler$$derive$macro$84$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$57$lzy$1, derive$macro$84$lzy$1, derive$macro$80$lzy$1, bitmap$0$3, bitmap$1$2);
-          var g$6 = $s_Lupickle_Types$Writer$class__write__Lupickle_Types$Writer__F1(this$50);
-          var evidence$6$6 = $m_s_reflect_ManifestFactory$AnyManifest$();
-          var evidence$7$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Offer.getClassOf());
-          var _write = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(f$3$5, g$2$5, evidence$6$1$5, evidence$7$1$5) {
-            return (function(x0$2$2$5) {
-              var o12$5 = $s_s_reflect_ClassTag$class__unapply__s_reflect_ClassTag__O__s_Option(evidence$7$1$5, x0$2$2$5);
-              if ((!o12$5.isEmpty__Z())) {
-                if ((o12$5.get__O() !== null)) {
-                  return g$2$5.apply__O__O(x0$2$2$5)
-                }
-              };
-              var o14$5 = $s_s_reflect_ClassTag$class__unapply__s_reflect_ClassTag__O__s_Option(evidence$6$1$5, x0$2$2$5);
-              if ((!o14$5.isEmpty__Z())) {
-                if ((o14$5.get__O() !== null)) {
-                  return f$3$5.apply__O__O(x0$2$2$5)
-                }
-              };
-              throw new $c_s_MatchError().init___O(x0$2$2$5)
-            })
-          })(f$6, g$6, evidence$6$6, evidence$7$6));
-          return new $c_Lupickle_Types$Writer$$anon$2().init___Lupickle_Types$Writer$__F1(this$55, _write)
+          return new $c_Lupickle_Types$Writer$$anon$2().init___Lupickle_Types$Writer$__F1(this$43, _write)
         })
-      })(this, derive$macro$75$lzy, derive$macro$72$lzy, derive$macro$57$lzy, derive$macro$56$lzy, derive$macro$61$lzy, derive$macro$68$lzy, derive$macro$78$lzy, derive$macro$84$lzy, derive$macro$80$lzy, bitmap$0, bitmap$1)));
-      bitmap$0.elem$1 = (2 | bitmap$0.elem$1)
+      })(this, derive$macro$73$lzy, derive$macro$62$lzy, derive$macro$61$lzy, derive$macro$67$lzy, derive$macro$80$lzy, derive$macro$92$lzy, derive$macro$70$lzy, derive$macro$76$lzy, derive$macro$84$lzy, bitmap$0, bitmap$1)));
+      bitmap$0.elem$1 = (128 | bitmap$0.elem$1)
     };
     return $as_Lupickle_Types$Writer(elem$1)
   } else {
     return $as_Lupickle_Types$Writer(elem$1)
   }
 });
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$80$lzycompute$1__p1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$80$lzy$1, bitmap$1$2) {
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$70$lzycompute$1__p1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$70$lzy$1, bitmap$0$2) {
+  if (((64 & bitmap$0$2.elem$1) === 0)) {
+    derive$macro$70$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler(this));
+    bitmap$0$2.elem$1 = (64 | bitmap$0$2.elem$1)
+  };
+  return $as_Lupickle_Types$Writer(derive$macro$70$lzy$1.elem$1)
+});
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$80$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$62$lzy$1, derive$macro$80$lzy$1, derive$macro$70$lzy$1, bitmap$0$2) {
+  return (((16 & bitmap$0$2.elem$1) === 0) ? this.derive$macro$80$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$62$lzy$1, derive$macro$80$lzy$1, derive$macro$70$lzy$1, bitmap$0$2) : $as_Lupickle_Types$Writer(derive$macro$80$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$84$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$62$lzy$1, derive$macro$84$lzy$1, bitmap$0$2, bitmap$1$2) {
   if (((2 & bitmap$1$2.elem$1) === 0)) {
-    derive$macro$80$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$80$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler(this));
+    derive$macro$84$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$62$lzy$1, bitmap$0$2));
     bitmap$1$2.elem$1 = (2 | bitmap$1$2.elem$1)
   };
-  return $as_Lupickle_Types$Writer(derive$macro$80$lzy$1.elem$1)
+  return $as_Lupickle_Types$Writer(derive$macro$84$lzy$1.elem$1)
 });
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$68$lzycompute$1__p1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$68$lzy$1, bitmap$0$3) {
-  if (((64 & bitmap$0$3.elem$1) === 0)) {
-    derive$macro$68$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler(this));
-    bitmap$0$3.elem$1 = (64 | bitmap$0$3.elem$1)
-  };
-  return $as_Lupickle_Types$Writer(derive$macro$68$lzy$1.elem$1)
-});
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$56$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$57$lzy$1, derive$macro$56$lzy$1, bitmap$0$3) {
-  if (((16 & bitmap$0$3.elem$1) === 0)) {
-    derive$macro$56$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$57$lzy$1, bitmap$0$3));
-    bitmap$0$3.elem$1 = (16 | bitmap$0$3.elem$1)
-  };
-  return $as_Lupickle_Types$Writer(derive$macro$56$lzy$1.elem$1)
-});
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$80$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$80$lzy$1, bitmap$1$2) {
-  return (((2 & bitmap$1$2.elem$1) === 0) ? this.derive$macro$80$lzycompute$1__p1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$80$lzy$1, bitmap$1$2) : $as_Lupickle_Types$Writer(derive$macro$80$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$72$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$72$lzy$1, derive$macro$57$lzy$1, derive$macro$68$lzy$1, bitmap$0$3) {
-  if (((4 & bitmap$0$3.elem$1) === 0)) {
-    derive$macro$72$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$57$lzy$1, derive$macro$68$lzy$1, bitmap$0$3));
-    bitmap$0$3.elem$1 = (4 | bitmap$0$3.elem$1)
-  };
-  return $as_Lupickle_Types$Writer(derive$macro$72$lzy$1.elem$1)
-});
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$68$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$68$lzy$1, bitmap$0$3) {
-  return (((64 & bitmap$0$3.elem$1) === 0) ? this.derive$macro$68$lzycompute$1__p1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$68$lzy$1, bitmap$0$3) : $as_Lupickle_Types$Writer(derive$macro$68$lzy$1.elem$1))
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$92$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$62$lzy$1, derive$macro$92$lzy$1, bitmap$0$2) {
+  return (((32 & bitmap$0$2.elem$1) === 0) ? this.derive$macro$92$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$62$lzy$1, derive$macro$92$lzy$1, bitmap$0$2) : $as_Lupickle_Types$Writer(derive$macro$92$lzy$1.elem$1))
 });
 $c_Lio_surfkit_client_WebSocketSignaler.prototype.toPeerSignaling__Lm_RTCSignal__Lio_surfkit_clientlib_webrtc_Peer$Signaling = (function(model) {
   if ($is_Lm_Signaling$Join(model)) {
     var x2 = $as_Lm_Signaling$Join(model);
+    var r = x2.remote$1;
+    var l = x2.local$1;
     var name = x2.room$1;
-    var p = x2.peer$1;
-    return new $c_Lio_surfkit_clientlib_webrtc_Peer$Join().init___T__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo(name, new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(p.id$1, p.type$1))
+    return new $c_Lio_surfkit_clientlib_webrtc_Peer$Join().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__T(new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(r.id$1, r.type$1), new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(l.id$1, l.type$1), name)
   } else if ($is_Lm_Signaling$Room(model)) {
     var x3 = $as_Lm_Signaling$Room(model);
+    var r$2 = x3.remote$1;
+    var l$2 = x3.local$1;
     var name$2 = x3.name$1;
-    var p$2 = x3.peer$1;
     var config = x3.config$1;
     var members = x3.members$1;
     var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(s$2) {
@@ -8733,14 +8746,15 @@ $c_Lio_surfkit_client_WebSocketSignaler.prototype.toPeerSignaling__Lm_RTCSignal_
     var this$4 = $m_sci_Set$();
     var bf = new $c_scg_GenSetFactory$$anon$1().init___scg_GenSetFactory(this$4);
     var servers = $as_sci_Set($s_sc_TraversableLike$class__map__sc_TraversableLike__F1__scg_CanBuildFrom__O(config, f, bf));
-    var f$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(p$2$1) {
-      var p$1 = $as_Lm_Signaling$PeerInfo(p$2$1);
-      return new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(p$1.id$1, p$1.type$1)
+    var f$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(p$2) {
+      var p = $as_Lm_Signaling$PeerInfo(p$2);
+      return new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(p.id$1, p.type$1)
     }));
     var this$5 = $m_sci_Set$();
     var bf$1 = new $c_scg_GenSetFactory$$anon$1().init___scg_GenSetFactory(this$5);
     var peers = $as_sci_Set($s_sc_TraversableLike$class__map__sc_TraversableLike__F1__scg_CanBuildFrom__O(members, f$1, bf$1));
-    var jsx$5 = new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(p$2.id$1, p$2.type$1);
+    var jsx$6 = new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(r$2.id$1, r$2.type$1);
+    var jsx$5 = new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(l$2.id$1, l$2.type$1);
     var jsx$4 = $m_Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration$();
     var this$8 = $m_sjsr_package$();
     if ($is_sjs_js_ArrayOps(servers)) {
@@ -8775,53 +8789,48 @@ $c_Lio_surfkit_client_WebSocketSignaler.prototype.toPeerSignaling__Lm_RTCSignal_
       })(this$12, result$2)));
       var jsx$1 = result$2
     };
-    return new $c_Lio_surfkit_clientlib_webrtc_Peer$Room().init___T__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration__sjs_js_Array(name$2, jsx$5, jsx$2, jsx$1)
+    return new $c_Lio_surfkit_clientlib_webrtc_Peer$Room().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__T__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration__sjs_js_Array(jsx$6, jsx$5, name$2, jsx$2, jsx$1)
   } else if ($is_Lm_Signaling$Offer(model)) {
     var x4 = $as_Lm_Signaling$Offer(model);
-    var p$3 = x4.peer$1;
+    var r$3 = x4.remote$1;
+    var l$3 = x4.local$1;
     var offer = x4.offer$1;
-    var o = $m_Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription$().apply__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription(offer.type$1, offer.sdp$1);
-    var this$16 = $m_s_Console$();
-    var this$17 = this$16.outVar$2;
-    $as_Ljava_io_PrintStream(this$17.tl$1.get__O()).println__O__V("toPeerSignaling");
-    var x = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["toPeerSignaling offer.type : ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([$as_T(o["type"])]));
-    var this$19 = $m_s_Console$();
-    var this$20 = this$19.outVar$2;
-    $as_Ljava_io_PrintStream(this$20.tl$1.get__O()).println__O__V(x);
-    var x$1 = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["toPeerSignaling offer.sdp : ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([$as_T(o["sdp"])]));
-    var this$22 = $m_s_Console$();
-    var this$23 = this$22.outVar$2;
-    $as_Ljava_io_PrintStream(this$23.tl$1.get__O()).println__O__V(x$1);
-    return new $c_Lio_surfkit_clientlib_webrtc_Peer$Offer().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription(new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(p$3.id$1, p$3.type$1), $m_Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription$().apply__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription(offer.type$1, offer.sdp$1))
+    $m_Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription$().apply__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription(offer.type$1, offer.sdp$1);
+    return new $c_Lio_surfkit_clientlib_webrtc_Peer$Offer().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription(new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(r$3.id$1, r$3.type$1), new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(l$3.id$1, l$3.type$1), $m_Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription$().apply__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription(offer.type$1, offer.sdp$1))
   } else if ($is_Lm_Signaling$Candidate(model)) {
     var x5 = $as_Lm_Signaling$Candidate(model);
-    var p$4 = x5.peer$1;
+    var r$4 = x5.remote$1;
+    var l$4 = x5.local$1;
     var c = x5.candidate$1;
-    return new $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCIceCandidate(new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(p$4.id$1, p$4.type$1), $m_Lorg_scalajs_dom_experimental_webrtc_RTCIceCandidate$().apply__sjs_js_UndefOr__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCIceCandidate(c.candidate$1, c.sdpMLineIndex$1, c.sdpMid$1))
+    return new $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCIceCandidate(new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(r$4.id$1, r$4.type$1), new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(l$4.id$1, l$4.type$1), $m_Lorg_scalajs_dom_experimental_webrtc_RTCIceCandidate$().apply__sjs_js_UndefOr__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCIceCandidate(c.candidate$1, c.sdpMLineIndex$1, c.sdpMid$1))
   } else if ($is_Lm_Signaling$Answer(model)) {
     var x6 = $as_Lm_Signaling$Answer(model);
-    var p$5 = x6.peer$1;
+    var r$5 = x6.remote$1;
+    var l$5 = x6.local$1;
     var answer = x6.answer$1;
-    return new $c_Lio_surfkit_clientlib_webrtc_Peer$Answer().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription(new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(p$5.id$1, p$5.type$1), $m_Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription$().apply__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription(answer.type$1, answer.sdp$1))
+    return new $c_Lio_surfkit_clientlib_webrtc_Peer$Answer().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription(new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(r$5.id$1, r$5.type$1), new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(l$5.id$1, l$5.type$1), $m_Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription$().apply__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription(answer.type$1, answer.sdp$1))
   } else if ($is_Lm_Signaling$Error(model)) {
     var x7 = $as_Lm_Signaling$Error(model);
-    var p$6 = x7.peer$1;
+    var r$6 = x7.remote$1;
+    var l$6 = x7.local$1;
     var error = x7.reason$1;
-    return new $c_Lio_surfkit_clientlib_webrtc_Peer$Error().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__T(new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(p$6.id$1, p$6.type$1), error)
+    return new $c_Lio_surfkit_clientlib_webrtc_Peer$Error().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__T(new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(r$6.id$1, r$6.type$1), new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(l$6.id$1, l$6.type$1), error)
   } else {
-    return new $c_Lio_surfkit_clientlib_webrtc_Peer$Error().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__T(new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T("", ""), "Unknown signaling type")
+    return new $c_Lio_surfkit_clientlib_webrtc_Peer$Error().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__T(new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T("", ""), new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T("", ""), "Unknown signaling type")
   }
 });
 $c_Lio_surfkit_client_WebSocketSignaler.prototype.fromPeerSignaling__Lio_surfkit_clientlib_webrtc_Peer$Signaling__Lm_RTCSignal = (function(s) {
   if ($is_Lio_surfkit_clientlib_webrtc_Peer$Join(s)) {
     var x2 = $as_Lio_surfkit_clientlib_webrtc_Peer$Join(s);
+    var r = x2.remote$1;
+    var l = x2.local$1;
     var name = x2.room$1;
-    var p = x2.peer$1;
-    return new $c_Lm_Signaling$Join().init___T__Lm_Signaling$PeerInfo(name, new $c_Lm_Signaling$PeerInfo().init___T__T(p.id$1, p.type$1))
+    return new $c_Lm_Signaling$Join().init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__T(new $c_Lm_Signaling$PeerInfo().init___T__T(r.id$1, r.type$1), new $c_Lm_Signaling$PeerInfo().init___T__T(l.id$1, l.type$1), name)
   } else if ($is_Lio_surfkit_clientlib_webrtc_Peer$Room(s)) {
     var x3 = $as_Lio_surfkit_clientlib_webrtc_Peer$Room(s);
+    var r$2 = x3.remote$1;
+    var l$2 = x3.local$1;
     var name$2 = x3.name$1;
-    var p$2 = x3.peer$1;
     var config = x3.config$1;
     var members = x3.members$1;
     var array = config["iceServers"];
@@ -8843,12 +8852,13 @@ $c_Lio_surfkit_client_WebSocketSignaler.prototype.fromPeerSignaling__Lio_surfkit
     while ((i$1 < len$1)) {
       var index$1 = i$1;
       var arg1$1 = members[index$1];
-      var p$1 = $as_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo(arg1$1);
-      var elem$1 = new $c_Lm_Signaling$PeerInfo().init___T__T(p$1.id$1, p$1.type$1);
+      var p = $as_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo(arg1$1);
+      var elem$1 = new $c_Lm_Signaling$PeerInfo().init___T__T(p.id$1, p.type$1);
       array$2["push"](elem$1);
       i$1 = ((1 + i$1) | 0)
     };
-    var jsx$2 = new $c_Lm_Signaling$PeerInfo().init___T__T(p$2.id$1, p$2.type$1);
+    var jsx$3 = new $c_Lm_Signaling$PeerInfo().init___T__T(r$2.id$1, r$2.type$1);
+    var jsx$2 = new $c_Lm_Signaling$PeerInfo().init___T__T(l$2.id$1, l$2.type$1);
     var this$6 = $m_sci_Set$();
     var cbf = new $c_scg_GenSetFactory$$anon$1().init___scg_GenSetFactory(this$6);
     var b = cbf.apply__scm_Builder();
@@ -8860,95 +8870,113 @@ $c_Lio_surfkit_client_WebSocketSignaler.prototype.fromPeerSignaling__Lio_surfkit
     var b$1 = cbf$1.apply__scm_Builder();
     b$1.sizeHint__I__V($uI(array$2["length"]));
     b$1.$$plus$plus$eq__sc_TraversableOnce__scg_Growable(new $c_sjs_js_WrappedArray().init___sjs_js_Array(array$2));
-    return new $c_Lm_Signaling$Room().init___T__Lm_Signaling$PeerInfo__sci_Set__sci_Set(name$2, jsx$2, jsx$1, $as_sci_Set(b$1.result__O()))
+    return new $c_Lm_Signaling$Room().init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__T__sci_Set__sci_Set(jsx$3, jsx$2, name$2, jsx$1, $as_sci_Set(b$1.result__O()))
   } else if ($is_Lio_surfkit_clientlib_webrtc_Peer$Offer(s)) {
     var x4 = $as_Lio_surfkit_clientlib_webrtc_Peer$Offer(s);
-    var p$3 = x4.peer$1;
+    var r$3 = x4.remote$1;
+    var l$3 = x4.local$1;
     var offer = x4.offer$1;
-    return new $c_Lm_Signaling$Offer().init___Lm_Signaling$PeerInfo__Lm_Signaling$RTCSessionDescription(new $c_Lm_Signaling$PeerInfo().init___T__T(p$3.id$1, p$3.type$1), new $c_Lm_Signaling$RTCSessionDescription().init___T__T($as_T(offer["type"]), $as_T(offer["sdp"])))
+    return new $c_Lm_Signaling$Offer().init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__Lm_Signaling$RTCSessionDescription(new $c_Lm_Signaling$PeerInfo().init___T__T(r$3.id$1, r$3.type$1), new $c_Lm_Signaling$PeerInfo().init___T__T(l$3.id$1, l$3.type$1), new $c_Lm_Signaling$RTCSessionDescription().init___T__T($as_T(offer["type"]), $as_T(offer["sdp"])))
   } else if ($is_Lio_surfkit_clientlib_webrtc_Peer$Candidate(s)) {
     var x5 = $as_Lio_surfkit_clientlib_webrtc_Peer$Candidate(s);
-    var p$4 = x5.peer$1;
+    var r$4 = x5.remote$1;
+    var l$4 = x5.local$1;
     var c = x5.candidate$1;
-    return new $c_Lm_Signaling$Candidate().init___Lm_Signaling$PeerInfo__Lm_Signaling$RTCIceCandidate(new $c_Lm_Signaling$PeerInfo().init___T__T(p$4.id$1, p$4.type$1), new $c_Lm_Signaling$RTCIceCandidate().init___T__I__T($as_T(c["candidate"]), $uI(c["sdpMLineIndex"]), $as_T(c["sdpMid"])))
+    return new $c_Lm_Signaling$Candidate().init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__Lm_Signaling$RTCIceCandidate(new $c_Lm_Signaling$PeerInfo().init___T__T(r$4.id$1, r$4.type$1), new $c_Lm_Signaling$PeerInfo().init___T__T(l$4.id$1, l$4.type$1), new $c_Lm_Signaling$RTCIceCandidate().init___T__I__T($as_T(c["candidate"]), $uI(c["sdpMLineIndex"]), $as_T(c["sdpMid"])))
   } else if ($is_Lio_surfkit_clientlib_webrtc_Peer$Answer(s)) {
     var x6 = $as_Lio_surfkit_clientlib_webrtc_Peer$Answer(s);
-    var p$5 = x6.peer$1;
+    var r$5 = x6.remote$1;
+    var l$5 = x6.local$1;
     var answer = x6.answer$1;
-    return new $c_Lm_Signaling$Answer().init___Lm_Signaling$PeerInfo__Lm_Signaling$RTCSessionDescription(new $c_Lm_Signaling$PeerInfo().init___T__T(p$5.id$1, p$5.type$1), new $c_Lm_Signaling$RTCSessionDescription().init___T__T($as_T(answer["type"]), $as_T(answer["sdp"])))
+    return new $c_Lm_Signaling$Answer().init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__Lm_Signaling$RTCSessionDescription(new $c_Lm_Signaling$PeerInfo().init___T__T(r$5.id$1, r$5.type$1), new $c_Lm_Signaling$PeerInfo().init___T__T(l$5.id$1, l$5.type$1), new $c_Lm_Signaling$RTCSessionDescription().init___T__T($as_T(answer["type"]), $as_T(answer["sdp"])))
   } else if ($is_Lio_surfkit_clientlib_webrtc_Peer$Error(s)) {
     var x7 = $as_Lio_surfkit_clientlib_webrtc_Peer$Error(s);
-    var p$6 = x7.peer$1;
+    var r$6 = x7.remote$1;
+    var l$6 = x7.local$1;
     var error = x7.reason$1;
-    return new $c_Lm_Signaling$Error().init___Lm_Signaling$PeerInfo__T(new $c_Lm_Signaling$PeerInfo().init___T__T(p$6.id$1, p$6.type$1), error)
+    return new $c_Lm_Signaling$Error().init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__T(new $c_Lm_Signaling$PeerInfo().init___T__T(r$6.id$1, r$6.type$1), new $c_Lm_Signaling$PeerInfo().init___T__T(l$6.id$1, l$6.type$1), error)
   } else {
-    return new $c_Lm_Signaling$Error().init___Lm_Signaling$PeerInfo__T(new $c_Lm_Signaling$PeerInfo().init___T__T("", ""), "Unknown signaling type")
+    return new $c_Lm_Signaling$Error().init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__T(new $c_Lm_Signaling$PeerInfo().init___T__T("", ""), new $c_Lm_Signaling$PeerInfo().init___T__T("", ""), "Unknown signaling type")
   }
 });
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$57$lzycompute$1__p1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$57$lzy$1, bitmap$0$3) {
-  if (((8 & bitmap$0$3.elem$1) === 0)) {
-    derive$macro$57$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler(this));
-    bitmap$0$3.elem$1 = (8 | bitmap$0$3.elem$1)
-  };
-  return $as_Lupickle_Types$Writer(derive$macro$57$lzy$1.elem$1)
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$76$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$76$lzy$1, bitmap$1$2) {
+  return (((1 & bitmap$1$2.elem$1) === 0) ? this.derive$macro$76$lzycompute$1__p1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$76$lzy$1, bitmap$1$2) : $as_Lupickle_Types$Writer(derive$macro$76$lzy$1.elem$1))
 });
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$61$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$57$lzy$1, derive$macro$61$lzy$1, bitmap$0$3) {
-  if (((32 & bitmap$0$3.elem$1) === 0)) {
-    derive$macro$61$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$57$lzy$1, bitmap$0$3));
-    bitmap$0$3.elem$1 = (32 | bitmap$0$3.elem$1)
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$61$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$62$lzy$1, derive$macro$61$lzy$1, bitmap$0$2) {
+  if (((4 & bitmap$0$2.elem$1) === 0)) {
+    derive$macro$61$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$62$lzy$1, bitmap$0$2));
+    bitmap$0$2.elem$1 = (4 | bitmap$0$2.elem$1)
   };
   return $as_Lupickle_Types$Writer(derive$macro$61$lzy$1.elem$1)
 });
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$72$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$72$lzy$1, derive$macro$57$lzy$1, derive$macro$68$lzy$1, bitmap$0$3) {
-  return (((4 & bitmap$0$3.elem$1) === 0) ? this.derive$macro$72$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$72$lzy$1, derive$macro$57$lzy$1, derive$macro$68$lzy$1, bitmap$0$3) : $as_Lupickle_Types$Writer(derive$macro$72$lzy$1.elem$1))
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$92$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$62$lzy$1, derive$macro$92$lzy$1, bitmap$0$2) {
+  if (((32 & bitmap$0$2.elem$1) === 0)) {
+    derive$macro$92$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$62$lzy$1, bitmap$0$2));
+    bitmap$0$2.elem$1 = (32 | bitmap$0$2.elem$1)
+  };
+  return $as_Lupickle_Types$Writer(derive$macro$92$lzy$1.elem$1)
+});
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$73$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$73$lzy$1, derive$macro$62$lzy$1, derive$macro$76$lzy$1, bitmap$0$2, bitmap$1$2) {
+  return (((1 & bitmap$0$2.elem$1) === 0) ? this.derive$macro$73$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$73$lzy$1, derive$macro$62$lzy$1, derive$macro$76$lzy$1, bitmap$0$2, bitmap$1$2) : $as_Lupickle_Types$Writer(derive$macro$73$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$62$lzycompute$1__p1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$62$lzy$1, bitmap$0$2) {
+  if (((2 & bitmap$0$2.elem$1) === 0)) {
+    derive$macro$62$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler(this));
+    bitmap$0$2.elem$1 = (2 | bitmap$0$2.elem$1)
+  };
+  return $as_Lupickle_Types$Writer(derive$macro$62$lzy$1.elem$1)
 });
 $c_Lio_surfkit_client_WebSocketSignaler.prototype.sendModel__Lm_RTCSignal__V = (function(s) {
-  var this$2 = $m_s_Console$();
-  var this$3 = this$2.outVar$2;
-  $as_Ljava_io_PrintStream(this$3.tl$1.get__O()).println__O__V("SEND USING WS");
   var jsx$1 = this.ws$1;
-  var this$4 = $m_Lupickle_default$();
-  var evidence$1 = this.derive$macro$87$1__p1__Lupickle_Types$Writer();
-  jsx$1["send"]($s_Lupickle_Types$class__write__Lupickle_Types__O__Lupickle_Types$Writer__T(this$4, s, evidence$1))
+  var this$1 = $m_Lupickle_default$();
+  var evidence$1 = this.derive$macro$96$1__p1__Lupickle_Types$Writer();
+  jsx$1["send"]($s_Lupickle_Types$class__write__Lupickle_Types__O__Lupickle_Types$Writer__T(this$1, s, evidence$1))
 });
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$75$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$75$lzy$1, derive$macro$57$lzy$1, bitmap$0$3) {
-  if (((1 & bitmap$0$3.elem$1) === 0)) {
-    derive$macro$75$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$57$lzy$1, bitmap$0$3));
-    bitmap$0$3.elem$1 = (1 | bitmap$0$3.elem$1)
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$84$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$62$lzy$1, derive$macro$84$lzy$1, bitmap$0$2, bitmap$1$2) {
+  return (((2 & bitmap$1$2.elem$1) === 0) ? this.derive$macro$84$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$62$lzy$1, derive$macro$84$lzy$1, bitmap$0$2, bitmap$1$2) : $as_Lupickle_Types$Writer(derive$macro$84$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$73$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$73$lzy$1, derive$macro$62$lzy$1, derive$macro$76$lzy$1, bitmap$0$2, bitmap$1$2) {
+  if (((1 & bitmap$0$2.elem$1) === 0)) {
+    derive$macro$73$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef(this, derive$macro$62$lzy$1, derive$macro$76$lzy$1, bitmap$0$2, bitmap$1$2));
+    bitmap$0$2.elem$1 = (1 | bitmap$0$2.elem$1)
   };
-  return $as_Lupickle_Types$Writer(derive$macro$75$lzy$1.elem$1)
+  return $as_Lupickle_Types$Writer(derive$macro$73$lzy$1.elem$1)
 });
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$56$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$57$lzy$1, derive$macro$56$lzy$1, bitmap$0$3) {
-  return (((16 & bitmap$0$3.elem$1) === 0) ? this.derive$macro$56$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$57$lzy$1, derive$macro$56$lzy$1, bitmap$0$3) : $as_Lupickle_Types$Writer(derive$macro$56$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$78$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$57$lzy$1, derive$macro$78$lzy$1, derive$macro$80$lzy$1, bitmap$0$3, bitmap$1$2) {
-  return (((128 & bitmap$0$3.elem$1) === 0) ? this.derive$macro$78$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$57$lzy$1, derive$macro$78$lzy$1, derive$macro$80$lzy$1, bitmap$0$3, bitmap$1$2) : $as_Lupickle_Types$Writer(derive$macro$78$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$61$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$57$lzy$1, derive$macro$61$lzy$1, bitmap$0$3) {
-  return (((32 & bitmap$0$3.elem$1) === 0) ? this.derive$macro$61$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$57$lzy$1, derive$macro$61$lzy$1, bitmap$0$3) : $as_Lupickle_Types$Writer(derive$macro$61$lzy$1.elem$1))
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$61$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$62$lzy$1, derive$macro$61$lzy$1, bitmap$0$2) {
+  return (((4 & bitmap$0$2.elem$1) === 0) ? this.derive$macro$61$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$62$lzy$1, derive$macro$61$lzy$1, bitmap$0$2) : $as_Lupickle_Types$Writer(derive$macro$61$lzy$1.elem$1))
 });
 $c_Lio_surfkit_client_WebSocketSignaler.prototype.send__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V = (function(s) {
   $s_Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler$class__send__Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(this, s)
 });
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$84$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$57$lzy$1, derive$macro$84$lzy$1, derive$macro$80$lzy$1, bitmap$0$3, bitmap$1$2) {
-  return (((1 & bitmap$1$2.elem$1) === 0) ? this.derive$macro$84$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$57$lzy$1, derive$macro$84$lzy$1, derive$macro$80$lzy$1, bitmap$0$3, bitmap$1$2) : $as_Lupickle_Types$Writer(derive$macro$84$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$78$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$57$lzy$1, derive$macro$78$lzy$1, derive$macro$80$lzy$1, bitmap$0$3, bitmap$1$2) {
-  if (((128 & bitmap$0$3.elem$1) === 0)) {
-    derive$macro$78$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef(this, derive$macro$57$lzy$1, derive$macro$80$lzy$1, bitmap$0$3, bitmap$1$2));
-    bitmap$0$3.elem$1 = (128 | bitmap$0$3.elem$1)
-  };
-  return $as_Lupickle_Types$Writer(derive$macro$78$lzy$1.elem$1)
-});
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$57$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$57$lzy$1, bitmap$0$3) {
-  return (((8 & bitmap$0$3.elem$1) === 0) ? this.derive$macro$57$lzycompute$1__p1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$57$lzy$1, bitmap$0$3) : $as_Lupickle_Types$Writer(derive$macro$57$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$84$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$57$lzy$1, derive$macro$84$lzy$1, derive$macro$80$lzy$1, bitmap$0$3, bitmap$1$2) {
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$76$lzycompute$1__p1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$76$lzy$1, bitmap$1$2) {
   if (((1 & bitmap$1$2.elem$1) === 0)) {
-    derive$macro$84$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef(this, derive$macro$57$lzy$1, derive$macro$80$lzy$1, bitmap$0$3, bitmap$1$2));
+    derive$macro$76$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler(this));
     bitmap$1$2.elem$1 = (1 | bitmap$1$2.elem$1)
   };
-  return $as_Lupickle_Types$Writer(derive$macro$84$lzy$1.elem$1)
+  return $as_Lupickle_Types$Writer(derive$macro$76$lzy$1.elem$1)
+});
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$80$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$62$lzy$1, derive$macro$80$lzy$1, derive$macro$70$lzy$1, bitmap$0$2) {
+  if (((16 & bitmap$0$2.elem$1) === 0)) {
+    derive$macro$80$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$80$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$62$lzy$1, derive$macro$70$lzy$1, bitmap$0$2));
+    bitmap$0$2.elem$1 = (16 | bitmap$0$2.elem$1)
+  };
+  return $as_Lupickle_Types$Writer(derive$macro$80$lzy$1.elem$1)
+});
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.derive$macro$67$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$62$lzy$1, derive$macro$67$lzy$1, derive$macro$70$lzy$1, bitmap$0$2) {
+  if (((8 & bitmap$0$2.elem$1) === 0)) {
+    derive$macro$67$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$62$lzy$1, derive$macro$70$lzy$1, bitmap$0$2));
+    bitmap$0$2.elem$1 = (8 | bitmap$0$2.elem$1)
+  };
+  return $as_Lupickle_Types$Writer(derive$macro$67$lzy$1.elem$1)
+});
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$67$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$62$lzy$1, derive$macro$67$lzy$1, derive$macro$70$lzy$1, bitmap$0$2) {
+  return (((8 & bitmap$0$2.elem$1) === 0) ? this.derive$macro$67$lzycompute$1__p1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$62$lzy$1, derive$macro$67$lzy$1, derive$macro$70$lzy$1, bitmap$0$2) : $as_Lupickle_Types$Writer(derive$macro$67$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$62$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$62$lzy$1, bitmap$0$2) {
+  return (((2 & bitmap$0$2.elem$1) === 0) ? this.derive$macro$62$lzycompute$1__p1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$62$lzy$1, bitmap$0$2) : $as_Lupickle_Types$Writer(derive$macro$62$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler.prototype.io$surfkit$client$WebSocketSignaler$$derive$macro$70$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer = (function(derive$macro$70$lzy$1, bitmap$0$2) {
+  return (((64 & bitmap$0$2.elem$1) === 0) ? this.derive$macro$70$lzycompute$1__p1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(derive$macro$70$lzy$1, bitmap$0$2) : $as_Lupickle_Types$Writer(derive$macro$70$lzy$1.elem$1))
 });
 var $d_Lio_surfkit_client_WebSocketSignaler = new $TypeData().initClass({
   Lio_surfkit_client_WebSocketSignaler: 0
@@ -8964,12 +8992,21 @@ function $c_Lio_surfkit_clientlib_webrtc_WebRTC() {
   $c_O.call(this);
   this.signaler$1 = null;
   this.peers$1 = null;
+  this.peerStreamAdded$1 = null;
+  this.peerStreamRemoved$1 = null;
   this.rtcConfiguration$1 = null;
   this.receiveMedia$1 = null;
   this.peerConnectionConstraints$1 = null;
   this.hardMuted$1 = false;
   this.localStreams$1 = null;
   this.localScreens$1 = null;
+  this.localStream$1 = null;
+  this.localStreamStopped$1 = null;
+  this.localScreenStopped$1 = null;
+  this.audioOff$1 = null;
+  this.audioOn$1 = null;
+  this.videoOff$1 = null;
+  this.videoOn$1 = null;
   this.Config$module$1 = null
 }
 $c_Lio_surfkit_clientlib_webrtc_WebRTC.prototype = new $h_O();
@@ -8982,10 +9019,13 @@ $h_Lio_surfkit_clientlib_webrtc_WebRTC.prototype = $c_Lio_surfkit_clientlib_webr
 $c_Lio_surfkit_clientlib_webrtc_WebRTC.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler = (function(signaler) {
   this.signaler$1 = signaler;
   $s_Lio_surfkit_clientlib_webrtc_LocalMedia$class__$$init$__Lio_surfkit_clientlib_webrtc_LocalMedia__V(this);
-  var this$2 = $m_s_Console$();
-  var this$3 = this$2.outVar$2;
-  $as_Ljava_io_PrintStream(this$3.tl$1.get__O()).println__O__V("WebRTC");
   this.peers$1 = [];
+  this.peerStreamAdded$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(p$2) {
+    $as_Lio_surfkit_clientlib_webrtc_Peer(p$2)
+  }));
+  this.peerStreamRemoved$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(p$2$1) {
+    $as_Lio_surfkit_clientlib_webrtc_Peer(p$2$1)
+  }));
   this.rtcConfiguration$1 = $m_Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration$().apply__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration([$m_Lorg_scalajs_dom_experimental_webrtc_RTCIceServer$().apply__sjs_js_UndefOr__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCIceServer("stun:stun.l.google.com:19302", (void 0), (void 0))]);
   var x$5 = {
     "OfferToReceiveAudio": true,
@@ -9005,11 +9045,10 @@ $c_Lio_surfkit_clientlib_webrtc_WebRTC.prototype.createPeer__Lio_surfkit_clientl
       peer$1.addStream$1.apply__O__O(x$1$2)
     })
   })(peer)));
-  peer.onAddStream$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(arg$outer, peer$1$1) {
+  peer.onAddStream$1 = new $c_Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2().init___Lio_surfkit_clientlib_webrtc_WebRTC__Lio_surfkit_clientlib_webrtc_Peer(this, peer);
+  peer.onRemoveStream$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(arg$outer, peer$1$1) {
     return (function(s$2) {
-      var this$2 = $m_s_Console$();
-      var this$3 = this$2.outVar$2;
-      $as_Ljava_io_PrintStream(this$3.tl$1.get__O()).println__O__V("TODO: add the remote video to the page")
+      arg$outer.peerStreamRemoved$1.apply__O__O(peer$1$1)
     })
   })(this, peer));
   this.peers$1["push"](peer);
@@ -12046,9 +12085,9 @@ $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC.prototype.init___Lio_surfkit_client
 });
 $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC.prototype.joinRoom__T__s_concurrent_Future = (function(name) {
   var p = new $c_s_concurrent_impl_Promise$DefaultPromise().init___();
-  var this$2 = this.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f;
-  var s = new $c_Lio_surfkit_clientlib_webrtc_Peer$Join().init___T__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo(name, this.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.peerInfo$1);
-  $s_Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler$class__send__Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(this$2, s);
+  var this$3 = this.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f;
+  var s = new $c_Lio_surfkit_clientlib_webrtc_Peer$Join().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__T(new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T("", ""), this.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.localPeer$1, name);
+  $s_Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler$class__send__Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(this$3, s);
   this.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.receivers$1["push"](new $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC$$anonfun$joinRoom$1().init___Lio_surfkit_clientlib_webrtc_SimpleWebRTC__T__s_concurrent_Promise(this, name, p));
   return p
 });
@@ -13218,57 +13257,91 @@ var $d_sjs_js_WrappedDictionary$DictionaryIterator = new $TypeData().initClass({
 });
 $c_sjs_js_WrappedDictionary$DictionaryIterator.prototype.$classData = $d_sjs_js_WrappedDictionary$DictionaryIterator;
 /** @constructor */
-function $c_sr_AbstractFunction0$mcV$sp() {
-  $c_sr_AbstractFunction0.call(this)
+function $c_Lio_surfkit_client_WebRTCMain$$anonfun$main$1() {
+  $c_sr_AbstractFunction1.call(this)
 }
-$c_sr_AbstractFunction0$mcV$sp.prototype = new $h_sr_AbstractFunction0();
-$c_sr_AbstractFunction0$mcV$sp.prototype.constructor = $c_sr_AbstractFunction0$mcV$sp;
+$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$1.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$1.prototype.constructor = $c_Lio_surfkit_client_WebRTCMain$$anonfun$main$1;
 /** @constructor */
-function $h_sr_AbstractFunction0$mcV$sp() {
+function $h_Lio_surfkit_client_WebRTCMain$$anonfun$main$1() {
   /*<skip>*/
 }
-$h_sr_AbstractFunction0$mcV$sp.prototype = $c_sr_AbstractFunction0$mcV$sp.prototype;
-/** @constructor */
-function $c_Lio_surfkit_client_WebRTCMain$$anonfun$main$2() {
-  $c_sr_AbstractFunction1.call(this);
-  this.webRTC$1$2 = null
-}
-$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$2.prototype = new $h_sr_AbstractFunction1();
-$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$2.prototype.constructor = $c_Lio_surfkit_client_WebRTCMain$$anonfun$main$2;
-/** @constructor */
-function $h_Lio_surfkit_client_WebRTCMain$$anonfun$main$2() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebRTCMain$$anonfun$main$2.prototype = $c_Lio_surfkit_client_WebRTCMain$$anonfun$main$2.prototype;
-$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$2.prototype.init___Lio_surfkit_clientlib_webrtc_SimpleWebRTC = (function(webRTC$1) {
-  this.webRTC$1$2 = webRTC$1;
-  return this
+$h_Lio_surfkit_client_WebRTCMain$$anonfun$main$1.prototype = $c_Lio_surfkit_client_WebRTCMain$$anonfun$main$1.prototype;
+$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$1.prototype.apply__O__O = (function(v1) {
+  this.apply__Lio_surfkit_clientlib_webrtc_Peer__V($as_Lio_surfkit_clientlib_webrtc_Peer(v1))
 });
-$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$2.prototype.apply__O__O = (function(v1) {
-  this.apply__Lorg_scalajs_dom_raw_MouseEvent__V(v1)
-});
-$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$2.prototype.apply__Lorg_scalajs_dom_raw_MouseEvent__V = (function(me) {
-  var this$4 = this.webRTC$1$2.joinRoom__T__s_concurrent_Future("test");
-  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(room$2) {
-    $as_Lio_surfkit_clientlib_webrtc_Peer$Room(room$2);
-    var this$2 = $m_s_Console$();
-    var this$3 = this$2.outVar$2;
-    $as_Ljava_io_PrintStream(this$3.tl$1.get__O()).println__O__V("You have joined the room...")
-  }));
+$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$1.prototype.apply__Lio_surfkit_clientlib_webrtc_Peer__V = (function(peer) {
+  var this$2 = $m_s_Console$();
+  var this$3 = this$2.outVar$2;
+  $as_Ljava_io_PrintStream(this$3.tl$1.get__O()).println__O__V("TODO: add the remote video to the page");
+  var remoteVideoElm = $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument()["createElement"]("video");
+  var this$7 = peer.stream$1;
+  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(remoteVideoElm$1) {
+    return (function(s$2) {
+      var x = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["peerStreamAdded ADDING STREAM ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([s$2]));
+      var this$5 = $m_s_Console$();
+      var this$6 = this$5.outVar$2;
+      $as_Ljava_io_PrintStream(this$6.tl$1.get__O()).println__O__V(x);
+      remoteVideoElm$1["srcObject"] = s$2
+    })
+  })(remoteVideoElm));
   var executor = $m_s_concurrent_ExecutionContext$Implicits$().global__s_concurrent_ExecutionContextExecutor();
-  $s_s_concurrent_Future$class__foreach__s_concurrent_Future__F1__s_concurrent_ExecutionContext__V(this$4, f, executor)
+  $s_s_concurrent_Future$class__foreach__s_concurrent_Future__F1__s_concurrent_ExecutionContext__V(this$7, f, executor);
+  $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument()["getElementById"]("playground")["appendChild"](remoteVideoElm)
 });
-var $d_Lio_surfkit_client_WebRTCMain$$anonfun$main$2 = new $TypeData().initClass({
-  Lio_surfkit_client_WebRTCMain$$anonfun$main$2: 0
-}, false, "io.surfkit.client.WebRTCMain$$anonfun$main$2", {
-  Lio_surfkit_client_WebRTCMain$$anonfun$main$2: 1,
+var $d_Lio_surfkit_client_WebRTCMain$$anonfun$main$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebRTCMain$$anonfun$main$1: 0
+}, false, "io.surfkit.client.WebRTCMain$$anonfun$main$1", {
+  Lio_surfkit_client_WebRTCMain$$anonfun$main$1: 1,
   sr_AbstractFunction1: 1,
   O: 1,
   F1: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$2.prototype.$classData = $d_Lio_surfkit_client_WebRTCMain$$anonfun$main$2;
+$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$1.prototype.$classData = $d_Lio_surfkit_client_WebRTCMain$$anonfun$main$1;
+/** @constructor */
+function $c_Lio_surfkit_client_WebRTCMain$$anonfun$main$3() {
+  $c_sr_AbstractFunction1.call(this);
+  this.webRTC$1$2 = null
+}
+$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$3.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$3.prototype.constructor = $c_Lio_surfkit_client_WebRTCMain$$anonfun$main$3;
+/** @constructor */
+function $h_Lio_surfkit_client_WebRTCMain$$anonfun$main$3() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebRTCMain$$anonfun$main$3.prototype = $c_Lio_surfkit_client_WebRTCMain$$anonfun$main$3.prototype;
+$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$3.prototype.init___Lio_surfkit_clientlib_webrtc_SimpleWebRTC = (function(webRTC$1) {
+  this.webRTC$1$2 = webRTC$1;
+  return this
+});
+$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$3.prototype.apply__O__O = (function(v1) {
+  this.apply__Lorg_scalajs_dom_raw_MouseEvent__V(v1)
+});
+$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$3.prototype.apply__Lorg_scalajs_dom_raw_MouseEvent__V = (function(me) {
+  var this$4 = this.webRTC$1$2.joinRoom__T__s_concurrent_Future("test");
+  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(room$2) {
+    var room = $as_Lio_surfkit_clientlib_webrtc_Peer$Room(room$2);
+    var x = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["You have joined the room... ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([room.name$1]));
+    var this$2 = $m_s_Console$();
+    var this$3 = this$2.outVar$2;
+    $as_Ljava_io_PrintStream(this$3.tl$1.get__O()).println__O__V(x)
+  }));
+  var executor = $m_s_concurrent_ExecutionContext$Implicits$().global__s_concurrent_ExecutionContextExecutor();
+  $s_s_concurrent_Future$class__foreach__s_concurrent_Future__F1__s_concurrent_ExecutionContext__V(this$4, f, executor)
+});
+var $d_Lio_surfkit_client_WebRTCMain$$anonfun$main$3 = new $TypeData().initClass({
+  Lio_surfkit_client_WebRTCMain$$anonfun$main$3: 0
+}, false, "io.surfkit.client.WebRTCMain$$anonfun$main$3", {
+  Lio_surfkit_client_WebRTCMain$$anonfun$main$3: 1,
+  sr_AbstractFunction1: 1,
+  O: 1,
+  F1: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebRTCMain$$anonfun$main$3.prototype.$classData = $d_Lio_surfkit_client_WebRTCMain$$anonfun$main$3;
 /** @constructor */
 function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1() {
   $c_sr_AbstractFunction1.call(this);
@@ -13281,58 +13354,58 @@ function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1() {
   /*<skip>*/
 }
 $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$34$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$7$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, bitmap$0$1, bitmap$1$1) {
-  return (((2 & bitmap$1$1.elem$1) === 0) ? this.derive$macro$34$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$7$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$34$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$2$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$2$lzy$1, derive$macro$25$lzy$1, derive$macro$5$lzy$1, derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$6$lzy$1, derive$macro$11$lzy$1, derive$macro$18$lzy$1, derive$macro$28$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, derive$macro$1$lzy$1, bitmap$0$1, bitmap$1$1) {
-  if (((1 & bitmap$0$1.elem$1) === 0)) {
-    derive$macro$2$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef(this, derive$macro$2$lzy$1, derive$macro$25$lzy$1, derive$macro$5$lzy$1, derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$6$lzy$1, derive$macro$11$lzy$1, derive$macro$18$lzy$1, derive$macro$28$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, derive$macro$1$lzy$1, bitmap$0$1, bitmap$1$1));
-    bitmap$0$1.elem$1 = (1 | bitmap$0$1.elem$1)
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$20$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$20$lzy$1, bitmap$0$1) {
+  if (((4 & bitmap$0$1.elem$1) === 0)) {
+    derive$macro$20$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$13$lzy$1, bitmap$0$1));
+    bitmap$0$1.elem$1 = (4 | bitmap$0$1.elem$1)
   };
-  return $as_Lupickle_Types$Reader(derive$macro$2$lzy$1.elem$1)
+  return $as_Lupickle_Types$Reader(derive$macro$20$lzy$1.elem$1)
 });
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.apply__O__O = (function(v1) {
   this.apply__Lorg_scalajs_dom_raw_MessageEvent__V(v1)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$48$1__p2__Lupickle_Types$Reader = (function() {
-  var derive$macro$2$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$25$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$5$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$22$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$7$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$6$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$11$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$18$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$28$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$34$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$30$lzy = new $c_sr_ObjectRef().init___O(null);
-  var derive$macro$1$lzy = new $c_sr_ObjectRef().init___O(null);
-  var bitmap$0 = new $c_sr_VolatileByteRef().init___B(0);
-  var bitmap$1 = new $c_sr_VolatileByteRef().init___B(0);
-  return this.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$1$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$2$lzy, derive$macro$25$lzy, derive$macro$5$lzy, derive$macro$22$lzy, derive$macro$7$lzy, derive$macro$6$lzy, derive$macro$11$lzy, derive$macro$18$lzy, derive$macro$28$lzy, derive$macro$34$lzy, derive$macro$30$lzy, derive$macro$1$lzy, bitmap$0, bitmap$1)
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$36$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) {
+  if (((8 & bitmap$1$1.elem$1) === 0)) {
+    derive$macro$36$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef(this, derive$macro$13$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1));
+    bitmap$1$1.elem$1 = (8 | bitmap$1$1.elem$1)
+  };
+  return $as_Lupickle_Types$Reader(derive$macro$36$lzy$1.elem$1)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$6$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$7$lzy$1, derive$macro$6$lzy$1, bitmap$0$1) {
-  return (((32 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$6$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$7$lzy$1, derive$macro$6$lzy$1, bitmap$0$1) : $as_Lupickle_Types$Reader(derive$macro$6$lzy$1.elem$1))
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$44$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$44$lzy$1, bitmap$0$1) {
+  if (((128 & bitmap$0$1.elem$1) === 0)) {
+    derive$macro$44$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$13$lzy$1, bitmap$0$1));
+    bitmap$0$1.elem$1 = (128 | bitmap$0$1.elem$1)
+  };
+  return $as_Lupickle_Types$Reader(derive$macro$44$lzy$1.elem$1)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$5$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$25$lzy$1, derive$macro$5$lzy$1, derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$6$lzy$1, derive$macro$11$lzy$1, derive$macro$18$lzy$1, derive$macro$28$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, bitmap$0$1, bitmap$1$1) {
-  return (((4 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$5$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$25$lzy$1, derive$macro$5$lzy$1, derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$6$lzy$1, derive$macro$11$lzy$1, derive$macro$18$lzy$1, derive$macro$28$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$5$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$28$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$7$lzy$1, derive$macro$28$lzy$1, derive$macro$30$lzy$1, bitmap$0$1, bitmap$1$1) {
-  if (((1 & bitmap$1$1.elem$1) === 0)) {
-    derive$macro$28$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef(this, derive$macro$7$lzy$1, derive$macro$30$lzy$1, bitmap$0$1, bitmap$1$1));
-    bitmap$1$1.elem$1 = (1 | bitmap$1$1.elem$1)
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$28$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$5$lzy$1, bitmap$0$1, bitmap$1$1) {
+  if (((1 & bitmap$0$1.elem$1) === 0)) {
+    derive$macro$28$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef(this, derive$macro$13$lzy$1, derive$macro$5$lzy$1, bitmap$0$1, bitmap$1$1));
+    bitmap$0$1.elem$1 = (1 | bitmap$0$1.elem$1)
   };
   return $as_Lupickle_Types$Reader(derive$macro$28$lzy$1.elem$1)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$22$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$18$lzy$1, bitmap$0$1) {
-  return (((8 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$22$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$18$lzy$1, bitmap$0$1) : $as_Lupickle_Types$Reader(derive$macro$22$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$34$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$7$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, bitmap$0$1, bitmap$1$1) {
-  if (((2 & bitmap$1$1.elem$1) === 0)) {
-    derive$macro$34$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef(this, derive$macro$7$lzy$1, derive$macro$30$lzy$1, bitmap$0$1, bitmap$1$1));
-    bitmap$1$1.elem$1 = (2 | bitmap$1$1.elem$1)
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$5$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$5$lzy$1, bitmap$1$1) {
+  if (((4 & bitmap$1$1.elem$1) === 0)) {
+    derive$macro$5$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1(this));
+    bitmap$1$1.elem$1 = (4 | bitmap$1$1.elem$1)
   };
-  return $as_Lupickle_Types$Reader(derive$macro$34$lzy$1.elem$1)
+  return $as_Lupickle_Types$Reader(derive$macro$5$lzy$1.elem$1)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$19$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$32$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) {
+  return (((2 & bitmap$1$1.elem$1) === 0) ? this.derive$macro$19$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$32$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$19$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$32$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$32$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1) {
+  return (((32 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$32$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1, derive$macro$32$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$32$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$20$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$20$lzy$1, bitmap$0$1) {
+  return (((4 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$20$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1, derive$macro$20$lzy$1, bitmap$0$1) : $as_Lupickle_Types$Reader(derive$macro$20$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$44$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$44$lzy$1, bitmap$0$1) {
+  return (((128 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$44$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1, derive$macro$44$lzy$1, bitmap$0$1) : $as_Lupickle_Types$Reader(derive$macro$44$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$24$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$24$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1) {
+  return (((8 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$24$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1, derive$macro$24$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$24$lzy$1.elem$1))
 });
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.init___Lio_surfkit_client_WebSocketSignaler = (function($$outer) {
   if (($$outer === null)) {
@@ -13342,12 +13415,36 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.init___Lio_surfkit_
   };
   return this
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$6$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$7$lzy$1, derive$macro$6$lzy$1, bitmap$0$1) {
-  if (((32 & bitmap$0$1.elem$1) === 0)) {
-    derive$macro$6$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$7$lzy$1, bitmap$0$1));
-    bitmap$0$1.elem$1 = (32 | bitmap$0$1.elem$1)
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$9$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$9$lzy$1, bitmap$1$1) {
+  if (((16 & bitmap$1$1.elem$1) === 0)) {
+    derive$macro$9$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1(this));
+    bitmap$1$1.elem$1 = (16 | bitmap$1$1.elem$1)
   };
-  return $as_Lupickle_Types$Reader(derive$macro$6$lzy$1.elem$1)
+  return $as_Lupickle_Types$Reader(derive$macro$9$lzy$1.elem$1)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, bitmap$0$1) {
+  return (((2 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$13$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1, bitmap$0$1) : $as_Lupickle_Types$Reader(derive$macro$13$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$2$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$2$lzy$1, bitmap$1$1) {
+  return (((1 & bitmap$1$1.elem$1) === 0) ? this.derive$macro$2$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$2$lzy$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$2$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$59$1__p2__Lupickle_Types$Reader = (function() {
+  var derive$macro$28$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$13$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$20$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$24$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$16$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$32$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$1$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$44$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$2$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$19$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$5$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$36$lzy = new $c_sr_ObjectRef().init___O(null);
+  var derive$macro$9$lzy = new $c_sr_ObjectRef().init___O(null);
+  var bitmap$0 = new $c_sr_VolatileByteRef().init___B(0);
+  var bitmap$1 = new $c_sr_VolatileByteRef().init___B(0);
+  return this.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$1$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$28$lzy, derive$macro$13$lzy, derive$macro$20$lzy, derive$macro$24$lzy, derive$macro$16$lzy, derive$macro$32$lzy, derive$macro$1$lzy, derive$macro$44$lzy, derive$macro$2$lzy, derive$macro$19$lzy, derive$macro$5$lzy, derive$macro$36$lzy, derive$macro$9$lzy, bitmap$0, bitmap$1)
 });
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.apply__Lorg_scalajs_dom_raw_MessageEvent__V = (function(x) {
   var this$2 = $m_s_Console$();
@@ -13355,127 +13452,112 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.apply__Lorg_scalajs
   $as_Ljava_io_PrintStream(this$3.tl$1.get__O()).println__O__V("WS onmessage");
   var this$4 = $m_Lupickle_default$();
   var expr = $objectToString(x["data"]);
-  var evidence$3 = this.derive$macro$48$1__p2__Lupickle_Types$Reader();
+  var evidence$3 = this.derive$macro$59$1__p2__Lupickle_Types$Reader();
   var msg = $as_Lm_Model($s_Lupickle_Types$class__read__Lupickle_Types__T__Lupickle_Types$Reader__O(this$4, expr, evidence$3));
-  var x$1 = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["MODEL ... ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([msg]));
-  var this$6 = $m_s_Console$();
-  var this$7 = this$6.outVar$2;
-  $as_Ljava_io_PrintStream(this$7.tl$1.get__O()).println__O__V(x$1);
-  var this$8 = this.$$outer$2;
+  var this$5 = this.$$outer$2;
   var s = this.$$outer$2.toPeerSignaling__Lm_RTCSignal__Lio_surfkit_clientlib_webrtc_Peer$Signaling($as_Lm_RTCSignal(msg));
-  $s_Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler$class__receive__Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(this$8, s)
+  $s_Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler$class__receive__Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(this$5, s)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$22$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$18$lzy$1, bitmap$0$1) {
-  if (((8 & bitmap$0$1.elem$1) === 0)) {
-    derive$macro$22$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$7$lzy$1, derive$macro$18$lzy$1, bitmap$0$1));
-    bitmap$0$1.elem$1 = (8 | bitmap$0$1.elem$1)
-  };
-  return $as_Lupickle_Types$Reader(derive$macro$22$lzy$1.elem$1)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$1$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$2$lzy$1, derive$macro$25$lzy$1, derive$macro$5$lzy$1, derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$6$lzy$1, derive$macro$11$lzy$1, derive$macro$18$lzy$1, derive$macro$28$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, derive$macro$1$lzy$1, bitmap$0$1, bitmap$1$1) {
-  if (((8 & bitmap$1$1.elem$1) === 0)) {
-    derive$macro$1$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(arg$outer, derive$macro$2$lzy$1$1, derive$macro$25$lzy$1$1, derive$macro$5$lzy$1$1, derive$macro$22$lzy$1$1, derive$macro$7$lzy$1$1, derive$macro$6$lzy$1$1, derive$macro$11$lzy$1$1, derive$macro$18$lzy$1$1, derive$macro$28$lzy$1$1, derive$macro$34$lzy$1$1, derive$macro$30$lzy$1$1, derive$macro$1$lzy$1$1, bitmap$0$1$1, bitmap$1$1$1) {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$19$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$32$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) {
+  if (((2 & bitmap$1$1.elem$1) === 0)) {
+    derive$macro$19$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(arg$outer, derive$macro$28$lzy$1$1, derive$macro$13$lzy$1$1, derive$macro$20$lzy$1$1, derive$macro$24$lzy$1$1, derive$macro$32$lzy$1$1, derive$macro$44$lzy$1$1, derive$macro$2$lzy$1$1, derive$macro$5$lzy$1$1, derive$macro$36$lzy$1$1, derive$macro$9$lzy$1$1, bitmap$0$1$1, bitmap$1$1$1) {
       return (function() {
-        var this$7 = $m_Lupickle_default$().Reader__Lupickle_Types$Reader$();
-        var this$2 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$2$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$2$lzy$1$1, derive$macro$25$lzy$1$1, derive$macro$5$lzy$1$1, derive$macro$22$lzy$1$1, derive$macro$7$lzy$1$1, derive$macro$6$lzy$1$1, derive$macro$11$lzy$1$1, derive$macro$18$lzy$1$1, derive$macro$28$lzy$1$1, derive$macro$34$lzy$1$1, derive$macro$30$lzy$1$1, derive$macro$1$lzy$1$1, bitmap$0$1$1, bitmap$1$1$1);
-        var jsx$2 = $s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$2);
-        var this$4 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$5$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$25$lzy$1$1, derive$macro$5$lzy$1$1, derive$macro$22$lzy$1$1, derive$macro$7$lzy$1$1, derive$macro$6$lzy$1$1, derive$macro$11$lzy$1$1, derive$macro$18$lzy$1$1, derive$macro$28$lzy$1$1, derive$macro$34$lzy$1$1, derive$macro$30$lzy$1$1, bitmap$0$1$1, bitmap$1$1$1);
-        var jsx$1 = jsx$2.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$4));
-        var this$6 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$7$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$7$lzy$1$1, bitmap$0$1$1);
-        var _read = jsx$1.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$6));
-        return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$7, _read)
+        var this$13 = $m_Lupickle_default$().Reader__Lupickle_Types$Reader$();
+        var this$2 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$20$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1$1, derive$macro$20$lzy$1$1, bitmap$0$1$1);
+        var jsx$5 = $s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$2);
+        var this$4 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$24$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1$1, derive$macro$24$lzy$1$1, derive$macro$2$lzy$1$1, bitmap$0$1$1, bitmap$1$1$1);
+        var jsx$4 = jsx$5.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$4));
+        var this$6 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$28$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$28$lzy$1$1, derive$macro$13$lzy$1$1, derive$macro$5$lzy$1$1, bitmap$0$1$1, bitmap$1$1$1);
+        var jsx$3 = jsx$4.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$6));
+        var this$8 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$32$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1$1, derive$macro$32$lzy$1$1, derive$macro$2$lzy$1$1, bitmap$0$1$1, bitmap$1$1$1);
+        var jsx$2 = jsx$3.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$8));
+        var this$10 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$36$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1$1, derive$macro$36$lzy$1$1, derive$macro$9$lzy$1$1, bitmap$0$1$1, bitmap$1$1$1);
+        var jsx$1 = jsx$2.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$10));
+        var this$12 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$44$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1$1, derive$macro$44$lzy$1$1, bitmap$0$1$1);
+        var _read = jsx$1.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$12));
+        return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
       })
-    })(this, derive$macro$2$lzy$1, derive$macro$25$lzy$1, derive$macro$5$lzy$1, derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$6$lzy$1, derive$macro$11$lzy$1, derive$macro$18$lzy$1, derive$macro$28$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, derive$macro$1$lzy$1, bitmap$0$1, bitmap$1$1)));
-    bitmap$1$1.elem$1 = (8 | bitmap$1$1.elem$1)
+    })(this, derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$32$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1)));
+    bitmap$1$1.elem$1 = (2 | bitmap$1$1.elem$1)
+  };
+  return $as_Lupickle_Types$Reader(derive$macro$19$lzy$1.elem$1)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$5$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$5$lzy$1, bitmap$1$1) {
+  return (((4 & bitmap$1$1.elem$1) === 0) ? this.derive$macro$5$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$5$lzy$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$5$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$36$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) {
+  return (((8 & bitmap$1$1.elem$1) === 0) ? this.derive$macro$36$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$36$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$1$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$16$lzy$1, derive$macro$32$lzy$1, derive$macro$1$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) {
+  return (((64 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$1$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$16$lzy$1, derive$macro$32$lzy$1, derive$macro$1$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$1$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$1$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$16$lzy$1, derive$macro$32$lzy$1, derive$macro$1$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) {
+  if (((64 & bitmap$0$1.elem$1) === 0)) {
+    derive$macro$1$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(arg$outer, derive$macro$28$lzy$1$1, derive$macro$13$lzy$1$1, derive$macro$20$lzy$1$1, derive$macro$24$lzy$1$1, derive$macro$16$lzy$1$1, derive$macro$32$lzy$1$1, derive$macro$1$lzy$1$1, derive$macro$44$lzy$1$1, derive$macro$2$lzy$1$1, derive$macro$19$lzy$1$1, derive$macro$5$lzy$1$1, derive$macro$36$lzy$1$1, derive$macro$9$lzy$1$1, bitmap$0$1$1, bitmap$1$1$1) {
+      return (function() {
+        var this$13 = $m_Lupickle_default$().Reader__Lupickle_Types$Reader$();
+        var this$2 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$2$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$2$lzy$1$1, bitmap$1$1$1);
+        var jsx$5 = $s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$2);
+        var this$4 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$5$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$5$lzy$1$1, bitmap$1$1$1);
+        var jsx$4 = jsx$5.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$4));
+        var this$6 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$9$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$9$lzy$1$1, bitmap$1$1$1);
+        var jsx$3 = jsx$4.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$6));
+        var this$8 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1$1, bitmap$0$1$1);
+        var jsx$2 = jsx$3.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$8));
+        var this$10 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$16$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$28$lzy$1$1, derive$macro$13$lzy$1$1, derive$macro$20$lzy$1$1, derive$macro$24$lzy$1$1, derive$macro$16$lzy$1$1, derive$macro$32$lzy$1$1, derive$macro$1$lzy$1$1, derive$macro$44$lzy$1$1, derive$macro$2$lzy$1$1, derive$macro$19$lzy$1$1, derive$macro$5$lzy$1$1, derive$macro$36$lzy$1$1, derive$macro$9$lzy$1$1, bitmap$0$1$1, bitmap$1$1$1);
+        var jsx$1 = jsx$2.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$10));
+        var this$12 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$19$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$28$lzy$1$1, derive$macro$13$lzy$1$1, derive$macro$20$lzy$1$1, derive$macro$24$lzy$1$1, derive$macro$32$lzy$1$1, derive$macro$44$lzy$1$1, derive$macro$2$lzy$1$1, derive$macro$19$lzy$1$1, derive$macro$5$lzy$1$1, derive$macro$36$lzy$1$1, derive$macro$9$lzy$1$1, bitmap$0$1$1, bitmap$1$1$1);
+        var _read = jsx$1.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$12));
+        return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
+      })
+    })(this, derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$16$lzy$1, derive$macro$32$lzy$1, derive$macro$1$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1)));
+    bitmap$0$1.elem$1 = (64 | bitmap$0$1.elem$1)
   };
   return $as_Lupickle_Types$Reader(derive$macro$1$lzy$1.elem$1)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$1$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$2$lzy$1, derive$macro$25$lzy$1, derive$macro$5$lzy$1, derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$6$lzy$1, derive$macro$11$lzy$1, derive$macro$18$lzy$1, derive$macro$28$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, derive$macro$1$lzy$1, bitmap$0$1, bitmap$1$1) {
-  return (((8 & bitmap$1$1.elem$1) === 0) ? this.derive$macro$1$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$2$lzy$1, derive$macro$25$lzy$1, derive$macro$5$lzy$1, derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$6$lzy$1, derive$macro$11$lzy$1, derive$macro$18$lzy$1, derive$macro$28$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, derive$macro$1$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$1$lzy$1.elem$1))
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$28$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$5$lzy$1, bitmap$0$1, bitmap$1$1) {
+  return (((1 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$28$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$5$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$28$lzy$1.elem$1))
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$18$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$18$lzy$1, bitmap$0$1) {
-  if (((128 & bitmap$0$1.elem$1) === 0)) {
-    derive$macro$18$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1(this));
-    bitmap$0$1.elem$1 = (128 | bitmap$0$1.elem$1)
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$32$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$32$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1) {
+  if (((32 & bitmap$0$1.elem$1) === 0)) {
+    derive$macro$32$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef(this, derive$macro$13$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1));
+    bitmap$0$1.elem$1 = (32 | bitmap$0$1.elem$1)
   };
-  return $as_Lupickle_Types$Reader(derive$macro$18$lzy$1.elem$1)
+  return $as_Lupickle_Types$Reader(derive$macro$32$lzy$1.elem$1)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$30$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$30$lzy$1, bitmap$1$1) {
-  if (((4 & bitmap$1$1.elem$1) === 0)) {
-    derive$macro$30$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1(this));
-    bitmap$1$1.elem$1 = (4 | bitmap$1$1.elem$1)
-  };
-  return $as_Lupickle_Types$Reader(derive$macro$30$lzy$1.elem$1)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$28$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$7$lzy$1, derive$macro$28$lzy$1, derive$macro$30$lzy$1, bitmap$0$1, bitmap$1$1) {
-  return (((1 & bitmap$1$1.elem$1) === 0) ? this.derive$macro$28$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$7$lzy$1, derive$macro$28$lzy$1, derive$macro$30$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$28$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$18$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$18$lzy$1, bitmap$0$1) {
-  return (((128 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$18$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$18$lzy$1, bitmap$0$1) : $as_Lupickle_Types$Reader(derive$macro$18$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$11$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$7$lzy$1, derive$macro$11$lzy$1, bitmap$0$1) {
-  if (((64 & bitmap$0$1.elem$1) === 0)) {
-    derive$macro$11$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$7$lzy$1, bitmap$0$1));
-    bitmap$0$1.elem$1 = (64 | bitmap$0$1.elem$1)
-  };
-  return $as_Lupickle_Types$Reader(derive$macro$11$lzy$1.elem$1)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$7$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$7$lzy$1, bitmap$0$1) {
-  return (((16 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$7$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$7$lzy$1, bitmap$0$1) : $as_Lupickle_Types$Reader(derive$macro$7$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$5$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$25$lzy$1, derive$macro$5$lzy$1, derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$6$lzy$1, derive$macro$11$lzy$1, derive$macro$18$lzy$1, derive$macro$28$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, bitmap$0$1, bitmap$1$1) {
-  if (((4 & bitmap$0$1.elem$1) === 0)) {
-    derive$macro$5$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(arg$outer, derive$macro$25$lzy$1$1, derive$macro$22$lzy$1$1, derive$macro$7$lzy$1$1, derive$macro$6$lzy$1$1, derive$macro$11$lzy$1$1, derive$macro$18$lzy$1$1, derive$macro$28$lzy$1$1, derive$macro$34$lzy$1$1, derive$macro$30$lzy$1$1, bitmap$0$1$1, bitmap$1$1$1) {
-      return (function() {
-        var this$17 = $m_Lupickle_default$().Reader__Lupickle_Types$Reader$();
-        var this$2 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$6$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$7$lzy$1$1, derive$macro$6$lzy$1$1, bitmap$0$1$1);
-        var jsx$7 = $s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$2);
-        var this$4 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$11$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$7$lzy$1$1, derive$macro$11$lzy$1$1, bitmap$0$1$1);
-        var jsx$6 = jsx$7.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$4));
-        var this$6 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$18$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$18$lzy$1$1, bitmap$0$1$1);
-        var jsx$5 = jsx$6.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$6));
-        var this$8 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$22$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$22$lzy$1$1, derive$macro$7$lzy$1$1, derive$macro$18$lzy$1$1, bitmap$0$1$1);
-        var jsx$4 = jsx$5.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$8));
-        var this$10 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$25$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$25$lzy$1$1, derive$macro$7$lzy$1$1, bitmap$0$1$1);
-        var jsx$3 = jsx$4.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$10));
-        var this$12 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$28$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$7$lzy$1$1, derive$macro$28$lzy$1$1, derive$macro$30$lzy$1$1, bitmap$0$1$1, bitmap$1$1$1);
-        var jsx$2 = jsx$3.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$12));
-        var this$14 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$30$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$30$lzy$1$1, bitmap$1$1$1);
-        var jsx$1 = jsx$2.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$14));
-        var this$16 = arg$outer.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$34$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$7$lzy$1$1, derive$macro$34$lzy$1$1, derive$macro$30$lzy$1$1, bitmap$0$1$1, bitmap$1$1$1);
-        var _read = jsx$1.orElse__s_PartialFunction__s_PartialFunction($s_Lupickle_Types$Reader$class__read__Lupickle_Types$Reader__s_PartialFunction(this$16));
-        return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$17, _read)
-      })
-    })(this, derive$macro$25$lzy$1, derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$6$lzy$1, derive$macro$11$lzy$1, derive$macro$18$lzy$1, derive$macro$28$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, bitmap$0$1, bitmap$1$1)));
-    bitmap$0$1.elem$1 = (4 | bitmap$0$1.elem$1)
-  };
-  return $as_Lupickle_Types$Reader(derive$macro$5$lzy$1.elem$1)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$11$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$7$lzy$1, derive$macro$11$lzy$1, bitmap$0$1) {
-  return (((64 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$11$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$7$lzy$1, derive$macro$11$lzy$1, bitmap$0$1) : $as_Lupickle_Types$Reader(derive$macro$11$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$7$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$7$lzy$1, bitmap$0$1) {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$16$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$16$lzy$1, derive$macro$32$lzy$1, derive$macro$1$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) {
   if (((16 & bitmap$0$1.elem$1) === 0)) {
-    derive$macro$7$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1(this));
+    derive$macro$16$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef(this, derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$16$lzy$1, derive$macro$32$lzy$1, derive$macro$1$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1));
     bitmap$0$1.elem$1 = (16 | bitmap$0$1.elem$1)
   };
-  return $as_Lupickle_Types$Reader(derive$macro$7$lzy$1.elem$1)
+  return $as_Lupickle_Types$Reader(derive$macro$16$lzy$1.elem$1)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$25$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$25$lzy$1, derive$macro$7$lzy$1, bitmap$0$1) {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$2$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$2$lzy$1, bitmap$1$1) {
+  if (((1 & bitmap$1$1.elem$1) === 0)) {
+    derive$macro$2$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1(this));
+    bitmap$1$1.elem$1 = (1 | bitmap$1$1.elem$1)
+  };
+  return $as_Lupickle_Types$Reader(derive$macro$2$lzy$1.elem$1)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$16$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$16$lzy$1, derive$macro$32$lzy$1, derive$macro$1$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) {
+  return (((16 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$16$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$16$lzy$1, derive$macro$32$lzy$1, derive$macro$1$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$16$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$24$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$24$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1) {
+  if (((8 & bitmap$0$1.elem$1) === 0)) {
+    derive$macro$24$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef(this, derive$macro$13$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1));
+    bitmap$0$1.elem$1 = (8 | bitmap$0$1.elem$1)
+  };
+  return $as_Lupickle_Types$Reader(derive$macro$24$lzy$1.elem$1)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$13$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, bitmap$0$1) {
   if (((2 & bitmap$0$1.elem$1) === 0)) {
-    derive$macro$25$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_VolatileByteRef(this, derive$macro$7$lzy$1, bitmap$0$1));
+    derive$macro$13$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1(this));
     bitmap$0$1.elem$1 = (2 | bitmap$0$1.elem$1)
   };
-  return $as_Lupickle_Types$Reader(derive$macro$25$lzy$1.elem$1)
+  return $as_Lupickle_Types$Reader(derive$macro$13$lzy$1.elem$1)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$2$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$2$lzy$1, derive$macro$25$lzy$1, derive$macro$5$lzy$1, derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$6$lzy$1, derive$macro$11$lzy$1, derive$macro$18$lzy$1, derive$macro$28$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, derive$macro$1$lzy$1, bitmap$0$1, bitmap$1$1) {
-  return (((1 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$2$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$2$lzy$1, derive$macro$25$lzy$1, derive$macro$5$lzy$1, derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$6$lzy$1, derive$macro$11$lzy$1, derive$macro$18$lzy$1, derive$macro$28$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, derive$macro$1$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$2$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$30$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$30$lzy$1, bitmap$1$1) {
-  return (((4 & bitmap$1$1.elem$1) === 0) ? this.derive$macro$30$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$30$lzy$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$30$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$25$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$25$lzy$1, derive$macro$7$lzy$1, bitmap$0$1) {
-  return (((2 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$25$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$25$lzy$1, derive$macro$7$lzy$1, bitmap$0$1) : $as_Lupickle_Types$Reader(derive$macro$25$lzy$1.elem$1))
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$9$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$9$lzy$1, bitmap$1$1) {
+  return (((16 & bitmap$1$1.elem$1) === 0) ? this.derive$macro$9$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$9$lzy$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$9$lzy$1.elem$1))
 });
 var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1 = new $TypeData().initClass({
   Lio_surfkit_client_WebSocketSignaler$$anonfun$1: 0
@@ -13489,34 +13571,24 @@ var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1 = new $TypeData().initCla
 });
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1;
 /** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this);
-  this.$$outer$2 = null;
-  this.derive$macro$7$lzy$1$2 = null;
-  this.bitmap$0$1$2 = null
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1() {
+  $c_sr_AbstractFunction0.call(this)
 }
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1;
 /** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1() {
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1() {
   /*<skip>*/
 }
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$7$lzy$1, bitmap$0$1) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$2 = $$outer
-  };
-  this.derive$macro$7$lzy$1$2 = derive$macro$7$lzy$1;
-  this.bitmap$0$1$2 = bitmap$0$1;
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1 = (function($$outer) {
   return this
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
-  var this$16 = $m_Lupickle_default$();
-  var this$14 = $m_Lupickle_default$();
-  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1(this);
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["name", "peer", "config", "members"]);
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
+  var this$12 = $m_Lupickle_default$();
+  var this$10 = $m_Lupickle_default$();
+  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1(this);
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["id", "type"]);
   var len = $uI(xs.array$6["length"]);
   var array = $newArrayObject($d_T.getArrayOf(), [len]);
   var elem$1 = 0;
@@ -13527,7 +13599,7 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzyc
     array.u[elem$1] = arg1;
     elem$1 = ((1 + elem$1) | 0)
   };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null, null]);
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
   var len$1 = $uI(xs$1.array$6["length"]);
   var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
   var elem$1$1 = 0;
@@ -13538,108 +13610,325 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzyc
     array$1.u[elem$1$1] = arg1$1;
     elem$1$1 = ((1 + elem$1$1) | 0)
   };
-  var this$13 = $m_Lupickle_default$();
-  var evidence$17 = $m_Lupickle_default$().StringRW$1;
-  var evidence$18 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$7$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$7$lzy$1$2, this.bitmap$0$1$2);
-  var this$10 = $m_Lupickle_default$();
-  var evidence$12 = this.derive$macro$54$1__p2__Lupickle_Types$Reader();
-  var this$9 = $m_sci_Set$();
-  var cbf = new $c_scg_GenSetFactory$$anon$1().init___scg_GenSetFactory(this$9);
-  var evidence$19 = $s_Lupickle_Implicits$class__SeqishR__Lupickle_Implicits__Lupickle_Types$Reader__scg_CanBuildFrom__Lupickle_Types$Reader(this$10, evidence$12, cbf);
-  var this$12 = $m_Lupickle_default$();
-  var evidence$12$1 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$7$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$7$lzy$1$2, this.bitmap$0$1$2);
-  var this$11 = $m_sci_Set$();
-  var cbf$1 = new $c_scg_GenSetFactory$$anon$1().init___scg_GenSetFactory(this$11);
-  var evidence$20 = $s_Lupickle_Implicits$class__SeqishR__Lupickle_Implicits__Lupickle_Types$Reader__scg_CanBuildFrom__Lupickle_Types$Reader(this$12, evidence$12$1, cbf$1);
-  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple4R__Lupickle_Generated__O__O__O__O__O(this$13, evidence$17, evidence$18, evidence$19, evidence$20));
-  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$14, f, array, array$1, evidence$8);
-  var this$17 = this$16.Reader__Lupickle_Types$Reader$();
-  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$16, rw, "m.Signaling.Room");
-  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$17, _read)
+  var this$9 = $m_Lupickle_default$();
+  var evidence$5 = $m_Lupickle_default$().StringRW$1;
+  var evidence$6 = $m_Lupickle_default$().StringRW$1;
+  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple2R__Lupickle_Generated__O__O__O(this$9, evidence$5, evidence$6));
+  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
+  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
+  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.PeerInfo");
+  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1.prototype.apply__O = (function() {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1.prototype.apply__O = (function() {
   return this.apply__Lupickle_Types$Reader()
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1.prototype.derive$macro$54$1__p2__Lupickle_Types$Reader = (function() {
-  var elem$1 = null;
-  elem$1 = null;
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  if (((1 & elem$1$1) === 0)) {
-    if (((1 & elem$1$1) === 0)) {
-      elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1(this));
-      elem$1$1 = (1 | elem$1$1)
-    };
-    return $as_Lupickle_Types$Reader(elem$1)
-  } else {
-    return $as_Lupickle_Types$Reader(elem$1)
-  }
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1: 1,
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1: 1,
   sr_AbstractFunction0: 1,
   O: 1,
   F0: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1;
 /** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11() {
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3() {
   $c_sr_AbstractFunction1.call(this)
 }
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11.prototype = new $h_sr_AbstractFunction1();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3;
 /** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11() {
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3() {
   /*<skip>*/
 }
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11.prototype.apply__O__O = (function(v1) {
-  return this.apply__T4__Lm_Signaling$Room($as_T4(v1))
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3.prototype.apply__O__O = (function(v1) {
+  return this.apply__T2__Lm_Signaling$PeerInfo($as_T2(v1))
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11.prototype.apply__T4__Lm_Signaling$Room = (function(derive$macro$43) {
-  var arg1 = derive$macro$43.$$und1$1;
-  var arg2 = derive$macro$43.$$und2$1;
-  var arg3 = derive$macro$43.$$und3$1;
-  var arg4 = derive$macro$43.$$und4$1;
-  var name = $as_T(arg1);
-  var peer = $as_Lm_Signaling$PeerInfo(arg2);
-  var config = $as_sci_Set(arg3);
-  var members = $as_sci_Set(arg4);
-  return new $c_Lm_Signaling$Room().init___T__Lm_Signaling$PeerInfo__sci_Set__sci_Set(name, peer, config, members)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1 = (function($$outer) {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1 = (function($$outer) {
   return this
 });
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11: 1,
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3.prototype.apply__T2__Lm_Signaling$PeerInfo = (function(derive$macro$49) {
+  var arg1 = derive$macro$49.$$und1$f;
+  var arg2 = derive$macro$49.$$und2$f;
+  var id = $as_T(arg1);
+  var type = $as_T(arg2);
+  return new $c_Lm_Signaling$PeerInfo().init___T__T(id, type)
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3: 1,
   sr_AbstractFunction1: 1,
   O: 1,
   F1: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$apply$11;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$13$lzycompute$1$1$$anonfun$apply$3;
 /** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this)
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1() {
+  $c_sr_AbstractFunction0.call(this);
+  this.$$outer$2 = null;
+  this.derive$macro$28$lzy$1$2 = null;
+  this.derive$macro$13$lzy$1$2 = null;
+  this.derive$macro$20$lzy$1$2 = null;
+  this.derive$macro$24$lzy$1$2 = null;
+  this.derive$macro$16$lzy$1$2 = null;
+  this.derive$macro$32$lzy$1$2 = null;
+  this.derive$macro$1$lzy$1$2 = null;
+  this.derive$macro$44$lzy$1$2 = null;
+  this.derive$macro$2$lzy$1$2 = null;
+  this.derive$macro$19$lzy$1$2 = null;
+  this.derive$macro$5$lzy$1$2 = null;
+  this.derive$macro$36$lzy$1$2 = null;
+  this.derive$macro$9$lzy$1$2 = null;
+  this.bitmap$0$1$2 = null;
+  this.bitmap$1$1$2 = null
 }
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1;
 /** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1() {
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1() {
   /*<skip>*/
 }
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
+  var this$12 = $m_Lupickle_default$();
   var this$10 = $m_Lupickle_default$();
-  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1(this);
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["url", "username", "credential"]);
+  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1(this);
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["id", "data"]);
+  var len = $uI(xs.array$6["length"]);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
+  var len$1 = $uI(xs$1.array$6["length"]);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$9 = $m_Lupickle_default$();
+  var evidence$5 = $m_Lupickle_default$().StringRW$1;
+  var evidence$6 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$1$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$28$lzy$1$2, this.derive$macro$13$lzy$1$2, this.derive$macro$20$lzy$1$2, this.derive$macro$24$lzy$1$2, this.derive$macro$16$lzy$1$2, this.derive$macro$32$lzy$1$2, this.derive$macro$1$lzy$1$2, this.derive$macro$44$lzy$1$2, this.derive$macro$2$lzy$1$2, this.derive$macro$19$lzy$1$2, this.derive$macro$5$lzy$1$2, this.derive$macro$36$lzy$1$2, this.derive$macro$9$lzy$1$2, this.bitmap$0$1$2, this.bitmap$1$1$2);
+  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple2R__Lupickle_Generated__O__O__O(this$9, evidence$5, evidence$6));
+  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
+  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
+  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.ApiMessage");
+  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef = (function($$outer, derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$16$lzy$1, derive$macro$32$lzy$1, derive$macro$1$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.derive$macro$28$lzy$1$2 = derive$macro$28$lzy$1;
+  this.derive$macro$13$lzy$1$2 = derive$macro$13$lzy$1;
+  this.derive$macro$20$lzy$1$2 = derive$macro$20$lzy$1;
+  this.derive$macro$24$lzy$1$2 = derive$macro$24$lzy$1;
+  this.derive$macro$16$lzy$1$2 = derive$macro$16$lzy$1;
+  this.derive$macro$32$lzy$1$2 = derive$macro$32$lzy$1;
+  this.derive$macro$1$lzy$1$2 = derive$macro$1$lzy$1;
+  this.derive$macro$44$lzy$1$2 = derive$macro$44$lzy$1;
+  this.derive$macro$2$lzy$1$2 = derive$macro$2$lzy$1;
+  this.derive$macro$19$lzy$1$2 = derive$macro$19$lzy$1;
+  this.derive$macro$5$lzy$1$2 = derive$macro$5$lzy$1;
+  this.derive$macro$36$lzy$1$2 = derive$macro$36$lzy$1;
+  this.derive$macro$9$lzy$1$2 = derive$macro$9$lzy$1;
+  this.bitmap$0$1$2 = bitmap$0$1;
+  this.bitmap$1$1$2 = bitmap$1$1;
+  return this
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Reader()
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9() {
+  $c_sr_AbstractFunction1.call(this)
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9.prototype.apply__O__O = (function(v1) {
+  return this.apply__T2__Lm_ApiMessage($as_T2(v1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1 = (function($$outer) {
+  return this
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9.prototype.apply__T2__Lm_ApiMessage = (function(derive$macro$52) {
+  var arg1 = derive$macro$52.$$und1$f;
+  var arg2 = derive$macro$52.$$und2$f;
+  var id = $as_T(arg1);
+  var data = $as_Lm_Model(arg2);
+  return new $c_Lm_ApiMessage().init___T__Lm_Model(id, data)
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9: 1,
+  sr_AbstractFunction1: 1,
+  O: 1,
+  F1: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$16$lzycompute$1$1$$anonfun$apply$9;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1() {
+  $c_sr_AbstractFunction0.call(this)
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1 = (function($$outer) {
+  return this
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
+  var this$12 = $m_Lupickle_default$();
+  var this$10 = $m_Lupickle_default$();
+  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1(this);
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["type", "sdp"]);
+  var len = $uI(xs.array$6["length"]);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
+  var len$1 = $uI(xs$1.array$6["length"]);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$9 = $m_Lupickle_default$();
+  var evidence$5 = $m_Lupickle_default$().StringRW$1;
+  var evidence$6 = $m_Lupickle_default$().StringRW$1;
+  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple2R__Lupickle_Generated__O__O__O(this$9, evidence$5, evidence$6));
+  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
+  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
+  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.RTCSessionDescription");
+  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Reader()
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15() {
+  $c_sr_AbstractFunction1.call(this)
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15.prototype.apply__O__O = (function(v1) {
+  return this.apply__T2__Lm_Signaling$RTCSessionDescription($as_T2(v1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1 = (function($$outer) {
+  return this
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15.prototype.apply__T2__Lm_Signaling$RTCSessionDescription = (function(derive$macro$55) {
+  var arg1 = derive$macro$55.$$und1$f;
+  var arg2 = derive$macro$55.$$und2$f;
+  var type = $as_T(arg1);
+  var sdp = $as_T(arg2);
+  return new $c_Lm_Signaling$RTCSessionDescription().init___T__T(type, sdp)
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15: 1,
+  sr_AbstractFunction1: 1,
+  O: 1,
+  F1: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$15;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1() {
+  $c_sr_AbstractFunction0.call(this);
+  this.$$outer$2 = null;
+  this.derive$macro$13$lzy$1$2 = null;
+  this.bitmap$0$1$2 = null
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$13$lzy$1, bitmap$0$1) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.derive$macro$13$lzy$1$2 = derive$macro$13$lzy$1;
+  this.bitmap$0$1$2 = bitmap$0$1;
+  return this
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
+  var this$12 = $m_Lupickle_default$();
+  var this$10 = $m_Lupickle_default$();
+  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1(this);
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["remote", "local", "room"]);
   var len = $uI(xs.array$6["length"]);
   var array = $newArrayObject($d_T.getArrayOf(), [len]);
   var elem$1 = 0;
@@ -13662,84 +13951,669 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzyc
     elem$1$1 = ((1 + elem$1$1) | 0)
   };
   var this$9 = $m_Lupickle_default$();
-  var evidence$10 = $m_Lupickle_default$().StringRW$1;
-  var evidence$11 = $m_Lupickle_default$().StringRW$1;
+  var evidence$10 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$13$lzy$1$2, this.bitmap$0$1$2);
+  var evidence$11 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$13$lzy$1$2, this.bitmap$0$1$2);
   var evidence$12 = $m_Lupickle_default$().StringRW$1;
   var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple3R__Lupickle_Generated__O__O__O__O(this$9, evidence$10, evidence$11, evidence$12));
-  return $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8)
+  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
+  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
+  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.Join");
+  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1 = (function($$outer) {
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1.prototype.apply__O = (function() {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1.prototype.apply__O = (function() {
   return this.apply__Lupickle_Types$Reader()
 });
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1: 1,
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1: 1,
   sr_AbstractFunction0: 1,
   O: 1,
   F0: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1;
 /** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13() {
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5() {
   $c_sr_AbstractFunction1.call(this)
 }
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13.prototype = new $h_sr_AbstractFunction1();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5;
 /** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13() {
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5() {
   /*<skip>*/
 }
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13.prototype.apply__O__O = (function(v1) {
-  return this.apply__T3__Lm_Signaling$RTCIceServer($as_T3(v1))
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5.prototype.apply__O__O = (function(v1) {
+  return this.apply__T3__Lm_Signaling$Join($as_T3(v1))
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13.prototype.apply__T3__Lm_Signaling$RTCIceServer = (function(derive$macro$53) {
-  var arg1 = derive$macro$53.$$und1$1;
-  var arg2 = derive$macro$53.$$und2$1;
-  var arg3 = derive$macro$53.$$und3$1;
-  var url = $as_T(arg1);
-  var username = $as_T(arg2);
-  var credential = $as_T(arg3);
-  return new $c_Lm_Signaling$RTCIceServer().init___T__T__T(url, username, credential)
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5.prototype.apply__T3__Lm_Signaling$Join = (function(derive$macro$50) {
+  var arg1 = derive$macro$50.$$und1$1;
+  var arg2 = derive$macro$50.$$und2$1;
+  var arg3 = derive$macro$50.$$und3$1;
+  var remote = $as_Lm_Signaling$PeerInfo(arg1);
+  var local = $as_Lm_Signaling$PeerInfo(arg2);
+  var room = $as_T(arg3);
+  return new $c_Lm_Signaling$Join().init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__T(remote, local, room)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1 = (function($$outer) {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1 = (function($$outer) {
   return this
 });
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13: 1,
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5: 1,
   sr_AbstractFunction1: 1,
   O: 1,
   F1: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$11$lzycompute$1$1$$anonfun$derive$macro$49$lzycompute$1$1$$anonfun$apply$13;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$20$lzycompute$1$1$$anonfun$apply$5;
 /** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this)
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1() {
+  $c_sr_AbstractFunction0.call(this);
+  this.$$outer$2 = null;
+  this.derive$macro$13$lzy$1$2 = null;
+  this.derive$macro$2$lzy$1$2 = null;
+  this.bitmap$0$1$2 = null;
+  this.bitmap$1$1$2 = null
 }
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1;
 /** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1() {
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1() {
   /*<skip>*/
 }
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1 = (function($$outer) {
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef = (function($$outer, derive$macro$13$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.derive$macro$13$lzy$1$2 = derive$macro$13$lzy$1;
+  this.derive$macro$2$lzy$1$2 = derive$macro$2$lzy$1;
+  this.bitmap$0$1$2 = bitmap$0$1;
+  this.bitmap$1$1$2 = bitmap$1$1;
   return this
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
   var this$12 = $m_Lupickle_default$();
   var this$10 = $m_Lupickle_default$();
-  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1(this);
+  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1(this);
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["remote", "local", "answer"]);
+  var len = $uI(xs.array$6["length"]);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null]);
+  var len$1 = $uI(xs$1.array$6["length"]);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$9 = $m_Lupickle_default$();
+  var evidence$10 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$13$lzy$1$2, this.bitmap$0$1$2);
+  var evidence$11 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$13$lzy$1$2, this.bitmap$0$1$2);
+  var evidence$12 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$2$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$2$lzy$1$2, this.bitmap$1$1$2);
+  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple3R__Lupickle_Generated__O__O__O__O(this$9, evidence$10, evidence$11, evidence$12));
+  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
+  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
+  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.Answer");
+  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Reader()
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7() {
+  $c_sr_AbstractFunction1.call(this)
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7.prototype.apply__O__O = (function(v1) {
+  return this.apply__T3__Lm_Signaling$Answer($as_T3(v1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7.prototype.apply__T3__Lm_Signaling$Answer = (function(derive$macro$51) {
+  var arg1 = derive$macro$51.$$und1$1;
+  var arg2 = derive$macro$51.$$und2$1;
+  var arg3 = derive$macro$51.$$und3$1;
+  var remote = $as_Lm_Signaling$PeerInfo(arg1);
+  var local = $as_Lm_Signaling$PeerInfo(arg2);
+  var answer = $as_Lm_Signaling$RTCSessionDescription(arg3);
+  return new $c_Lm_Signaling$Answer().init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__Lm_Signaling$RTCSessionDescription(remote, local, answer)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1 = (function($$outer) {
+  return this
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7: 1,
+  sr_AbstractFunction1: 1,
+  O: 1,
+  F1: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$24$lzycompute$1$1$$anonfun$apply$7;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1() {
+  $c_sr_AbstractFunction0.call(this);
+  this.$$outer$2 = null;
+  this.derive$macro$13$lzy$1$2 = null;
+  this.derive$macro$5$lzy$1$2 = null;
+  this.bitmap$0$1$2 = null;
+  this.bitmap$1$1$2 = null
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef = (function($$outer, derive$macro$13$lzy$1, derive$macro$5$lzy$1, bitmap$0$1, bitmap$1$1) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.derive$macro$13$lzy$1$2 = derive$macro$13$lzy$1;
+  this.derive$macro$5$lzy$1$2 = derive$macro$5$lzy$1;
+  this.bitmap$0$1$2 = bitmap$0$1;
+  this.bitmap$1$1$2 = bitmap$1$1;
+  return this
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
+  var this$12 = $m_Lupickle_default$();
+  var this$10 = $m_Lupickle_default$();
+  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1(this);
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["remote", "local", "candidate"]);
+  var len = $uI(xs.array$6["length"]);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null]);
+  var len$1 = $uI(xs$1.array$6["length"]);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$9 = $m_Lupickle_default$();
+  var evidence$10 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$13$lzy$1$2, this.bitmap$0$1$2);
+  var evidence$11 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$13$lzy$1$2, this.bitmap$0$1$2);
+  var evidence$12 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$5$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$5$lzy$1$2, this.bitmap$1$1$2);
+  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple3R__Lupickle_Generated__O__O__O__O(this$9, evidence$10, evidence$11, evidence$12));
+  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
+  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
+  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.Candidate");
+  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Reader()
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1() {
+  $c_sr_AbstractFunction1.call(this)
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1.prototype.apply__T3__Lm_Signaling$Candidate = (function(derive$macro$48) {
+  var arg1 = derive$macro$48.$$und1$1;
+  var arg2 = derive$macro$48.$$und2$1;
+  var arg3 = derive$macro$48.$$und3$1;
+  var remote = $as_Lm_Signaling$PeerInfo(arg1);
+  var local = $as_Lm_Signaling$PeerInfo(arg2);
+  var candidate = $as_Lm_Signaling$RTCIceCandidate(arg3);
+  return new $c_Lm_Signaling$Candidate().init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__Lm_Signaling$RTCIceCandidate(remote, local, candidate)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1.prototype.apply__O__O = (function(v1) {
+  return this.apply__T3__Lm_Signaling$Candidate($as_T3(v1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1 = (function($$outer) {
+  return this
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1: 1,
+  sr_AbstractFunction1: 1,
+  O: 1,
+  F1: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$1;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1() {
+  $c_sr_AbstractFunction0.call(this);
+  this.$$outer$2 = null;
+  this.derive$macro$13$lzy$1$2 = null;
+  this.derive$macro$2$lzy$1$2 = null;
+  this.bitmap$0$1$2 = null;
+  this.bitmap$1$1$2 = null
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef = (function($$outer, derive$macro$13$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.derive$macro$13$lzy$1$2 = derive$macro$13$lzy$1;
+  this.derive$macro$2$lzy$1$2 = derive$macro$2$lzy$1;
+  this.bitmap$0$1$2 = bitmap$0$1;
+  this.bitmap$1$1$2 = bitmap$1$1;
+  return this
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
+  var this$12 = $m_Lupickle_default$();
+  var this$10 = $m_Lupickle_default$();
+  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1(this);
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["remote", "local", "offer"]);
+  var len = $uI(xs.array$6["length"]);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null]);
+  var len$1 = $uI(xs$1.array$6["length"]);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$9 = $m_Lupickle_default$();
+  var evidence$10 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$13$lzy$1$2, this.bitmap$0$1$2);
+  var evidence$11 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$13$lzy$1$2, this.bitmap$0$1$2);
+  var evidence$12 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$2$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$2$lzy$1$2, this.bitmap$1$1$2);
+  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple3R__Lupickle_Generated__O__O__O__O(this$9, evidence$10, evidence$11, evidence$12));
+  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
+  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
+  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.Offer");
+  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Reader()
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11() {
+  $c_sr_AbstractFunction1.call(this)
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11.prototype.apply__T3__Lm_Signaling$Offer = (function(derive$macro$53) {
+  var arg1 = derive$macro$53.$$und1$1;
+  var arg2 = derive$macro$53.$$und2$1;
+  var arg3 = derive$macro$53.$$und3$1;
+  var remote = $as_Lm_Signaling$PeerInfo(arg1);
+  var local = $as_Lm_Signaling$PeerInfo(arg2);
+  var offer = $as_Lm_Signaling$RTCSessionDescription(arg3);
+  return new $c_Lm_Signaling$Offer().init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__Lm_Signaling$RTCSessionDescription(remote, local, offer)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11.prototype.apply__O__O = (function(v1) {
+  return this.apply__T3__Lm_Signaling$Offer($as_T3(v1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1 = (function($$outer) {
+  return this
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11: 1,
+  sr_AbstractFunction1: 1,
+  O: 1,
+  F1: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$32$lzycompute$1$1$$anonfun$apply$11;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1() {
+  $c_sr_AbstractFunction0.call(this);
+  this.$$outer$2 = null;
+  this.derive$macro$13$lzy$1$2 = null;
+  this.derive$macro$9$lzy$1$2 = null;
+  this.bitmap$0$1$2 = null;
+  this.bitmap$1$1$2 = null
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef = (function($$outer, derive$macro$13$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.derive$macro$13$lzy$1$2 = derive$macro$13$lzy$1;
+  this.derive$macro$9$lzy$1$2 = derive$macro$9$lzy$1;
+  this.bitmap$0$1$2 = bitmap$0$1;
+  this.bitmap$1$1$2 = bitmap$1$1;
+  return this
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
+  var this$16 = $m_Lupickle_default$();
+  var this$14 = $m_Lupickle_default$();
+  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1(this);
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["remote", "local", "name", "config", "members"]);
+  var len = $uI(xs.array$6["length"]);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null, null, null]);
+  var len$1 = $uI(xs$1.array$6["length"]);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$13 = $m_Lupickle_default$();
+  var evidence$26 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$13$lzy$1$2, this.bitmap$0$1$2);
+  var evidence$27 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$13$lzy$1$2, this.bitmap$0$1$2);
+  var evidence$28 = $m_Lupickle_default$().StringRW$1;
+  var this$10 = $m_Lupickle_default$();
+  var evidence$12 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$9$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$9$lzy$1$2, this.bitmap$1$1$2);
+  var this$9 = $m_sci_Set$();
+  var cbf = new $c_scg_GenSetFactory$$anon$1().init___scg_GenSetFactory(this$9);
+  var evidence$29 = $s_Lupickle_Implicits$class__SeqishR__Lupickle_Implicits__Lupickle_Types$Reader__scg_CanBuildFrom__Lupickle_Types$Reader(this$10, evidence$12, cbf);
+  var this$12 = $m_Lupickle_default$();
+  var evidence$12$1 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$13$lzy$1$2, this.bitmap$0$1$2);
+  var this$11 = $m_sci_Set$();
+  var cbf$1 = new $c_scg_GenSetFactory$$anon$1().init___scg_GenSetFactory(this$11);
+  var evidence$30 = $s_Lupickle_Implicits$class__SeqishR__Lupickle_Implicits__Lupickle_Types$Reader__scg_CanBuildFrom__Lupickle_Types$Reader(this$12, evidence$12$1, cbf$1);
+  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple5R__Lupickle_Generated__O__O__O__O__O__O(this$13, evidence$26, evidence$27, evidence$28, evidence$29, evidence$30));
+  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$14, f, array, array$1, evidence$8);
+  var this$17 = this$16.Reader__Lupickle_Types$Reader$();
+  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$16, rw, "m.Signaling.Room");
+  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$17, _read)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Reader()
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19() {
+  $c_sr_AbstractFunction1.call(this)
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1 = (function($$outer) {
+  return this
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19.prototype.apply__O__O = (function(v1) {
+  return this.apply__T5__Lm_Signaling$Room($as_T5(v1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19.prototype.apply__T5__Lm_Signaling$Room = (function(derive$macro$57) {
+  var arg1 = derive$macro$57.$$und1$1;
+  var arg2 = derive$macro$57.$$und2$1;
+  var arg3 = derive$macro$57.$$und3$1;
+  var arg4 = derive$macro$57.$$und4$1;
+  var arg5 = derive$macro$57.$$und5$1;
+  var remote = $as_Lm_Signaling$PeerInfo(arg1);
+  var local = $as_Lm_Signaling$PeerInfo(arg2);
+  var name = $as_T(arg3);
+  var config = $as_sci_Set(arg4);
+  var members = $as_sci_Set(arg5);
+  return new $c_Lm_Signaling$Room().init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__T__sci_Set__sci_Set(remote, local, name, config, members)
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19: 1,
+  sr_AbstractFunction1: 1,
+  O: 1,
+  F1: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$36$lzycompute$1$1$$anonfun$apply$19;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1() {
+  $c_sr_AbstractFunction0.call(this);
+  this.$$outer$2 = null;
+  this.derive$macro$13$lzy$1$2 = null;
+  this.bitmap$0$1$2 = null
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$13$lzy$1, bitmap$0$1) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.derive$macro$13$lzy$1$2 = derive$macro$13$lzy$1;
+  this.bitmap$0$1$2 = bitmap$0$1;
+  return this
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
+  var this$12 = $m_Lupickle_default$();
+  var this$10 = $m_Lupickle_default$();
+  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1(this);
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["remote", "local", "reason"]);
+  var len = $uI(xs.array$6["length"]);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null]);
+  var len$1 = $uI(xs$1.array$6["length"]);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$9 = $m_Lupickle_default$();
+  var evidence$10 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$13$lzy$1$2, this.bitmap$0$1$2);
+  var evidence$11 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$13$lzy$1$2, this.bitmap$0$1$2);
+  var evidence$12 = $m_Lupickle_default$().StringRW$1;
+  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple3R__Lupickle_Generated__O__O__O__O(this$9, evidence$10, evidence$11, evidence$12));
+  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
+  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
+  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.Error");
+  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Reader()
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13() {
+  $c_sr_AbstractFunction1.call(this)
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13.prototype.apply__O__O = (function(v1) {
+  return this.apply__T3__Lm_Signaling$Error($as_T3(v1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13.prototype.apply__T3__Lm_Signaling$Error = (function(derive$macro$54) {
+  var arg1 = derive$macro$54.$$und1$1;
+  var arg2 = derive$macro$54.$$und2$1;
+  var arg3 = derive$macro$54.$$und3$1;
+  var remote = $as_Lm_Signaling$PeerInfo(arg1);
+  var local = $as_Lm_Signaling$PeerInfo(arg2);
+  var reason = $as_T(arg3);
+  return new $c_Lm_Signaling$Error().init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__T(remote, local, reason)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1 = (function($$outer) {
+  return this
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13: 1,
+  sr_AbstractFunction1: 1,
+  O: 1,
+  F1: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$44$lzycompute$1$1$$anonfun$apply$13;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1() {
+  $c_sr_AbstractFunction0.call(this)
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1 = (function($$outer) {
+  return this
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
+  var this$12 = $m_Lupickle_default$();
+  var this$10 = $m_Lupickle_default$();
+  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1(this);
   var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["candidate", "sdpMLineIndex", "sdpMid"]);
   var len = $uI(xs.array$6["length"]);
   var array = $newArrayObject($d_T.getArrayOf(), [len]);
@@ -13772,538 +14646,76 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzyc
   var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.RTCIceCandidate");
   return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1.prototype.apply__O = (function() {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1.prototype.apply__O = (function() {
   return this.apply__Lupickle_Types$Reader()
 });
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1: 1,
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1: 1,
   sr_AbstractFunction0: 1,
   O: 1,
   F0: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1;
 /** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15() {
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17() {
   $c_sr_AbstractFunction1.call(this)
 }
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15.prototype = new $h_sr_AbstractFunction1();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17;
 /** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15() {
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17() {
   /*<skip>*/
 }
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15.prototype.apply__O__O = (function(v1) {
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17.prototype.apply__O__O = (function(v1) {
   return this.apply__T3__Lm_Signaling$RTCIceCandidate($as_T3(v1))
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15.prototype.apply__T3__Lm_Signaling$RTCIceCandidate = (function(derive$macro$44) {
-  var arg1 = derive$macro$44.$$und1$1;
-  var arg2 = derive$macro$44.$$und2$1;
-  var arg3 = derive$macro$44.$$und3$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17.prototype.apply__T3__Lm_Signaling$RTCIceCandidate = (function(derive$macro$56) {
+  var arg1 = derive$macro$56.$$und1$1;
+  var arg2 = derive$macro$56.$$und2$1;
+  var arg3 = derive$macro$56.$$und3$1;
   var candidate = $as_T(arg1);
   var sdpMLineIndex = $uI(arg2);
   var sdpMid = $as_T(arg3);
   return new $c_Lm_Signaling$RTCIceCandidate().init___T__I__T(candidate, sdpMLineIndex, sdpMid)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1 = (function($$outer) {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1 = (function($$outer) {
   return this
 });
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15: 1,
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17: 1,
   sr_AbstractFunction1: 1,
   O: 1,
   F1: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$18$lzycompute$1$1$$anonfun$apply$15;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1$$anonfun$apply$17;
 /** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this);
-  this.$$outer$2 = null;
-  this.derive$macro$2$lzy$1$2 = null;
-  this.derive$macro$25$lzy$1$2 = null;
-  this.derive$macro$5$lzy$1$2 = null;
-  this.derive$macro$22$lzy$1$2 = null;
-  this.derive$macro$7$lzy$1$2 = null;
-  this.derive$macro$6$lzy$1$2 = null;
-  this.derive$macro$11$lzy$1$2 = null;
-  this.derive$macro$18$lzy$1$2 = null;
-  this.derive$macro$28$lzy$1$2 = null;
-  this.derive$macro$34$lzy$1$2 = null;
-  this.derive$macro$30$lzy$1$2 = null;
-  this.derive$macro$1$lzy$1$2 = null;
-  this.bitmap$0$1$2 = null;
-  this.bitmap$1$1$2 = null
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
-  var this$12 = $m_Lupickle_default$();
-  var this$10 = $m_Lupickle_default$();
-  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1(this);
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["id", "data"]);
-  var len = $uI(xs.array$6["length"]);
-  var array = $newArrayObject($d_T.getArrayOf(), [len]);
-  var elem$1 = 0;
-  elem$1 = 0;
-  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
-  while (this$4.hasNext__Z()) {
-    var arg1 = this$4.next__O();
-    array.u[elem$1] = arg1;
-    elem$1 = ((1 + elem$1) | 0)
-  };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
-  var len$1 = $uI(xs$1.array$6["length"]);
-  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
-  while (this$8.hasNext__Z()) {
-    var arg1$1 = this$8.next__O();
-    array$1.u[elem$1$1] = arg1$1;
-    elem$1$1 = ((1 + elem$1$1) | 0)
-  };
-  var this$9 = $m_Lupickle_default$();
-  var evidence$5 = $m_Lupickle_default$().StringRW$1;
-  var evidence$6 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$1$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$2$lzy$1$2, this.derive$macro$25$lzy$1$2, this.derive$macro$5$lzy$1$2, this.derive$macro$22$lzy$1$2, this.derive$macro$7$lzy$1$2, this.derive$macro$6$lzy$1$2, this.derive$macro$11$lzy$1$2, this.derive$macro$18$lzy$1$2, this.derive$macro$28$lzy$1$2, this.derive$macro$34$lzy$1$2, this.derive$macro$30$lzy$1$2, this.derive$macro$1$lzy$1$2, this.bitmap$0$1$2, this.bitmap$1$1$2);
-  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple2R__Lupickle_Generated__O__O__O(this$9, evidence$5, evidence$6));
-  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
-  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
-  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.ApiMessage");
-  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef = (function($$outer, derive$macro$2$lzy$1, derive$macro$25$lzy$1, derive$macro$5$lzy$1, derive$macro$22$lzy$1, derive$macro$7$lzy$1, derive$macro$6$lzy$1, derive$macro$11$lzy$1, derive$macro$18$lzy$1, derive$macro$28$lzy$1, derive$macro$34$lzy$1, derive$macro$30$lzy$1, derive$macro$1$lzy$1, bitmap$0$1, bitmap$1$1) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$2 = $$outer
-  };
-  this.derive$macro$2$lzy$1$2 = derive$macro$2$lzy$1;
-  this.derive$macro$25$lzy$1$2 = derive$macro$25$lzy$1;
-  this.derive$macro$5$lzy$1$2 = derive$macro$5$lzy$1;
-  this.derive$macro$22$lzy$1$2 = derive$macro$22$lzy$1;
-  this.derive$macro$7$lzy$1$2 = derive$macro$7$lzy$1;
-  this.derive$macro$6$lzy$1$2 = derive$macro$6$lzy$1;
-  this.derive$macro$11$lzy$1$2 = derive$macro$11$lzy$1;
-  this.derive$macro$18$lzy$1$2 = derive$macro$18$lzy$1;
-  this.derive$macro$28$lzy$1$2 = derive$macro$28$lzy$1;
-  this.derive$macro$34$lzy$1$2 = derive$macro$34$lzy$1;
-  this.derive$macro$30$lzy$1$2 = derive$macro$30$lzy$1;
-  this.derive$macro$1$lzy$1$2 = derive$macro$1$lzy$1;
-  this.bitmap$0$1$2 = bitmap$0$1;
-  this.bitmap$1$1$2 = bitmap$1$1;
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype.apply__O = (function() {
-  return this.apply__Lupickle_Types$Reader()
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1: 1,
-  sr_AbstractFunction0: 1,
-  O: 1,
-  F0: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1() {
-  $c_sr_AbstractFunction1.call(this)
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1.prototype = new $h_sr_AbstractFunction1();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1.prototype.apply__O__O = (function(v1) {
-  return this.apply__T2__Lm_ApiMessage($as_T2(v1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1 = (function($$outer) {
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1.prototype.apply__T2__Lm_ApiMessage = (function(derive$macro$38) {
-  var arg1 = derive$macro$38.$$und1$f;
-  var arg2 = derive$macro$38.$$und2$f;
-  var id = $as_T(arg1);
-  var data = $as_Lm_Model(arg2);
-  return new $c_Lm_ApiMessage().init___T__Lm_Model(id, data)
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1: 1,
-  sr_AbstractFunction1: 1,
-  O: 1,
-  F1: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$2$lzycompute$1$1$$anonfun$apply$1;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this);
-  this.$$outer$2 = null;
-  this.derive$macro$7$lzy$1$2 = null;
-  this.derive$macro$18$lzy$1$2 = null;
-  this.bitmap$0$1$2 = null
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
-  var this$12 = $m_Lupickle_default$();
-  var this$10 = $m_Lupickle_default$();
-  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1(this);
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["peer", "candidate"]);
-  var len = $uI(xs.array$6["length"]);
-  var array = $newArrayObject($d_T.getArrayOf(), [len]);
-  var elem$1 = 0;
-  elem$1 = 0;
-  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
-  while (this$4.hasNext__Z()) {
-    var arg1 = this$4.next__O();
-    array.u[elem$1] = arg1;
-    elem$1 = ((1 + elem$1) | 0)
-  };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
-  var len$1 = $uI(xs$1.array$6["length"]);
-  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
-  while (this$8.hasNext__Z()) {
-    var arg1$1 = this$8.next__O();
-    array$1.u[elem$1$1] = arg1$1;
-    elem$1$1 = ((1 + elem$1$1) | 0)
-  };
-  var this$9 = $m_Lupickle_default$();
-  var evidence$5 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$7$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$7$lzy$1$2, this.bitmap$0$1$2);
-  var evidence$6 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$18$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$18$lzy$1$2, this.bitmap$0$1$2);
-  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple2R__Lupickle_Generated__O__O__O(this$9, evidence$5, evidence$6));
-  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
-  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
-  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.Candidate");
-  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$7$lzy$1, derive$macro$18$lzy$1, bitmap$0$1) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$2 = $$outer
-  };
-  this.derive$macro$7$lzy$1$2 = derive$macro$7$lzy$1;
-  this.derive$macro$18$lzy$1$2 = derive$macro$18$lzy$1;
-  this.bitmap$0$1$2 = bitmap$0$1;
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1.prototype.apply__O = (function() {
-  return this.apply__Lupickle_Types$Reader()
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1: 1,
-  sr_AbstractFunction0: 1,
-  O: 1,
-  F0: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5() {
-  $c_sr_AbstractFunction1.call(this)
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5.prototype = new $h_sr_AbstractFunction1();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5.prototype.apply__O__O = (function(v1) {
-  return this.apply__T2__Lm_Signaling$Candidate($as_T2(v1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1 = (function($$outer) {
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5.prototype.apply__T2__Lm_Signaling$Candidate = (function(derive$macro$40) {
-  var arg1 = derive$macro$40.$$und1$f;
-  var arg2 = derive$macro$40.$$und2$f;
-  var peer = $as_Lm_Signaling$PeerInfo(arg1);
-  var candidate = $as_Lm_Signaling$RTCIceCandidate(arg2);
-  return new $c_Lm_Signaling$Candidate().init___Lm_Signaling$PeerInfo__Lm_Signaling$RTCIceCandidate(peer, candidate)
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5: 1,
-  sr_AbstractFunction1: 1,
-  O: 1,
-  F1: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$22$lzycompute$1$1$$anonfun$apply$5;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this);
-  this.$$outer$2 = null;
-  this.derive$macro$7$lzy$1$2 = null;
-  this.bitmap$0$1$2 = null
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$7$lzy$1, bitmap$0$1) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$2 = $$outer
-  };
-  this.derive$macro$7$lzy$1$2 = derive$macro$7$lzy$1;
-  this.bitmap$0$1$2 = bitmap$0$1;
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
-  var this$12 = $m_Lupickle_default$();
-  var this$10 = $m_Lupickle_default$();
-  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1(this);
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["room", "peer"]);
-  var len = $uI(xs.array$6["length"]);
-  var array = $newArrayObject($d_T.getArrayOf(), [len]);
-  var elem$1 = 0;
-  elem$1 = 0;
-  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
-  while (this$4.hasNext__Z()) {
-    var arg1 = this$4.next__O();
-    array.u[elem$1] = arg1;
-    elem$1 = ((1 + elem$1) | 0)
-  };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
-  var len$1 = $uI(xs$1.array$6["length"]);
-  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
-  while (this$8.hasNext__Z()) {
-    var arg1$1 = this$8.next__O();
-    array$1.u[elem$1$1] = arg1$1;
-    elem$1$1 = ((1 + elem$1$1) | 0)
-  };
-  var this$9 = $m_Lupickle_default$();
-  var evidence$5 = $m_Lupickle_default$().StringRW$1;
-  var evidence$6 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$7$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$7$lzy$1$2, this.bitmap$0$1$2);
-  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple2R__Lupickle_Generated__O__O__O(this$9, evidence$5, evidence$6));
-  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
-  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
-  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.Join");
-  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1.prototype.apply__O = (function() {
-  return this.apply__Lupickle_Types$Reader()
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1: 1,
-  sr_AbstractFunction0: 1,
-  O: 1,
-  F0: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3() {
-  $c_sr_AbstractFunction1.call(this)
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3.prototype = new $h_sr_AbstractFunction1();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3.prototype.apply__O__O = (function(v1) {
-  return this.apply__T2__Lm_Signaling$Join($as_T2(v1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1 = (function($$outer) {
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3.prototype.apply__T2__Lm_Signaling$Join = (function(derive$macro$39) {
-  var arg1 = derive$macro$39.$$und1$f;
-  var arg2 = derive$macro$39.$$und2$f;
-  var room = $as_T(arg1);
-  var peer = $as_Lm_Signaling$PeerInfo(arg2);
-  return new $c_Lm_Signaling$Join().init___T__Lm_Signaling$PeerInfo(room, peer)
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3: 1,
-  sr_AbstractFunction1: 1,
-  O: 1,
-  F1: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$25$lzycompute$1$1$$anonfun$apply$3;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this);
-  this.$$outer$2 = null;
-  this.derive$macro$7$lzy$1$2 = null;
-  this.derive$macro$30$lzy$1$2 = null;
-  this.bitmap$0$1$2 = null;
-  this.bitmap$1$1$2 = null
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef = (function($$outer, derive$macro$7$lzy$1, derive$macro$30$lzy$1, bitmap$0$1, bitmap$1$1) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$2 = $$outer
-  };
-  this.derive$macro$7$lzy$1$2 = derive$macro$7$lzy$1;
-  this.derive$macro$30$lzy$1$2 = derive$macro$30$lzy$1;
-  this.bitmap$0$1$2 = bitmap$0$1;
-  this.bitmap$1$1$2 = bitmap$1$1;
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
-  var this$12 = $m_Lupickle_default$();
-  var this$10 = $m_Lupickle_default$();
-  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1(this);
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["peer", "answer"]);
-  var len = $uI(xs.array$6["length"]);
-  var array = $newArrayObject($d_T.getArrayOf(), [len]);
-  var elem$1 = 0;
-  elem$1 = 0;
-  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
-  while (this$4.hasNext__Z()) {
-    var arg1 = this$4.next__O();
-    array.u[elem$1] = arg1;
-    elem$1 = ((1 + elem$1) | 0)
-  };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
-  var len$1 = $uI(xs$1.array$6["length"]);
-  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
-  while (this$8.hasNext__Z()) {
-    var arg1$1 = this$8.next__O();
-    array$1.u[elem$1$1] = arg1$1;
-    elem$1$1 = ((1 + elem$1$1) | 0)
-  };
-  var this$9 = $m_Lupickle_default$();
-  var evidence$5 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$7$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$7$lzy$1$2, this.bitmap$0$1$2);
-  var evidence$6 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$30$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$30$lzy$1$2, this.bitmap$1$1$2);
-  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple2R__Lupickle_Generated__O__O__O(this$9, evidence$5, evidence$6));
-  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
-  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
-  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.Answer");
-  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype.apply__O = (function() {
-  return this.apply__Lupickle_Types$Reader()
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1: 1,
-  sr_AbstractFunction0: 1,
-  O: 1,
-  F0: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17() {
-  $c_sr_AbstractFunction1.call(this)
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17.prototype = new $h_sr_AbstractFunction1();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17.prototype.apply__O__O = (function(v1) {
-  return this.apply__T2__Lm_Signaling$Answer($as_T2(v1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1 = (function($$outer) {
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17.prototype.apply__T2__Lm_Signaling$Answer = (function(derive$macro$45) {
-  var arg1 = derive$macro$45.$$und1$f;
-  var arg2 = derive$macro$45.$$und2$f;
-  var peer = $as_Lm_Signaling$PeerInfo(arg1);
-  var answer = $as_Lm_Signaling$RTCSessionDescription(arg2);
-  return new $c_Lm_Signaling$Answer().init___Lm_Signaling$PeerInfo__Lm_Signaling$RTCSessionDescription(peer, answer)
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17: 1,
-  sr_AbstractFunction1: 1,
-  O: 1,
-  F1: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$28$lzycompute$1$1$$anonfun$apply$17;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1() {
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1() {
   $c_sr_AbstractFunction0.call(this)
 }
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1;
 /** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1() {
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1() {
   /*<skip>*/
 }
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1 = (function($$outer) {
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1 = (function($$outer) {
   return this
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
   var this$12 = $m_Lupickle_default$();
   var this$10 = $m_Lupickle_default$();
-  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1(this);
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["type", "sdp"]);
+  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1(this);
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["url", "username", "credential"]);
   var len = $uI(xs.array$6["length"]);
   var array = $newArrayObject($d_T.getArrayOf(), [len]);
   var elem$1 = 0;
@@ -14314,7 +14726,7 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzyc
     array.u[elem$1] = arg1;
     elem$1 = ((1 + elem$1) | 0)
   };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null]);
   var len$1 = $uI(xs$1.array$6["length"]);
   var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
   var elem$1$1 = 0;
@@ -14326,403 +14738,88 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzyc
     elem$1$1 = ((1 + elem$1$1) | 0)
   };
   var this$9 = $m_Lupickle_default$();
-  var evidence$5 = $m_Lupickle_default$().StringRW$1;
-  var evidence$6 = $m_Lupickle_default$().StringRW$1;
-  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple2R__Lupickle_Generated__O__O__O(this$9, evidence$5, evidence$6));
+  var evidence$10 = $m_Lupickle_default$().StringRW$1;
+  var evidence$11 = $m_Lupickle_default$().StringRW$1;
+  var evidence$12 = $m_Lupickle_default$().StringRW$1;
+  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple3R__Lupickle_Generated__O__O__O__O(this$9, evidence$10, evidence$11, evidence$12));
   var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
   var this$13 = this$12.Reader__Lupickle_Types$Reader$();
-  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.RTCSessionDescription");
+  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.RTCIceServer");
   return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1.prototype.apply__O = (function() {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1.prototype.apply__O = (function() {
   return this.apply__Lupickle_Types$Reader()
 });
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1: 1,
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1: 1,
   sr_AbstractFunction0: 1,
   O: 1,
   F0: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1;
 /** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21() {
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21() {
   $c_sr_AbstractFunction1.call(this)
 }
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21.prototype = new $h_sr_AbstractFunction1();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21;
 /** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21() {
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21() {
   /*<skip>*/
 }
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21.prototype.apply__O__O = (function(v1) {
-  return this.apply__T2__Lm_Signaling$RTCSessionDescription($as_T2(v1))
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21.prototype.apply__O__O = (function(v1) {
+  return this.apply__T3__Lm_Signaling$RTCIceServer($as_T3(v1))
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21.prototype.apply__T2__Lm_Signaling$RTCSessionDescription = (function(derive$macro$47) {
-  var arg1 = derive$macro$47.$$und1$f;
-  var arg2 = derive$macro$47.$$und2$f;
-  var type = $as_T(arg1);
-  var sdp = $as_T(arg2);
-  return new $c_Lm_Signaling$RTCSessionDescription().init___T__T(type, sdp)
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21.prototype.apply__T3__Lm_Signaling$RTCIceServer = (function(derive$macro$58) {
+  var arg1 = derive$macro$58.$$und1$1;
+  var arg2 = derive$macro$58.$$und2$1;
+  var arg3 = derive$macro$58.$$und3$1;
+  var url = $as_T(arg1);
+  var username = $as_T(arg2);
+  var credential = $as_T(arg3);
+  return new $c_Lm_Signaling$RTCIceServer().init___T__T__T(url, username, credential)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1 = (function($$outer) {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1 = (function($$outer) {
   return this
 });
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21: 1,
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21: 1,
   sr_AbstractFunction1: 1,
   O: 1,
   F1: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$30$lzycompute$1$1$$anonfun$apply$21;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$9$lzycompute$1$1$$anonfun$apply$21;
 /** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1() {
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1() {
   $c_sr_AbstractFunction0.call(this);
   this.$$outer$2 = null;
-  this.derive$macro$7$lzy$1$2 = null;
-  this.derive$macro$30$lzy$1$2 = null;
-  this.bitmap$0$1$2 = null;
-  this.bitmap$1$1$2 = null
+  this.derive$macro$62$lzy$1$2 = null;
+  this.bitmap$0$2$2 = null
 }
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1;
 /** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1() {
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1() {
   /*<skip>*/
 }
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef = (function($$outer, derive$macro$7$lzy$1, derive$macro$30$lzy$1, bitmap$0$1, bitmap$1$1) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$2 = $$outer
-  };
-  this.derive$macro$7$lzy$1$2 = derive$macro$7$lzy$1;
-  this.derive$macro$30$lzy$1$2 = derive$macro$30$lzy$1;
-  this.bitmap$0$1$2 = bitmap$0$1;
-  this.bitmap$1$1$2 = bitmap$1$1;
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
-  var this$12 = $m_Lupickle_default$();
-  var this$10 = $m_Lupickle_default$();
-  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1(this);
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["peer", "offer"]);
-  var len = $uI(xs.array$6["length"]);
-  var array = $newArrayObject($d_T.getArrayOf(), [len]);
-  var elem$1 = 0;
-  elem$1 = 0;
-  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
-  while (this$4.hasNext__Z()) {
-    var arg1 = this$4.next__O();
-    array.u[elem$1] = arg1;
-    elem$1 = ((1 + elem$1) | 0)
-  };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
-  var len$1 = $uI(xs$1.array$6["length"]);
-  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
-  while (this$8.hasNext__Z()) {
-    var arg1$1 = this$8.next__O();
-    array$1.u[elem$1$1] = arg1$1;
-    elem$1$1 = ((1 + elem$1$1) | 0)
-  };
-  var this$9 = $m_Lupickle_default$();
-  var evidence$5 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$7$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$7$lzy$1$2, this.bitmap$0$1$2);
-  var evidence$6 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$30$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$30$lzy$1$2, this.bitmap$1$1$2);
-  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple2R__Lupickle_Generated__O__O__O(this$9, evidence$5, evidence$6));
-  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
-  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
-  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.Offer");
-  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1.prototype.apply__O = (function() {
-  return this.apply__Lupickle_Types$Reader()
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1: 1,
-  sr_AbstractFunction0: 1,
-  O: 1,
-  F0: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19() {
-  $c_sr_AbstractFunction1.call(this)
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19.prototype = new $h_sr_AbstractFunction1();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19.prototype.apply__O__O = (function(v1) {
-  return this.apply__T2__Lm_Signaling$Offer($as_T2(v1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1 = (function($$outer) {
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19.prototype.apply__T2__Lm_Signaling$Offer = (function(derive$macro$46) {
-  var arg1 = derive$macro$46.$$und1$f;
-  var arg2 = derive$macro$46.$$und2$f;
-  var peer = $as_Lm_Signaling$PeerInfo(arg1);
-  var offer = $as_Lm_Signaling$RTCSessionDescription(arg2);
-  return new $c_Lm_Signaling$Offer().init___Lm_Signaling$PeerInfo__Lm_Signaling$RTCSessionDescription(peer, offer)
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19: 1,
-  sr_AbstractFunction1: 1,
-  O: 1,
-  F1: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$34$lzycompute$1$1$$anonfun$apply$19;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this);
-  this.$$outer$2 = null;
-  this.derive$macro$7$lzy$1$2 = null;
-  this.bitmap$0$1$2 = null
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$7$lzy$1, bitmap$0$1) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$2 = $$outer
-  };
-  this.derive$macro$7$lzy$1$2 = derive$macro$7$lzy$1;
-  this.bitmap$0$1$2 = bitmap$0$1;
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
-  var this$12 = $m_Lupickle_default$();
-  var this$10 = $m_Lupickle_default$();
-  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1(this);
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["peer", "reason"]);
-  var len = $uI(xs.array$6["length"]);
-  var array = $newArrayObject($d_T.getArrayOf(), [len]);
-  var elem$1 = 0;
-  elem$1 = 0;
-  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
-  while (this$4.hasNext__Z()) {
-    var arg1 = this$4.next__O();
-    array.u[elem$1] = arg1;
-    elem$1 = ((1 + elem$1) | 0)
-  };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
-  var len$1 = $uI(xs$1.array$6["length"]);
-  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
-  while (this$8.hasNext__Z()) {
-    var arg1$1 = this$8.next__O();
-    array$1.u[elem$1$1] = arg1$1;
-    elem$1$1 = ((1 + elem$1$1) | 0)
-  };
-  var this$9 = $m_Lupickle_default$();
-  var evidence$5 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$7$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(this.derive$macro$7$lzy$1$2, this.bitmap$0$1$2);
-  var evidence$6 = $m_Lupickle_default$().StringRW$1;
-  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple2R__Lupickle_Generated__O__O__O(this$9, evidence$5, evidence$6));
-  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
-  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
-  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.Error");
-  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1.prototype.apply__O = (function() {
-  return this.apply__Lupickle_Types$Reader()
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1: 1,
-  sr_AbstractFunction0: 1,
-  O: 1,
-  F0: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9() {
-  $c_sr_AbstractFunction1.call(this)
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9.prototype = new $h_sr_AbstractFunction1();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9.prototype.apply__O__O = (function(v1) {
-  return this.apply__T2__Lm_Signaling$Error($as_T2(v1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1 = (function($$outer) {
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9.prototype.apply__T2__Lm_Signaling$Error = (function(derive$macro$42) {
-  var arg1 = derive$macro$42.$$und1$f;
-  var arg2 = derive$macro$42.$$und2$f;
-  var peer = $as_Lm_Signaling$PeerInfo(arg1);
-  var reason = $as_T(arg2);
-  return new $c_Lm_Signaling$Error().init___Lm_Signaling$PeerInfo__T(peer, reason)
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9: 1,
-  sr_AbstractFunction1: 1,
-  O: 1,
-  F1: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$6$lzycompute$1$1$$anonfun$apply$9;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this)
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1 = (function($$outer) {
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1.prototype.apply__Lupickle_Types$Reader = (function() {
-  var this$12 = $m_Lupickle_default$();
-  var this$10 = $m_Lupickle_default$();
-  var f = new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1(this);
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["id", "type"]);
-  var len = $uI(xs.array$6["length"]);
-  var array = $newArrayObject($d_T.getArrayOf(), [len]);
-  var elem$1 = 0;
-  elem$1 = 0;
-  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
-  while (this$4.hasNext__Z()) {
-    var arg1 = this$4.next__O();
-    array.u[elem$1] = arg1;
-    elem$1 = ((1 + elem$1) | 0)
-  };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
-  var len$1 = $uI(xs$1.array$6["length"]);
-  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
-  while (this$8.hasNext__Z()) {
-    var arg1$1 = this$8.next__O();
-    array$1.u[elem$1$1] = arg1$1;
-    elem$1$1 = ((1 + elem$1$1) | 0)
-  };
-  var this$9 = $m_Lupickle_default$();
-  var evidence$5 = $m_Lupickle_default$().StringRW$1;
-  var evidence$6 = $m_Lupickle_default$().StringRW$1;
-  var evidence$8 = $as_Lupickle_Types$Reader($s_Lupickle_Generated$class__Tuple2R__Lupickle_Generated__O__O__O(this$9, evidence$5, evidence$6));
-  var rw = $s_Lupickle_Implicits$class__CaseR__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Reader__Lupickle_Types$Reader(this$10, f, array, array$1, evidence$8);
-  var this$13 = this$12.Reader__Lupickle_Types$Reader$();
-  var _read = new $c_Lupickle_AttributeTagged$$anonfun$annotate$2().init___Lupickle_AttributeTagged__Lupickle_Types$Reader__T(this$12, rw, "m.Signaling.PeerInfo");
-  return new $c_Lupickle_Types$Reader$$anon$3().init___Lupickle_Types$Reader$__s_PartialFunction(this$13, _read)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1.prototype.apply__O = (function() {
-  return this.apply__Lupickle_Types$Reader()
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1: 1,
-  sr_AbstractFunction0: 1,
-  O: 1,
-  F0: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7() {
-  $c_sr_AbstractFunction1.call(this)
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7.prototype = new $h_sr_AbstractFunction1();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1 = (function($$outer) {
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7.prototype.apply__O__O = (function(v1) {
-  return this.apply__T2__Lm_Signaling$PeerInfo($as_T2(v1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7.prototype.apply__T2__Lm_Signaling$PeerInfo = (function(derive$macro$41) {
-  var arg1 = derive$macro$41.$$und1$f;
-  var arg2 = derive$macro$41.$$und2$f;
-  var id = $as_T(arg1);
-  var type = $as_T(arg2);
-  return new $c_Lm_Signaling$PeerInfo().init___T__T(id, type)
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7: 1,
-  sr_AbstractFunction1: 1,
-  O: 1,
-  F1: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$7$lzycompute$1$1$$anonfun$apply$7;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this);
-  this.$$outer$2 = null;
-  this.derive$macro$57$lzy$1$2 = null;
-  this.bitmap$0$3$2 = null
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
   var this$12 = $m_Lupickle_default$();
   var this$10 = $m_Lupickle_default$();
   var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
-    var x$0 = $as_Lm_Signaling$Error(x$0$2);
-    return $m_Lm_Signaling$Error$().unapply__Lm_Signaling$Error__s_Option(x$0)
+    var x$0 = $as_Lm_Signaling$Join(x$0$2);
+    return $m_Lm_Signaling$Join$().unapply__Lm_Signaling$Join__s_Option(x$0)
   }));
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["peer", "reason"]);
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["remote", "local", "room"]);
   var len = $uI(xs.array$6["length"]);
   var array = $newArrayObject($d_T.getArrayOf(), [len]);
   var elem$1 = 0;
@@ -14733,7 +14830,7 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1.
     array.u[elem$1] = arg1;
     elem$1 = ((1 + elem$1) | 0)
   };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null]);
   var len$1 = $uI(xs$1.array$6["length"]);
   var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
   var elem$1$1 = 0;
@@ -14745,49 +14842,50 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1.
     elem$1$1 = ((1 + elem$1$1) | 0)
   };
   var this$9 = $m_Lupickle_default$();
-  var evidence$3 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$57$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$57$lzy$1$2, this.bitmap$0$3$2);
-  var evidence$4 = $m_Lupickle_default$().StringRW$1;
-  var evidence$9 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple2W__Lupickle_Generated__O__O__O(this$9, evidence$3, evidence$4));
-  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$9);
-  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Error.getClassOf());
-  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.Error", evidence$6)
+  var evidence$7 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$62$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$62$lzy$1$2, this.bitmap$0$2$2);
+  var evidence$8 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$62$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$62$lzy$1$2, this.bitmap$0$2$2);
+  var evidence$9 = $m_Lupickle_default$().StringRW$1;
+  var evidence$9$1 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple3W__Lupickle_Generated__O__O__O__O(this$9, evidence$7, evidence$8, evidence$9));
+  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$9$1);
+  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Join.getClassOf());
+  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.Join", evidence$6)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$57$lzy$1, bitmap$0$3) {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$62$lzy$1, bitmap$0$2) {
   if (($$outer === null)) {
     throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
   } else {
     this.$$outer$2 = $$outer
   };
-  this.derive$macro$57$lzy$1$2 = derive$macro$57$lzy$1;
-  this.bitmap$0$3$2 = bitmap$0$3;
+  this.derive$macro$62$lzy$1$2 = derive$macro$62$lzy$1;
+  this.bitmap$0$2$2 = bitmap$0$2;
   return this
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1.prototype.apply__O = (function() {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype.apply__O = (function() {
   return this.apply__Lupickle_Types$Writer()
 });
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1: 1,
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1: 1,
   sr_AbstractFunction0: 1,
   O: 1,
   F0: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$56$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1;
 /** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1() {
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1() {
   $c_sr_AbstractFunction0.call(this)
 }
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1;
 /** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1() {
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1() {
   /*<skip>*/
 }
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
   var this$12 = $m_Lupickle_default$();
   var this$10 = $m_Lupickle_default$();
   var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
@@ -14824,137 +14922,46 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1.
   var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$PeerInfo.getClassOf());
   return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.PeerInfo", evidence$6)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler = (function($$outer) {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler = (function($$outer) {
   return this
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1.prototype.apply__O = (function() {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1.prototype.apply__O = (function() {
   return this.apply__Lupickle_Types$Writer()
 });
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1: 1,
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1: 1,
   sr_AbstractFunction0: 1,
   O: 1,
   F0: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$57$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$62$lzycompute$1$1;
 /** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1() {
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1() {
   $c_sr_AbstractFunction0.call(this);
   this.$$outer$2 = null;
-  this.derive$macro$57$lzy$1$2 = null;
-  this.bitmap$0$3$2 = null
+  this.derive$macro$62$lzy$1$2 = null;
+  this.derive$macro$70$lzy$1$2 = null;
+  this.bitmap$0$2$2 = null
 }
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1;
 /** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1() {
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1() {
   /*<skip>*/
 }
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype.derive$macro$92$1__p2__Lupickle_Types$Writer = (function() {
-  var elem$1 = null;
-  elem$1 = null;
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  if (((1 & elem$1$1) === 0)) {
-    if (((1 & elem$1$1) === 0)) {
-      elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1(this));
-      elem$1$1 = (1 | elem$1$1)
-    };
-    return $as_Lupickle_Types$Writer(elem$1)
-  } else {
-    return $as_Lupickle_Types$Writer(elem$1)
-  }
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
-  var this$14 = $m_Lupickle_default$();
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
   var this$12 = $m_Lupickle_default$();
-  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
-    var x$0 = $as_Lm_Signaling$Room(x$0$2);
-    return $m_Lm_Signaling$Room$().unapply__Lm_Signaling$Room__s_Option(x$0)
-  }));
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["name", "peer", "config", "members"]);
-  var len = $uI(xs.array$6["length"]);
-  var array = $newArrayObject($d_T.getArrayOf(), [len]);
-  var elem$1 = 0;
-  elem$1 = 0;
-  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
-  while (this$4.hasNext__Z()) {
-    var arg1 = this$4.next__O();
-    array.u[elem$1] = arg1;
-    elem$1 = ((1 + elem$1) | 0)
-  };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null, null]);
-  var len$1 = $uI(xs$1.array$6["length"]);
-  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
-  while (this$8.hasNext__Z()) {
-    var arg1$1 = this$8.next__O();
-    array$1.u[elem$1$1] = arg1$1;
-    elem$1$1 = ((1 + elem$1$1) | 0)
-  };
-  var this$11 = $m_Lupickle_default$();
-  var evidence$13$2 = $m_Lupickle_default$().StringRW$1;
-  var evidence$14 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$57$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$57$lzy$1$2, this.bitmap$0$3$2);
-  var this$9 = $m_Lupickle_default$();
-  var evidence$13 = this.derive$macro$92$1__p2__Lupickle_Types$Writer();
-  var evidence$15 = $s_Lupickle_Implicits$class__SeqishW__Lupickle_Implicits__Lupickle_Types$Writer__Lupickle_Types$Writer(this$9, evidence$13);
-  var this$10 = $m_Lupickle_default$();
-  var evidence$13$1 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$57$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$57$lzy$1$2, this.bitmap$0$3$2);
-  var evidence$16 = $s_Lupickle_Implicits$class__SeqishW__Lupickle_Implicits__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, evidence$13$1);
-  var evidence$9 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple4W__Lupickle_Generated__O__O__O__O__O(this$11, evidence$13$2, evidence$14, evidence$15, evidence$16));
-  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$12, f, array, array$1, evidence$9);
-  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Room.getClassOf());
-  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$14, rw, "m.Signaling.Room", evidence$6)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$57$lzy$1, bitmap$0$3) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$2 = $$outer
-  };
-  this.derive$macro$57$lzy$1$2 = derive$macro$57$lzy$1;
-  this.bitmap$0$3$2 = bitmap$0$3;
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype.apply__O = (function() {
-  return this.apply__Lupickle_Types$Writer()
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1: 1,
-  sr_AbstractFunction0: 1,
-  O: 1,
-  F0: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this)
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
   var this$10 = $m_Lupickle_default$();
   var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
-    var x$0 = $as_Lm_Signaling$RTCIceServer(x$0$2);
-    return $m_Lm_Signaling$RTCIceServer$().unapply__Lm_Signaling$RTCIceServer__s_Option(x$0)
+    var x$0 = $as_Lm_Signaling$Answer(x$0$2);
+    return $m_Lm_Signaling$Answer$().unapply__Lm_Signaling$Answer__s_Option(x$0)
   }));
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["url", "username", "credential"]);
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["remote", "local", "answer"]);
   var len = $uI(xs.array$6["length"]);
   var array = $newArrayObject($d_T.getArrayOf(), [len]);
   var elem$1 = 0;
@@ -14977,41 +14984,196 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$
     elem$1$1 = ((1 + elem$1$1) | 0)
   };
   var this$9 = $m_Lupickle_default$();
-  var evidence$7 = $m_Lupickle_default$().StringRW$1;
-  var evidence$8 = $m_Lupickle_default$().StringRW$1;
-  var evidence$9 = $m_Lupickle_default$().StringRW$1;
+  var evidence$7 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$62$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$62$lzy$1$2, this.bitmap$0$2$2);
+  var evidence$8 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$62$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$62$lzy$1$2, this.bitmap$0$2$2);
+  var evidence$9 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$70$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$70$lzy$1$2, this.bitmap$0$2$2);
   var evidence$9$1 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple3W__Lupickle_Generated__O__O__O__O(this$9, evidence$7, evidence$8, evidence$9));
-  return $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$9$1)
+  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$9$1);
+  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Answer.getClassOf());
+  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.Answer", evidence$6)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1 = (function($$outer) {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$62$lzy$1, derive$macro$70$lzy$1, bitmap$0$2) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.derive$macro$62$lzy$1$2 = derive$macro$62$lzy$1;
+  this.derive$macro$70$lzy$1$2 = derive$macro$70$lzy$1;
+  this.bitmap$0$2$2 = bitmap$0$2;
   return this
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1.prototype.apply__O = (function() {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1.prototype.apply__O = (function() {
   return this.apply__Lupickle_Types$Writer()
 });
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1: 1,
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1: 1,
   sr_AbstractFunction0: 1,
   O: 1,
   F0: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$61$lzycompute$1$1$$anonfun$derive$macro$88$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$67$lzycompute$1$1;
 /** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1() {
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1() {
   $c_sr_AbstractFunction0.call(this)
 }
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1;
 /** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1() {
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1() {
   /*<skip>*/
 }
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
+  var this$12 = $m_Lupickle_default$();
+  var this$10 = $m_Lupickle_default$();
+  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
+    var x$0 = $as_Lm_Signaling$RTCSessionDescription(x$0$2);
+    return $m_Lm_Signaling$RTCSessionDescription$().unapply__Lm_Signaling$RTCSessionDescription__s_Option(x$0)
+  }));
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["type", "sdp"]);
+  var len = $uI(xs.array$6["length"]);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
+  var len$1 = $uI(xs$1.array$6["length"]);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$9 = $m_Lupickle_default$();
+  var evidence$3 = $m_Lupickle_default$().StringRW$1;
+  var evidence$4 = $m_Lupickle_default$().StringRW$1;
+  var evidence$9 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple2W__Lupickle_Generated__O__O__O(this$9, evidence$3, evidence$4));
+  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$9);
+  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$RTCSessionDescription.getClassOf());
+  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.RTCSessionDescription", evidence$6)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler = (function($$outer) {
+  return this
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Writer()
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$70$lzycompute$1$1;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1() {
+  $c_sr_AbstractFunction0.call(this);
+  this.$$outer$2 = null;
+  this.derive$macro$62$lzy$1$2 = null;
+  this.derive$macro$76$lzy$1$2 = null;
+  this.bitmap$0$2$2 = null;
+  this.bitmap$1$2$2 = null
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
+  var this$12 = $m_Lupickle_default$();
+  var this$10 = $m_Lupickle_default$();
+  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
+    var x$0 = $as_Lm_Signaling$Candidate(x$0$2);
+    return $m_Lm_Signaling$Candidate$().unapply__Lm_Signaling$Candidate__s_Option(x$0)
+  }));
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["remote", "local", "candidate"]);
+  var len = $uI(xs.array$6["length"]);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null]);
+  var len$1 = $uI(xs$1.array$6["length"]);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$9 = $m_Lupickle_default$();
+  var evidence$7 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$62$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$62$lzy$1$2, this.bitmap$0$2$2);
+  var evidence$8 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$62$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$62$lzy$1$2, this.bitmap$0$2$2);
+  var evidence$9 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$76$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$76$lzy$1$2, this.bitmap$1$2$2);
+  var evidence$9$1 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple3W__Lupickle_Generated__O__O__O__O(this$9, evidence$7, evidence$8, evidence$9));
+  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$9$1);
+  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Candidate.getClassOf());
+  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.Candidate", evidence$6)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef = (function($$outer, derive$macro$62$lzy$1, derive$macro$76$lzy$1, bitmap$0$2, bitmap$1$2) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.derive$macro$62$lzy$1$2 = derive$macro$62$lzy$1;
+  this.derive$macro$76$lzy$1$2 = derive$macro$76$lzy$1;
+  this.bitmap$0$2$2 = bitmap$0$2;
+  this.bitmap$1$2$2 = bitmap$1$2;
+  return this
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Writer()
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$73$lzycompute$1$1;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1() {
+  $c_sr_AbstractFunction0.call(this)
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
   var this$12 = $m_Lupickle_default$();
   var this$10 = $m_Lupickle_default$();
   var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
@@ -15049,257 +15211,30 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1.
   var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$RTCIceCandidate.getClassOf());
   return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.RTCIceCandidate", evidence$6)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler = (function($$outer) {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler = (function($$outer) {
   return this
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1.prototype.apply__O = (function() {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1.prototype.apply__O = (function() {
   return this.apply__Lupickle_Types$Writer()
 });
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1: 1,
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1: 1,
   sr_AbstractFunction0: 1,
   O: 1,
   F0: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$68$lzycompute$1$1;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this);
-  this.$$outer$2 = null;
-  this.derive$macro$57$lzy$1$2 = null;
-  this.derive$macro$68$lzy$1$2 = null;
-  this.bitmap$0$3$2 = null
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
-  var this$12 = $m_Lupickle_default$();
-  var this$10 = $m_Lupickle_default$();
-  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
-    var x$0 = $as_Lm_Signaling$Candidate(x$0$2);
-    return $m_Lm_Signaling$Candidate$().unapply__Lm_Signaling$Candidate__s_Option(x$0)
-  }));
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["peer", "candidate"]);
-  var len = $uI(xs.array$6["length"]);
-  var array = $newArrayObject($d_T.getArrayOf(), [len]);
-  var elem$1 = 0;
-  elem$1 = 0;
-  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
-  while (this$4.hasNext__Z()) {
-    var arg1 = this$4.next__O();
-    array.u[elem$1] = arg1;
-    elem$1 = ((1 + elem$1) | 0)
-  };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
-  var len$1 = $uI(xs$1.array$6["length"]);
-  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
-  while (this$8.hasNext__Z()) {
-    var arg1$1 = this$8.next__O();
-    array$1.u[elem$1$1] = arg1$1;
-    elem$1$1 = ((1 + elem$1$1) | 0)
-  };
-  var this$9 = $m_Lupickle_default$();
-  var evidence$3 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$57$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$57$lzy$1$2, this.bitmap$0$3$2);
-  var evidence$4 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$68$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$68$lzy$1$2, this.bitmap$0$3$2);
-  var evidence$9 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple2W__Lupickle_Generated__O__O__O(this$9, evidence$3, evidence$4));
-  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$9);
-  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Candidate.getClassOf());
-  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.Candidate", evidence$6)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$57$lzy$1, derive$macro$68$lzy$1, bitmap$0$3) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$2 = $$outer
-  };
-  this.derive$macro$57$lzy$1$2 = derive$macro$57$lzy$1;
-  this.derive$macro$68$lzy$1$2 = derive$macro$68$lzy$1;
-  this.bitmap$0$3$2 = bitmap$0$3;
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1.prototype.apply__O = (function() {
-  return this.apply__Lupickle_Types$Writer()
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1: 1,
-  sr_AbstractFunction0: 1,
-  O: 1,
-  F0: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$72$lzycompute$1$1;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this);
-  this.$$outer$2 = null;
-  this.derive$macro$57$lzy$1$2 = null;
-  this.bitmap$0$3$2 = null
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
-  var this$12 = $m_Lupickle_default$();
-  var this$10 = $m_Lupickle_default$();
-  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
-    var x$0 = $as_Lm_Signaling$Join(x$0$2);
-    return $m_Lm_Signaling$Join$().unapply__Lm_Signaling$Join__s_Option(x$0)
-  }));
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["room", "peer"]);
-  var len = $uI(xs.array$6["length"]);
-  var array = $newArrayObject($d_T.getArrayOf(), [len]);
-  var elem$1 = 0;
-  elem$1 = 0;
-  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
-  while (this$4.hasNext__Z()) {
-    var arg1 = this$4.next__O();
-    array.u[elem$1] = arg1;
-    elem$1 = ((1 + elem$1) | 0)
-  };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
-  var len$1 = $uI(xs$1.array$6["length"]);
-  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
-  while (this$8.hasNext__Z()) {
-    var arg1$1 = this$8.next__O();
-    array$1.u[elem$1$1] = arg1$1;
-    elem$1$1 = ((1 + elem$1$1) | 0)
-  };
-  var this$9 = $m_Lupickle_default$();
-  var evidence$3 = $m_Lupickle_default$().StringRW$1;
-  var evidence$4 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$57$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$57$lzy$1$2, this.bitmap$0$3$2);
-  var evidence$9 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple2W__Lupickle_Generated__O__O__O(this$9, evidence$3, evidence$4));
-  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$9);
-  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Join.getClassOf());
-  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.Join", evidence$6)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$57$lzy$1, bitmap$0$3) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$2 = $$outer
-  };
-  this.derive$macro$57$lzy$1$2 = derive$macro$57$lzy$1;
-  this.bitmap$0$3$2 = bitmap$0$3;
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1.prototype.apply__O = (function() {
-  return this.apply__Lupickle_Types$Writer()
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1: 1,
-  sr_AbstractFunction0: 1,
-  O: 1,
-  F0: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$75$lzycompute$1$1;
-/** @constructor */
-function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this);
-  this.$$outer$2 = null;
-  this.derive$macro$57$lzy$1$2 = null;
-  this.derive$macro$80$lzy$1$2 = null;
-  this.bitmap$0$3$2 = null;
-  this.bitmap$1$2$2 = null
-}
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1;
-/** @constructor */
-function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1.prototype;
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
-  var this$12 = $m_Lupickle_default$();
-  var this$10 = $m_Lupickle_default$();
-  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
-    var x$0 = $as_Lm_Signaling$Answer(x$0$2);
-    return $m_Lm_Signaling$Answer$().unapply__Lm_Signaling$Answer__s_Option(x$0)
-  }));
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["peer", "answer"]);
-  var len = $uI(xs.array$6["length"]);
-  var array = $newArrayObject($d_T.getArrayOf(), [len]);
-  var elem$1 = 0;
-  elem$1 = 0;
-  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
-  while (this$4.hasNext__Z()) {
-    var arg1 = this$4.next__O();
-    array.u[elem$1] = arg1;
-    elem$1 = ((1 + elem$1) | 0)
-  };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
-  var len$1 = $uI(xs$1.array$6["length"]);
-  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
-  while (this$8.hasNext__Z()) {
-    var arg1$1 = this$8.next__O();
-    array$1.u[elem$1$1] = arg1$1;
-    elem$1$1 = ((1 + elem$1$1) | 0)
-  };
-  var this$9 = $m_Lupickle_default$();
-  var evidence$3 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$57$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$57$lzy$1$2, this.bitmap$0$3$2);
-  var evidence$4 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$80$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$80$lzy$1$2, this.bitmap$1$2$2);
-  var evidence$9 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple2W__Lupickle_Generated__O__O__O(this$9, evidence$3, evidence$4));
-  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$9);
-  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Answer.getClassOf());
-  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.Answer", evidence$6)
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef = (function($$outer, derive$macro$57$lzy$1, derive$macro$80$lzy$1, bitmap$0$3, bitmap$1$2) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$2 = $$outer
-  };
-  this.derive$macro$57$lzy$1$2 = derive$macro$57$lzy$1;
-  this.derive$macro$80$lzy$1$2 = derive$macro$80$lzy$1;
-  this.bitmap$0$3$2 = bitmap$0$3;
-  this.bitmap$1$2$2 = bitmap$1$2;
-  return this
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1.prototype.apply__O = (function() {
-  return this.apply__Lupickle_Types$Writer()
-});
-var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1 = new $TypeData().initClass({
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1: 0
-}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1", {
-  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1: 1,
-  sr_AbstractFunction0: 1,
-  O: 1,
-  F0: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$78$lzycompute$1$1;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$76$lzycompute$1$1;
 /** @constructor */
 function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$80$lzycompute$1$1() {
-  $c_sr_AbstractFunction0.call(this)
+  $c_sr_AbstractFunction0.call(this);
+  this.$$outer$2 = null;
+  this.derive$macro$62$lzy$1$2 = null;
+  this.derive$macro$70$lzy$1$2 = null;
+  this.bitmap$0$2$2 = null
 }
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$80$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$80$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$80$lzycompute$1$1;
@@ -15312,10 +15247,10 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$80$lzycompute$1$1.
   var this$12 = $m_Lupickle_default$();
   var this$10 = $m_Lupickle_default$();
   var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
-    var x$0 = $as_Lm_Signaling$RTCSessionDescription(x$0$2);
-    return $m_Lm_Signaling$RTCSessionDescription$().unapply__Lm_Signaling$RTCSessionDescription__s_Option(x$0)
+    var x$0 = $as_Lm_Signaling$Offer(x$0$2);
+    return $m_Lm_Signaling$Offer$().unapply__Lm_Signaling$Offer__s_Option(x$0)
   }));
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["type", "sdp"]);
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["remote", "local", "offer"]);
   var len = $uI(xs.array$6["length"]);
   var array = $newArrayObject($d_T.getArrayOf(), [len]);
   var elem$1 = 0;
@@ -15326,7 +15261,7 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$80$lzycompute$1$1.
     array.u[elem$1] = arg1;
     elem$1 = ((1 + elem$1) | 0)
   };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null]);
   var len$1 = $uI(xs$1.array$6["length"]);
   var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
   var elem$1$1 = 0;
@@ -15338,14 +15273,23 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$80$lzycompute$1$1.
     elem$1$1 = ((1 + elem$1$1) | 0)
   };
   var this$9 = $m_Lupickle_default$();
-  var evidence$3 = $m_Lupickle_default$().StringRW$1;
-  var evidence$4 = $m_Lupickle_default$().StringRW$1;
-  var evidence$9 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple2W__Lupickle_Generated__O__O__O(this$9, evidence$3, evidence$4));
-  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$9);
-  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$RTCSessionDescription.getClassOf());
-  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.RTCSessionDescription", evidence$6)
+  var evidence$7 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$62$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$62$lzy$1$2, this.bitmap$0$2$2);
+  var evidence$8 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$62$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$62$lzy$1$2, this.bitmap$0$2$2);
+  var evidence$9 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$70$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$70$lzy$1$2, this.bitmap$0$2$2);
+  var evidence$9$1 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple3W__Lupickle_Generated__O__O__O__O(this$9, evidence$7, evidence$8, evidence$9));
+  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$9$1);
+  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Offer.getClassOf());
+  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.Offer", evidence$6)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$80$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler = (function($$outer) {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$80$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$62$lzy$1, derive$macro$70$lzy$1, bitmap$0$2) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.derive$macro$62$lzy$1$2 = derive$macro$62$lzy$1;
+  this.derive$macro$70$lzy$1$2 = derive$macro$70$lzy$1;
+  this.bitmap$0$2$2 = bitmap$0$2;
   return this
 });
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$80$lzycompute$1$1.prototype.apply__O = (function() {
@@ -15366,10 +15310,8 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$80$lzycompute$1$1.
 function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1() {
   $c_sr_AbstractFunction0.call(this);
   this.$$outer$2 = null;
-  this.derive$macro$57$lzy$1$2 = null;
-  this.derive$macro$80$lzy$1$2 = null;
-  this.bitmap$0$3$2 = null;
-  this.bitmap$1$2$2 = null
+  this.derive$macro$62$lzy$1$2 = null;
+  this.bitmap$0$2$2 = null
 }
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1;
@@ -15379,13 +15321,13 @@ function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycom
 }
 $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1.prototype;
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
+  var this$14 = $m_Lupickle_default$();
   var this$12 = $m_Lupickle_default$();
-  var this$10 = $m_Lupickle_default$();
   var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
-    var x$0 = $as_Lm_Signaling$Offer(x$0$2);
-    return $m_Lm_Signaling$Offer$().unapply__Lm_Signaling$Offer__s_Option(x$0)
+    var x$0 = $as_Lm_Signaling$Room(x$0$2);
+    return $m_Lm_Signaling$Room$().unapply__Lm_Signaling$Room__s_Option(x$0)
   }));
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["peer", "offer"]);
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["remote", "local", "name", "config", "members"]);
   var len = $uI(xs.array$6["length"]);
   var array = $newArrayObject($d_T.getArrayOf(), [len]);
   var elem$1 = 0;
@@ -15396,7 +15338,7 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1.
     array.u[elem$1] = arg1;
     elem$1 = ((1 + elem$1) | 0)
   };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null, null, null]);
   var len$1 = $uI(xs$1.array$6["length"]);
   var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
   var elem$1$1 = 0;
@@ -15407,28 +15349,48 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1.
     array$1.u[elem$1$1] = arg1$1;
     elem$1$1 = ((1 + elem$1$1) | 0)
   };
+  var this$11 = $m_Lupickle_default$();
+  var evidence$21 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$62$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$62$lzy$1$2, this.bitmap$0$2$2);
+  var evidence$22 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$62$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$62$lzy$1$2, this.bitmap$0$2$2);
+  var evidence$23 = $m_Lupickle_default$().StringRW$1;
   var this$9 = $m_Lupickle_default$();
-  var evidence$3 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$57$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$57$lzy$1$2, this.bitmap$0$3$2);
-  var evidence$4 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$80$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$80$lzy$1$2, this.bitmap$1$2$2);
-  var evidence$9 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple2W__Lupickle_Generated__O__O__O(this$9, evidence$3, evidence$4));
-  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$9);
-  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Offer.getClassOf());
-  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.Offer", evidence$6)
+  var evidence$13 = this.derive$macro$101$1__p2__Lupickle_Types$Writer();
+  var evidence$24 = $s_Lupickle_Implicits$class__SeqishW__Lupickle_Implicits__Lupickle_Types$Writer__Lupickle_Types$Writer(this$9, evidence$13);
+  var this$10 = $m_Lupickle_default$();
+  var evidence$13$1 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$62$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$62$lzy$1$2, this.bitmap$0$2$2);
+  var evidence$25 = $s_Lupickle_Implicits$class__SeqishW__Lupickle_Implicits__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, evidence$13$1);
+  var evidence$9 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple5W__Lupickle_Generated__O__O__O__O__O__O(this$11, evidence$21, evidence$22, evidence$23, evidence$24, evidence$25));
+  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$12, f, array, array$1, evidence$9);
+  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Room.getClassOf());
+  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$14, rw, "m.Signaling.Room", evidence$6)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef = (function($$outer, derive$macro$57$lzy$1, derive$macro$80$lzy$1, bitmap$0$3, bitmap$1$2) {
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$62$lzy$1, bitmap$0$2) {
   if (($$outer === null)) {
     throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
   } else {
     this.$$outer$2 = $$outer
   };
-  this.derive$macro$57$lzy$1$2 = derive$macro$57$lzy$1;
-  this.derive$macro$80$lzy$1$2 = derive$macro$80$lzy$1;
-  this.bitmap$0$3$2 = bitmap$0$3;
-  this.bitmap$1$2$2 = bitmap$1$2;
+  this.derive$macro$62$lzy$1$2 = derive$macro$62$lzy$1;
+  this.bitmap$0$2$2 = bitmap$0$2;
   return this
 });
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1.prototype.apply__O = (function() {
   return this.apply__Lupickle_Types$Writer()
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1.prototype.derive$macro$101$1__p2__Lupickle_Types$Writer = (function() {
+  var elem$1 = null;
+  elem$1 = null;
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  if (((1 & elem$1$1) === 0)) {
+    if (((1 & elem$1$1) === 0)) {
+      elem$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1(this));
+      elem$1$1 = (1 | elem$1$1)
+    };
+    return $as_Lupickle_Types$Writer(elem$1)
+  } else {
+    return $as_Lupickle_Types$Writer(elem$1)
+  }
 });
 var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1 = new $TypeData().initClass({
   Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1: 0
@@ -15441,6 +15403,148 @@ var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$
   Ljava_io_Serializable: 1
 });
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1() {
+  $c_sr_AbstractFunction0.call(this)
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
+  var this$12 = $m_Lupickle_default$();
+  var this$10 = $m_Lupickle_default$();
+  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
+    var x$0 = $as_Lm_Signaling$RTCIceServer(x$0$2);
+    return $m_Lm_Signaling$RTCIceServer$().unapply__Lm_Signaling$RTCIceServer__s_Option(x$0)
+  }));
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["url", "username", "credential"]);
+  var len = $uI(xs.array$6["length"]);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null]);
+  var len$1 = $uI(xs$1.array$6["length"]);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$9 = $m_Lupickle_default$();
+  var evidence$7 = $m_Lupickle_default$().StringRW$1;
+  var evidence$8 = $m_Lupickle_default$().StringRW$1;
+  var evidence$9 = $m_Lupickle_default$().StringRW$1;
+  var evidence$9$1 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple3W__Lupickle_Generated__O__O__O__O(this$9, evidence$7, evidence$8, evidence$9));
+  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$9$1);
+  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$RTCIceServer.getClassOf());
+  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.RTCIceServer", evidence$6)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Writer()
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1 = (function($$outer) {
+  return this
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$84$lzycompute$1$1$$anonfun$derive$macro$97$lzycompute$1$1;
+/** @constructor */
+function $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1() {
+  $c_sr_AbstractFunction0.call(this);
+  this.$$outer$2 = null;
+  this.derive$macro$62$lzy$1$2 = null;
+  this.bitmap$0$2$2 = null
+}
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1.prototype.constructor = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1;
+/** @constructor */
+function $h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1.prototype = $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1.prototype;
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
+  var this$12 = $m_Lupickle_default$();
+  var this$10 = $m_Lupickle_default$();
+  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
+    var x$0 = $as_Lm_Signaling$Error(x$0$2);
+    return $m_Lm_Signaling$Error$().unapply__Lm_Signaling$Error__s_Option(x$0)
+  }));
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["remote", "local", "reason"]);
+  var len = $uI(xs.array$6["length"]);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6["length"]));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null]);
+  var len$1 = $uI(xs$1.array$6["length"]);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6["length"]));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$9 = $m_Lupickle_default$();
+  var evidence$7 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$62$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$62$lzy$1$2, this.bitmap$0$2$2);
+  var evidence$8 = this.$$outer$2.io$surfkit$client$WebSocketSignaler$$derive$macro$62$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Writer(this.derive$macro$62$lzy$1$2, this.bitmap$0$2$2);
+  var evidence$9 = $m_Lupickle_default$().StringRW$1;
+  var evidence$9$1 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple3W__Lupickle_Generated__O__O__O__O(this$9, evidence$7, evidence$8, evidence$9));
+  var rw = $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$9$1);
+  var evidence$6 = new $c_s_reflect_ClassTag$ClassClassTag().init___jl_Class($d_Lm_Signaling$Error.getClassOf());
+  return $s_Lupickle_AttributeTagged$class__annotate__Lupickle_AttributeTagged__Lupickle_Types$Writer__T__s_reflect_ClassTag__Lupickle_Types$Writer(this$12, rw, "m.Signaling.Error", evidence$6)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1.prototype.init___Lio_surfkit_client_WebSocketSignaler__sr_ObjectRef__sr_VolatileByteRef = (function($$outer, derive$macro$62$lzy$1, bitmap$0$2) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.derive$macro$62$lzy$1$2 = derive$macro$62$lzy$1;
+  this.bitmap$0$2$2 = bitmap$0$2;
+  return this
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Writer()
+});
+var $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1 = new $TypeData().initClass({
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1: 0
+}, false, "io.surfkit.client.WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1", {
+  Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1.prototype.$classData = $d_Lio_surfkit_client_WebSocketSignaler$$anonfun$derive$macro$92$lzycompute$1$1;
 /** @constructor */
 function $c_Lio_surfkit_clientlib_webrtc_LocalMedia$$anonfun$startLocalMedia$1() {
   $c_sr_AbstractFunction1.call(this);
@@ -15464,10 +15568,8 @@ $c_Lio_surfkit_clientlib_webrtc_LocalMedia$$anonfun$startLocalMedia$1.prototype.
   };
   this.$$outer$2.localStreams$1 = $as_sci_Set(this.$$outer$2.localStreams$1.$$plus__O__sc_Set(stream));
   this.$$outer$2.Config__Lio_surfkit_clientlib_webrtc_LocalMedia$Config$();
-  var this$6 = $m_s_Console$();
-  var this$7 = this$6.outVar$2;
-  $as_Ljava_io_PrintStream(this$7.tl$1.get__O()).println__O__V("localStream");
-  var this$9 = this.p$1$2;
+  this.$$outer$2.localStream$1.apply__O__O(stream);
+  var this$5 = this.p$1$2;
   try {
     var result = new $c_s_util_Success().init___O(stream)
   } catch (e) {
@@ -15488,7 +15590,7 @@ $c_Lio_surfkit_clientlib_webrtc_LocalMedia$$anonfun$startLocalMedia$1.prototype.
       throw e
     }
   };
-  return $s_s_concurrent_Promise$class__complete__s_concurrent_Promise__s_util_Try__s_concurrent_Promise(this$9, result)
+  return $s_s_concurrent_Promise$class__complete__s_concurrent_Promise__s_util_Try__s_concurrent_Promise(this$5, result)
 });
 $c_Lio_surfkit_clientlib_webrtc_LocalMedia$$anonfun$startLocalMedia$1.prototype.apply__O__O = (function(v1) {
   return this.apply__Lorg_scalajs_dom_experimental_webrtc_MediaStream__s_concurrent_Promise(v1)
@@ -15530,7 +15632,17 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3.prototype.apply__O__O = (functio
   this.apply__Lorg_scalajs_dom_experimental_webrtc_MediaStreamEvent__V(v1)
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3.prototype.apply__Lorg_scalajs_dom_experimental_webrtc_MediaStreamEvent__V = (function(evt) {
-  var this$2 = this.$$outer$2.io$surfkit$clientlib$webrtc$Peer$$streamPromise$1;
+  var array = evt["stream"]["getTracks"]();
+  var f = new $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3().init___Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3__Lorg_scalajs_dom_experimental_webrtc_MediaStreamEvent(this, evt);
+  var i = 0;
+  var len = $uI(array["length"]);
+  while ((i < len)) {
+    var index = i;
+    var v1 = array[index];
+    f.apply__Lorg_scalajs_dom_experimental_webrtc_MediaStreamTrack__V(v1);
+    i = ((1 + i) | 0)
+  };
+  var this$3 = this.$$outer$2.io$surfkit$clientlib$webrtc$Peer$$streamPromise$1;
   try {
     var result = new $c_s_util_Success().init___O(evt["stream"])
   } catch (e) {
@@ -15551,7 +15663,7 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3.prototype.apply__Lorg_scalajs_do
       throw e
     }
   };
-  $s_s_concurrent_Promise$class__complete__s_concurrent_Promise__s_util_Try__s_concurrent_Promise(this$2, result);
+  $s_s_concurrent_Promise$class__complete__s_concurrent_Promise__s_util_Try__s_concurrent_Promise(this$3, result);
   this.$$outer$2.onAddStream$1.apply__O__O(evt["stream"])
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3.prototype.init___Lio_surfkit_clientlib_webrtc_Peer = (function($$outer) {
@@ -15573,6 +15685,101 @@ var $d_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3 = new $TypeData().initClass(
   Ljava_io_Serializable: 1
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3.prototype.$classData = $d_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3;
+/** @constructor */
+function $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3() {
+  $c_sr_AbstractFunction1.call(this);
+  this.$$outer$2 = null;
+  this.evt$1$f = null
+}
+$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3.prototype.constructor = $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3;
+/** @constructor */
+function $h_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3.prototype = $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3.prototype;
+$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3.prototype.apply__O__O = (function(v1) {
+  this.apply__Lorg_scalajs_dom_experimental_webrtc_MediaStreamTrack__V(v1)
+});
+$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3.prototype.apply__Lorg_scalajs_dom_experimental_webrtc_MediaStreamTrack__V = (function(t) {
+  t["oneended"] = (function(arg$outer) {
+    return (function(ev$2) {
+      var this$2 = $m_s_Console$();
+      var this$3 = this$2.outVar$2;
+      $as_Ljava_io_PrintStream(this$3.tl$1.get__O()).println__O__V("Track oneended");
+      arg$outer.$$outer$2.$$outer$2.onRemoveStream$1.apply__O__O(arg$outer.evt$1$f["stream"])
+    })
+  })(this)
+});
+$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3__Lorg_scalajs_dom_experimental_webrtc_MediaStreamEvent = (function($$outer, evt$1) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.evt$1$f = evt$1;
+  return this
+});
+var $d_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3 = new $TypeData().initClass({
+  Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3: 0
+}, false, "io.surfkit.clientlib.webrtc.Peer$$anonfun$3$$anonfun$apply$3", {
+  Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3: 1,
+  sr_AbstractFunction1: 1,
+  O: 1,
+  F1: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3.prototype.$classData = $d_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$3$$anonfun$apply$3;
+/** @constructor */
+function $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1() {
+  $c_sr_AbstractFunction1.call(this);
+  this.$$outer$2 = null
+}
+$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1.prototype.constructor = $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1;
+/** @constructor */
+function $h_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1.prototype = $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1.prototype;
+$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1.prototype.apply__O__O = (function(v1) {
+  this.apply__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription__V(v1)
+});
+$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1.prototype.init___Lio_surfkit_clientlib_webrtc_Peer = (function($$outer) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  return this
+});
+$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1.prototype.apply__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription__V = (function(answer) {
+  this.$$outer$2.pc$1["setLocalDescription"](answer, (function(arg$outer, answer$1) {
+    return (function() {
+      var x = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["createAnswer for:  ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([arg$outer.$$outer$2.remote$1]));
+      var this$2 = $m_s_Console$();
+      var this$3 = this$2.outVar$2;
+      $as_Ljava_io_PrintStream(this$3.tl$1.get__O()).println__O__V(x);
+      arg$outer.$$outer$2.io$surfkit$clientlib$webrtc$Peer$$p$f.signaler$1.send__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(new $c_Lio_surfkit_clientlib_webrtc_Peer$Answer().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription(arg$outer.$$outer$2.remote$1, arg$outer.$$outer$2.local$1, answer$1))
+    })
+  })(this, answer), (function(arg$outer$1) {
+    return (function(err$2) {
+      arg$outer$1.$$outer$2.handleError__Lorg_scalajs_dom_raw_DOMError__V(err$2)
+    })
+  })(this))
+});
+var $d_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1 = new $TypeData().initClass({
+  Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1: 0
+}, false, "io.surfkit.clientlib.webrtc.Peer$$anonfun$answer$1", {
+  Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1: 1,
+  sr_AbstractFunction1: 1,
+  O: 1,
+  F1: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1.prototype.$classData = $d_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$answer$1;
 /** @constructor */
 function $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$start$1() {
   $c_sr_AbstractFunction1.call(this);
@@ -15601,12 +15808,12 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$start$1.prototype.apply__Lorg_scal
   var this$4 = $m_s_Console$();
   var this$5 = this$4.outVar$2;
   $as_Ljava_io_PrintStream(this$5.tl$1.get__O()).println__O__V("setLocalDescription");
-  this.$$outer$2.pc$1["setLocalDescription"](offer, (function(arg$outer, offer$1) {
+  this.$$outer$2.pc$1["setLocalDescription"](offer, (function(arg$outer, offer$2) {
     return (function() {
       var this$7 = $m_s_Console$();
       var this$8 = this$7.outVar$2;
       $as_Ljava_io_PrintStream(this$8.tl$1.get__O()).println__O__V("signal offer");
-      arg$outer.$$outer$2.io$surfkit$clientlib$webrtc$Peer$$p$f.signaler$1.send__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(new $c_Lio_surfkit_clientlib_webrtc_Peer$Offer().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription(arg$outer.$$outer$2.info$1, offer$1))
+      arg$outer.$$outer$2.io$surfkit$clientlib$webrtc$Peer$$p$f.signaler$1.send__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(new $c_Lio_surfkit_clientlib_webrtc_Peer$Offer().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription(arg$outer.$$outer$2.remote$1, arg$outer.$$outer$2.local$1, offer$2))
     })
   })(this, offer), (function(arg$outer$1) {
     return (function(err$2) {
@@ -15710,7 +15917,8 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo.prototype.$classData = $d_Lio_surf
 /** @constructor */
 function $c_Lio_surfkit_clientlib_webrtc_Peer$Props() {
   $c_O.call(this);
-  this.id$1 = null;
+  this.local$1 = null;
+  this.remote$1 = null;
   this.signaler$1 = null;
   this.rtcConfiguration$1 = null;
   this.receiveMedia$1 = null;
@@ -15731,25 +15939,48 @@ $h_Lio_surfkit_clientlib_webrtc_Peer$Props.prototype = $c_Lio_surfkit_clientlib_
 $c_Lio_surfkit_clientlib_webrtc_Peer$Props.prototype.productPrefix__T = (function() {
   return "Props"
 });
+$c_Lio_surfkit_clientlib_webrtc_Peer$Props.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerSignaler__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__T__Z__Z__s_Option__T = (function(local, remote, signaler, rtcConfiguration, receiveMedia, peerConnectionConstraints, type, oneway, sharemyscreen, browserPrefix, sid) {
+  this.local$1 = local;
+  this.remote$1 = remote;
+  this.signaler$1 = signaler;
+  this.rtcConfiguration$1 = rtcConfiguration;
+  this.receiveMedia$1 = receiveMedia;
+  this.peerConnectionConstraints$1 = peerConnectionConstraints;
+  this.type$1 = type;
+  this.oneway$1 = oneway;
+  this.sharemyscreen$1 = sharemyscreen;
+  this.browserPrefix$1 = browserPrefix;
+  this.sid$1 = sid;
+  return this
+});
 $c_Lio_surfkit_clientlib_webrtc_Peer$Props.prototype.productArity__I = (function() {
-  return 10
+  return 11
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Props.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
   } else if ($is_Lio_surfkit_clientlib_webrtc_Peer$Props(x$1)) {
     var Props$1 = $as_Lio_surfkit_clientlib_webrtc_Peer$Props(x$1);
-    if ((this.id$1 === Props$1.id$1)) {
-      var x = this.signaler$1;
-      var x$2 = Props$1.signaler$1;
-      var jsx$2 = (x === x$2)
+    var x = this.local$1;
+    var x$2 = Props$1.local$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.remote$1;
+      var x$4 = Props$1.remote$1;
+      var jsx$3 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      var jsx$3 = false
+    };
+    if (jsx$3) {
+      var x$5 = this.signaler$1;
+      var x$6 = Props$1.signaler$1;
+      var jsx$2 = (x$5 === x$6)
     } else {
       var jsx$2 = false
     };
     if (((((((jsx$2 && $m_sr_BoxesRunTime$().equals__O__O__Z(this.rtcConfiguration$1, Props$1.rtcConfiguration$1)) && $m_sr_BoxesRunTime$().equals__O__O__Z(this.receiveMedia$1, Props$1.receiveMedia$1)) && $m_sr_BoxesRunTime$().equals__O__O__Z(this.peerConnectionConstraints$1, Props$1.peerConnectionConstraints$1)) && (this.type$1 === Props$1.type$1)) && (this.oneway$1 === Props$1.oneway$1)) && (this.sharemyscreen$1 === Props$1.sharemyscreen$1))) {
-      var x$3 = this.browserPrefix$1;
-      var x$4 = Props$1.browserPrefix$1;
-      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+      var x$7 = this.browserPrefix$1;
+      var x$8 = Props$1.browserPrefix$1;
+      var jsx$1 = ((x$7 === null) ? (x$8 === null) : x$7.equals__O__Z(x$8))
     } else {
       var jsx$1 = false
     };
@@ -15765,42 +15996,46 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Props.prototype.equals__O__Z = (function(x$
 $c_Lio_surfkit_clientlib_webrtc_Peer$Props.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.id$1;
+      return this.local$1;
       break
     }
     case 1: {
-      return this.signaler$1;
+      return this.remote$1;
       break
     }
     case 2: {
-      return this.rtcConfiguration$1;
+      return this.signaler$1;
       break
     }
     case 3: {
-      return this.receiveMedia$1;
+      return this.rtcConfiguration$1;
       break
     }
     case 4: {
-      return this.peerConnectionConstraints$1;
+      return this.receiveMedia$1;
       break
     }
     case 5: {
-      return this.type$1;
+      return this.peerConnectionConstraints$1;
       break
     }
     case 6: {
-      return this.oneway$1;
+      return this.type$1;
       break
     }
     case 7: {
-      return this.sharemyscreen$1;
+      return this.oneway$1;
       break
     }
     case 8: {
-      return this.browserPrefix$1;
+      return this.sharemyscreen$1;
       break
     }
     case 9: {
+      return this.browserPrefix$1;
+      break
+    }
+    case 10: {
       return this.sid$1;
       break
     }
@@ -15812,22 +16047,10 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Props.prototype.productElement__I__O = (fun
 $c_Lio_surfkit_clientlib_webrtc_Peer$Props.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
-$c_Lio_surfkit_clientlib_webrtc_Peer$Props.prototype.init___T__Lio_surfkit_clientlib_webrtc_Peer$PeerSignaler__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__T__Z__Z__s_Option__T = (function(id, signaler, rtcConfiguration, receiveMedia, peerConnectionConstraints, type, oneway, sharemyscreen, browserPrefix, sid) {
-  this.id$1 = id;
-  this.signaler$1 = signaler;
-  this.rtcConfiguration$1 = rtcConfiguration;
-  this.receiveMedia$1 = receiveMedia;
-  this.peerConnectionConstraints$1 = peerConnectionConstraints;
-  this.type$1 = type;
-  this.oneway$1 = oneway;
-  this.sharemyscreen$1 = sharemyscreen;
-  this.browserPrefix$1 = browserPrefix;
-  this.sid$1 = sid;
-  return this
-});
 $c_Lio_surfkit_clientlib_webrtc_Peer$Props.prototype.hashCode__I = (function() {
   var acc = (-889275714);
-  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.id$1));
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.local$1));
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.remote$1));
   acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.signaler$1));
   acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.rtcConfiguration$1));
   acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.receiveMedia$1));
@@ -15837,7 +16060,7 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Props.prototype.hashCode__I = (function() {
   acc = $m_sr_Statics$().mix__I__I__I(acc, (this.sharemyscreen$1 ? 1231 : 1237));
   acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.browserPrefix$1));
   acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.sid$1));
-  return $m_sr_Statics$().finalizeHash__I__I__I(acc, 10)
+  return $m_sr_Statics$().finalizeHash__I__I__I(acc, 11)
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Props.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
@@ -15895,7 +16118,7 @@ $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC$$anonfun$joinRoom$1.prototype.apply
           var index = i;
           var arg1 = array[index];
           var x$1 = $as_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo(arg1);
-          if ((x$1.id$1 !== this.$$outer$2.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.peerInfo$1.id$1)) {
+          if ((x$1.id$1 !== this.$$outer$2.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.localPeer$1.id$1)) {
             array$1["push"](arg1)
           };
           i = ((1 + i) | 0)
@@ -15906,7 +16129,16 @@ $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC$$anonfun$joinRoom$1.prototype.apply
           var index$1 = i$1;
           var arg1$1 = array$1[index$1];
           var m = $as_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo(arg1$1);
-          var peer = this.$$outer$2.createPeer__Lio_surfkit_clientlib_webrtc_Peer$Props__Lio_surfkit_clientlib_webrtc_Peer(new $c_Lio_surfkit_clientlib_webrtc_Peer$Props().init___T__Lio_surfkit_clientlib_webrtc_Peer$PeerSignaler__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__T__Z__Z__s_Option__T(m.id$1, this.$$outer$2, x2.config$1, this.$$outer$2.receiveMedia$1, this.$$outer$2.peerConnectionConstraints$1, m.type$1, false, false, $m_s_None$(), $m_ju_UUID$().randomUUID__ju_UUID().toString__T()));
+          var jsx$1 = this.$$outer$2;
+          var x$4 = new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(m.id$1, m.type$1);
+          var x$5 = this.$$outer$2.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.localPeer$1;
+          var x$6 = this.$$outer$2;
+          var x$7 = x2.config$1;
+          var x$8 = this.$$outer$2.receiveMedia$1;
+          var x$9 = this.$$outer$2.peerConnectionConstraints$1;
+          var x$13 = $m_s_None$();
+          var x$14 = $m_ju_UUID$().randomUUID__ju_UUID().toString__T();
+          var peer = jsx$1.createPeer__Lio_surfkit_clientlib_webrtc_Peer$Props__Lio_surfkit_clientlib_webrtc_Peer(new $c_Lio_surfkit_clientlib_webrtc_Peer$Props().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerSignaler__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__T__Z__Z__s_Option__T(x$5, x$4, x$6, x$7, x$8, x$9, "video", false, false, x$13, x$14));
           peer.start__V();
           i$1 = ((1 + i$1) | 0)
         };
@@ -15937,8 +16169,8 @@ $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC$$anonfun$joinRoom$1.prototype.apply
     };
     if ($is_Lio_surfkit_clientlib_webrtc_Peer$Offer(x0$1)) {
       var x3 = $as_Lio_surfkit_clientlib_webrtc_Peer$Offer(x0$1);
-      if ((x3.peer$1.id$1 !== this.$$outer$2.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.peerInfo$1.id$1)) {
-        var x = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["GOT AN OFFER ... for ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([x3.peer$1]));
+      if ((x3.local$1.id$1 !== this.$$outer$2.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.localPeer$1.id$1)) {
+        var x = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["GOT AN OFFER ... for ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([x3.local$1]));
         var this$8 = $m_s_Console$();
         var this$9 = this$8.outVar$2;
         $as_Ljava_io_PrintStream(this$9.tl$1.get__O()).println__O__V(x);
@@ -15950,11 +16182,11 @@ $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC$$anonfun$joinRoom$1.prototype.apply
             var index$2 = i$2;
             var arg1$2 = array$2[index$2];
             var x$2 = $as_Lio_surfkit_clientlib_webrtc_Peer(arg1$2);
-            var jsx$1 = (!(x$2.id$1 === x3.peer$1.id$1))
+            var jsx$2 = (!(x$2.remote$1.id$1 === x3.local$1.id$1))
           } else {
-            var jsx$1 = false
+            var jsx$2 = false
           };
-          if (jsx$1) {
+          if (jsx$2) {
             i$2 = ((1 + i$2) | 0)
           } else {
             break
@@ -15973,7 +16205,16 @@ $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC$$anonfun$joinRoom$1.prototype.apply
             var this$12 = $m_s_Console$();
             var this$13 = this$12.outVar$2;
             $as_Ljava_io_PrintStream(this$13.tl$1.get__O()).println__O__V("Offer for new peer...");
-            var peer$2 = this.$$outer$2.createPeer__Lio_surfkit_clientlib_webrtc_Peer$Props__Lio_surfkit_clientlib_webrtc_Peer(new $c_Lio_surfkit_clientlib_webrtc_Peer$Props().init___T__Lio_surfkit_clientlib_webrtc_Peer$PeerSignaler__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__T__Z__Z__s_Option__T(x3.peer$1.id$1, this.$$outer$2, this.$$outer$2.rtcConfiguration$1, this.$$outer$2.receiveMedia$1, this.$$outer$2.peerConnectionConstraints$1, x3.peer$1.type$1, false, false, $m_s_None$(), $m_ju_UUID$().randomUUID__ju_UUID().toString__T()));
+            var jsx$3 = this.$$outer$2;
+            var x$15 = x3.local$1;
+            var x$16 = this.$$outer$2.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.localPeer$1;
+            var x$17 = this.$$outer$2;
+            var x$18 = this.$$outer$2.rtcConfiguration$1;
+            var x$19 = this.$$outer$2.receiveMedia$1;
+            var x$20 = this.$$outer$2.peerConnectionConstraints$1;
+            var x$24 = $m_s_None$();
+            var x$25 = $m_ju_UUID$().randomUUID__ju_UUID().toString__T();
+            var peer$2 = jsx$3.createPeer__Lio_surfkit_clientlib_webrtc_Peer$Props__Lio_surfkit_clientlib_webrtc_Peer(new $c_Lio_surfkit_clientlib_webrtc_Peer$Props().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerSignaler__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__T__Z__Z__s_Option__T(x$16, x$15, x$17, x$18, x$19, x$20, "video", false, false, x$24, x$25));
             peer$2.handleMessage__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(x3);
             break matchEnd5
           } else {
@@ -15982,7 +16223,7 @@ $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC$$anonfun$joinRoom$1.prototype.apply
         }
       }
     };
-    if ((x0$1.peer__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().id$1 !== this.$$outer$2.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.peerInfo$1.id$1)) {
+    if ((x0$1.local__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().id$1 !== this.$$outer$2.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.localPeer$1.id$1)) {
       var array$3 = this.$$outer$2.peers$1;
       var i$4 = 0;
       var len$3 = $uI(array$3["length"]);
@@ -16023,10 +16264,54 @@ var $d_Lio_surfkit_clientlib_webrtc_SimpleWebRTC$$anonfun$joinRoom$1 = new $Type
 });
 $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC$$anonfun$joinRoom$1.prototype.$classData = $d_Lio_surfkit_clientlib_webrtc_SimpleWebRTC$$anonfun$joinRoom$1;
 /** @constructor */
-function $c_Lm_Signaling$Answer$() {
-  $c_sr_AbstractFunction2.call(this)
+function $c_Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2() {
+  $c_sr_AbstractFunction1.call(this);
+  this.$$outer$2 = null;
+  this.peer$1$f = null
 }
-$c_Lm_Signaling$Answer$.prototype = new $h_sr_AbstractFunction2();
+$c_Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2.prototype = new $h_sr_AbstractFunction1();
+$c_Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2.prototype.constructor = $c_Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2;
+/** @constructor */
+function $h_Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2() {
+  /*<skip>*/
+}
+$h_Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2.prototype = $c_Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2.prototype;
+$c_Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2.prototype.init___Lio_surfkit_clientlib_webrtc_WebRTC__Lio_surfkit_clientlib_webrtc_Peer = (function($$outer, peer$1) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.peer$1$f = peer$1;
+  return this
+});
+$c_Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2.prototype.apply__O__O = (function(v1) {
+  this.apply__Lorg_scalajs_dom_experimental_webrtc_MediaStream__V(v1)
+});
+$c_Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2.prototype.apply__Lorg_scalajs_dom_experimental_webrtc_MediaStream__V = (function(s) {
+  s["oninactive"] = (function(arg$outer) {
+    return (function(ev$2) {
+      arg$outer.$$outer$2.peerStreamRemoved$1.apply__O__O(arg$outer.peer$1$f)
+    })
+  })(this);
+  this.$$outer$2.peerStreamAdded$1.apply__O__O(this.peer$1$f)
+});
+var $d_Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2 = new $TypeData().initClass({
+  Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2: 0
+}, false, "io.surfkit.clientlib.webrtc.WebRTC$$anonfun$createPeer$2", {
+  Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2: 1,
+  sr_AbstractFunction1: 1,
+  O: 1,
+  F1: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2.prototype.$classData = $d_Lio_surfkit_clientlib_webrtc_WebRTC$$anonfun$createPeer$2;
+/** @constructor */
+function $c_Lm_Signaling$Answer$() {
+  $c_sr_AbstractFunction3.call(this)
+}
+$c_Lm_Signaling$Answer$.prototype = new $h_sr_AbstractFunction3();
 $c_Lm_Signaling$Answer$.prototype.constructor = $c_Lm_Signaling$Answer$;
 /** @constructor */
 function $h_Lm_Signaling$Answer$() {
@@ -16036,21 +16321,16 @@ $h_Lm_Signaling$Answer$.prototype = $c_Lm_Signaling$Answer$.prototype;
 $c_Lm_Signaling$Answer$.prototype.toString__T = (function() {
   return "Answer"
 });
-$c_Lm_Signaling$Answer$.prototype.apply__O__O__O = (function(v1, v2) {
-  var peer = $as_Lm_Signaling$PeerInfo(v1);
-  var answer = $as_Lm_Signaling$RTCSessionDescription(v2);
-  return new $c_Lm_Signaling$Answer().init___Lm_Signaling$PeerInfo__Lm_Signaling$RTCSessionDescription(peer, answer)
-});
 $c_Lm_Signaling$Answer$.prototype.unapply__Lm_Signaling$Answer__s_Option = (function(x$0) {
-  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T2().init___O__O(x$0.peer$1, x$0.answer$1)))
+  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T3().init___O__O__O(x$0.remote$1, x$0.local$1, x$0.answer$1)))
 });
 var $d_Lm_Signaling$Answer$ = new $TypeData().initClass({
   Lm_Signaling$Answer$: 0
 }, false, "m.Signaling$Answer$", {
   Lm_Signaling$Answer$: 1,
-  sr_AbstractFunction2: 1,
+  sr_AbstractFunction3: 1,
   O: 1,
-  F2: 1,
+  F3: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
@@ -16064,9 +16344,9 @@ function $m_Lm_Signaling$Answer$() {
 }
 /** @constructor */
 function $c_Lm_Signaling$Candidate$() {
-  $c_sr_AbstractFunction2.call(this)
+  $c_sr_AbstractFunction3.call(this)
 }
-$c_Lm_Signaling$Candidate$.prototype = new $h_sr_AbstractFunction2();
+$c_Lm_Signaling$Candidate$.prototype = new $h_sr_AbstractFunction3();
 $c_Lm_Signaling$Candidate$.prototype.constructor = $c_Lm_Signaling$Candidate$;
 /** @constructor */
 function $h_Lm_Signaling$Candidate$() {
@@ -16074,23 +16354,18 @@ function $h_Lm_Signaling$Candidate$() {
 }
 $h_Lm_Signaling$Candidate$.prototype = $c_Lm_Signaling$Candidate$.prototype;
 $c_Lm_Signaling$Candidate$.prototype.unapply__Lm_Signaling$Candidate__s_Option = (function(x$0) {
-  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T2().init___O__O(x$0.peer$1, x$0.candidate$1)))
+  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T3().init___O__O__O(x$0.remote$1, x$0.local$1, x$0.candidate$1)))
 });
 $c_Lm_Signaling$Candidate$.prototype.toString__T = (function() {
   return "Candidate"
-});
-$c_Lm_Signaling$Candidate$.prototype.apply__O__O__O = (function(v1, v2) {
-  var peer = $as_Lm_Signaling$PeerInfo(v1);
-  var candidate = $as_Lm_Signaling$RTCIceCandidate(v2);
-  return new $c_Lm_Signaling$Candidate().init___Lm_Signaling$PeerInfo__Lm_Signaling$RTCIceCandidate(peer, candidate)
 });
 var $d_Lm_Signaling$Candidate$ = new $TypeData().initClass({
   Lm_Signaling$Candidate$: 0
 }, false, "m.Signaling$Candidate$", {
   Lm_Signaling$Candidate$: 1,
-  sr_AbstractFunction2: 1,
+  sr_AbstractFunction3: 1,
   O: 1,
-  F2: 1,
+  F3: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
@@ -16104,9 +16379,9 @@ function $m_Lm_Signaling$Candidate$() {
 }
 /** @constructor */
 function $c_Lm_Signaling$Error$() {
-  $c_sr_AbstractFunction2.call(this)
+  $c_sr_AbstractFunction3.call(this)
 }
-$c_Lm_Signaling$Error$.prototype = new $h_sr_AbstractFunction2();
+$c_Lm_Signaling$Error$.prototype = new $h_sr_AbstractFunction3();
 $c_Lm_Signaling$Error$.prototype.constructor = $c_Lm_Signaling$Error$;
 /** @constructor */
 function $h_Lm_Signaling$Error$() {
@@ -16116,21 +16391,16 @@ $h_Lm_Signaling$Error$.prototype = $c_Lm_Signaling$Error$.prototype;
 $c_Lm_Signaling$Error$.prototype.toString__T = (function() {
   return "Error"
 });
-$c_Lm_Signaling$Error$.prototype.apply__O__O__O = (function(v1, v2) {
-  var peer = $as_Lm_Signaling$PeerInfo(v1);
-  var reason = $as_T(v2);
-  return new $c_Lm_Signaling$Error().init___Lm_Signaling$PeerInfo__T(peer, reason)
-});
 $c_Lm_Signaling$Error$.prototype.unapply__Lm_Signaling$Error__s_Option = (function(x$0) {
-  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T2().init___O__O(x$0.peer$1, x$0.reason$1)))
+  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T3().init___O__O__O(x$0.remote$1, x$0.local$1, x$0.reason$1)))
 });
 var $d_Lm_Signaling$Error$ = new $TypeData().initClass({
   Lm_Signaling$Error$: 0
 }, false, "m.Signaling$Error$", {
   Lm_Signaling$Error$: 1,
-  sr_AbstractFunction2: 1,
+  sr_AbstractFunction3: 1,
   O: 1,
-  F2: 1,
+  F3: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
@@ -16144,9 +16414,9 @@ function $m_Lm_Signaling$Error$() {
 }
 /** @constructor */
 function $c_Lm_Signaling$Join$() {
-  $c_sr_AbstractFunction2.call(this)
+  $c_sr_AbstractFunction3.call(this)
 }
-$c_Lm_Signaling$Join$.prototype = new $h_sr_AbstractFunction2();
+$c_Lm_Signaling$Join$.prototype = new $h_sr_AbstractFunction3();
 $c_Lm_Signaling$Join$.prototype.constructor = $c_Lm_Signaling$Join$;
 /** @constructor */
 function $h_Lm_Signaling$Join$() {
@@ -16154,23 +16424,18 @@ function $h_Lm_Signaling$Join$() {
 }
 $h_Lm_Signaling$Join$.prototype = $c_Lm_Signaling$Join$.prototype;
 $c_Lm_Signaling$Join$.prototype.unapply__Lm_Signaling$Join__s_Option = (function(x$0) {
-  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T2().init___O__O(x$0.room$1, x$0.peer$1)))
+  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T3().init___O__O__O(x$0.remote$1, x$0.local$1, x$0.room$1)))
 });
 $c_Lm_Signaling$Join$.prototype.toString__T = (function() {
   return "Join"
-});
-$c_Lm_Signaling$Join$.prototype.apply__O__O__O = (function(v1, v2) {
-  var room = $as_T(v1);
-  var peer = $as_Lm_Signaling$PeerInfo(v2);
-  return new $c_Lm_Signaling$Join().init___T__Lm_Signaling$PeerInfo(room, peer)
 });
 var $d_Lm_Signaling$Join$ = new $TypeData().initClass({
   Lm_Signaling$Join$: 0
 }, false, "m.Signaling$Join$", {
   Lm_Signaling$Join$: 1,
-  sr_AbstractFunction2: 1,
+  sr_AbstractFunction3: 1,
   O: 1,
-  F2: 1,
+  F3: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
@@ -16184,9 +16449,9 @@ function $m_Lm_Signaling$Join$() {
 }
 /** @constructor */
 function $c_Lm_Signaling$Offer$() {
-  $c_sr_AbstractFunction2.call(this)
+  $c_sr_AbstractFunction3.call(this)
 }
-$c_Lm_Signaling$Offer$.prototype = new $h_sr_AbstractFunction2();
+$c_Lm_Signaling$Offer$.prototype = new $h_sr_AbstractFunction3();
 $c_Lm_Signaling$Offer$.prototype.constructor = $c_Lm_Signaling$Offer$;
 /** @constructor */
 function $h_Lm_Signaling$Offer$() {
@@ -16197,20 +16462,15 @@ $c_Lm_Signaling$Offer$.prototype.toString__T = (function() {
   return "Offer"
 });
 $c_Lm_Signaling$Offer$.prototype.unapply__Lm_Signaling$Offer__s_Option = (function(x$0) {
-  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T2().init___O__O(x$0.peer$1, x$0.offer$1)))
-});
-$c_Lm_Signaling$Offer$.prototype.apply__O__O__O = (function(v1, v2) {
-  var peer = $as_Lm_Signaling$PeerInfo(v1);
-  var offer = $as_Lm_Signaling$RTCSessionDescription(v2);
-  return new $c_Lm_Signaling$Offer().init___Lm_Signaling$PeerInfo__Lm_Signaling$RTCSessionDescription(peer, offer)
+  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T3().init___O__O__O(x$0.remote$1, x$0.local$1, x$0.offer$1)))
 });
 var $d_Lm_Signaling$Offer$ = new $TypeData().initClass({
   Lm_Signaling$Offer$: 0
 }, false, "m.Signaling$Offer$", {
   Lm_Signaling$Offer$: 1,
-  sr_AbstractFunction2: 1,
+  sr_AbstractFunction3: 1,
   O: 1,
-  F2: 1,
+  F3: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
@@ -16298,94 +16558,6 @@ function $m_Lm_Signaling$RTCIceCandidate$() {
   return $n_Lm_Signaling$RTCIceCandidate$
 }
 /** @constructor */
-function $c_Lm_Signaling$RTCIceServer() {
-  $c_O.call(this);
-  this.url$1 = null;
-  this.username$1 = null;
-  this.credential$1 = null
-}
-$c_Lm_Signaling$RTCIceServer.prototype = new $h_O();
-$c_Lm_Signaling$RTCIceServer.prototype.constructor = $c_Lm_Signaling$RTCIceServer;
-/** @constructor */
-function $h_Lm_Signaling$RTCIceServer() {
-  /*<skip>*/
-}
-$h_Lm_Signaling$RTCIceServer.prototype = $c_Lm_Signaling$RTCIceServer.prototype;
-$c_Lm_Signaling$RTCIceServer.prototype.productPrefix__T = (function() {
-  return "RTCIceServer"
-});
-$c_Lm_Signaling$RTCIceServer.prototype.productArity__I = (function() {
-  return 3
-});
-$c_Lm_Signaling$RTCIceServer.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Lm_Signaling$RTCIceServer(x$1)) {
-    var RTCIceServer$1 = $as_Lm_Signaling$RTCIceServer(x$1);
-    return (((this.url$1 === RTCIceServer$1.url$1) && (this.username$1 === RTCIceServer$1.username$1)) && (this.credential$1 === RTCIceServer$1.credential$1))
-  } else {
-    return false
-  }
-});
-$c_Lm_Signaling$RTCIceServer.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.url$1;
-      break
-    }
-    case 1: {
-      return this.username$1;
-      break
-    }
-    case 2: {
-      return this.credential$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Lm_Signaling$RTCIceServer.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Lm_Signaling$RTCIceServer.prototype.init___T__T__T = (function(url, username, credential) {
-  this.url$1 = url;
-  this.username$1 = username;
-  this.credential$1 = credential;
-  return this
-});
-$c_Lm_Signaling$RTCIceServer.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Lm_Signaling$RTCIceServer.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Lm_Signaling$RTCIceServer(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lm_Signaling$RTCIceServer)))
-}
-function $as_Lm_Signaling$RTCIceServer(obj) {
-  return (($is_Lm_Signaling$RTCIceServer(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "m.Signaling$RTCIceServer"))
-}
-function $isArrayOf_Lm_Signaling$RTCIceServer(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lm_Signaling$RTCIceServer)))
-}
-function $asArrayOf_Lm_Signaling$RTCIceServer(obj, depth) {
-  return (($isArrayOf_Lm_Signaling$RTCIceServer(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lm.Signaling$RTCIceServer;", depth))
-}
-var $d_Lm_Signaling$RTCIceServer = new $TypeData().initClass({
-  Lm_Signaling$RTCIceServer: 0
-}, false, "m.Signaling$RTCIceServer", {
-  Lm_Signaling$RTCIceServer: 1,
-  O: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lm_Signaling$RTCIceServer.prototype.$classData = $d_Lm_Signaling$RTCIceServer;
-/** @constructor */
 function $c_Lm_Signaling$RTCIceServer$() {
   $c_sr_AbstractFunction3.call(this)
 }
@@ -16462,9 +16634,9 @@ function $m_Lm_Signaling$RTCSessionDescription$() {
 }
 /** @constructor */
 function $c_Lm_Signaling$Room$() {
-  $c_sr_AbstractFunction4.call(this)
+  $c_sr_AbstractFunction5.call(this)
 }
-$c_Lm_Signaling$Room$.prototype = new $h_sr_AbstractFunction4();
+$c_Lm_Signaling$Room$.prototype = new $h_sr_AbstractFunction5();
 $c_Lm_Signaling$Room$.prototype.constructor = $c_Lm_Signaling$Room$;
 /** @constructor */
 function $h_Lm_Signaling$Room$() {
@@ -16475,15 +16647,15 @@ $c_Lm_Signaling$Room$.prototype.toString__T = (function() {
   return "Room"
 });
 $c_Lm_Signaling$Room$.prototype.unapply__Lm_Signaling$Room__s_Option = (function(x$0) {
-  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T4().init___O__O__O__O(x$0.name$1, x$0.peer$1, x$0.config$1, x$0.members$1)))
+  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T5().init___O__O__O__O__O(x$0.remote$1, x$0.local$1, x$0.name$1, x$0.config$1, x$0.members$1)))
 });
 var $d_Lm_Signaling$Room$ = new $TypeData().initClass({
   Lm_Signaling$Room$: 0
 }, false, "m.Signaling$Room$", {
   Lm_Signaling$Room$: 1,
-  sr_AbstractFunction4: 1,
+  sr_AbstractFunction5: 1,
   O: 1,
-  F4: 1,
+  F5: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
@@ -18329,7 +18501,8 @@ $c_sr_ScalaRunTime$$anon$1.prototype.$classData = $d_sr_ScalaRunTime$$anon$1;
 /** @constructor */
 function $c_Lio_surfkit_clientlib_webrtc_Peer$Answer() {
   $c_O.call(this);
-  this.peer$1 = null;
+  this.remote$1 = null;
+  this.local$1 = null;
   this.answer$1 = null
 }
 $c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype = new $h_O();
@@ -18343,16 +18516,23 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype.productPrefix__T = (functi
   return "Answer"
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype.productArity__I = (function() {
-  return 2
+  return 3
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
   } else if ($is_Lio_surfkit_clientlib_webrtc_Peer$Answer(x$1)) {
     var Answer$1 = $as_Lio_surfkit_clientlib_webrtc_Peer$Answer(x$1);
-    var x = this.peer$1;
-    var x$2 = Answer$1.peer$1;
+    var x = this.remote$1;
+    var x$2 = Answer$1.remote$1;
     if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.local$1;
+      var x$4 = Answer$1.local$1;
+      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      var jsx$1 = false
+    };
+    if (jsx$1) {
       return $m_sr_BoxesRunTime$().equals__O__O__Z(this.answer$1, Answer$1.answer$1)
     } else {
       return false
@@ -18364,10 +18544,14 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype.equals__O__Z = (function(x
 $c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.peer$1;
+      return this.remote$1;
       break
     }
     case 1: {
+      return this.local$1;
+      break
+    }
+    case 2: {
       return this.answer$1;
       break
     }
@@ -18379,20 +18563,21 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype.productElement__I__O = (fu
 $c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
-$c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype.peer__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo = (function() {
-  return this.peer$1
+$c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription = (function(remote, local, answer) {
+  this.remote$1 = remote;
+  this.local$1 = local;
+  this.answer$1 = answer;
+  return this
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
   return this$2.productHash__s_Product__I__I(this, (-889275714))
 });
-$c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription = (function(peer, answer) {
-  this.peer$1 = peer;
-  this.answer$1 = answer;
-  return this
-});
 $c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype.local__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo = (function() {
+  return this.local$1
 });
 function $is_Lio_surfkit_clientlib_webrtc_Peer$Answer(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lio_surfkit_clientlib_webrtc_Peer$Answer)))
@@ -18421,7 +18606,8 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Answer.prototype.$classData = $d_Lio_surfki
 /** @constructor */
 function $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate() {
   $c_O.call(this);
-  this.peer$1 = null;
+  this.remote$1 = null;
+  this.local$1 = null;
   this.candidate$1 = null
 }
 $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype = new $h_O();
@@ -18434,22 +18620,24 @@ $h_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype = $c_Lio_surfkit_client
 $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.productPrefix__T = (function() {
   return "Candidate"
 });
-$c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCIceCandidate = (function(peer, candidate) {
-  this.peer$1 = peer;
-  this.candidate$1 = candidate;
-  return this
-});
 $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.productArity__I = (function() {
-  return 2
+  return 3
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
   } else if ($is_Lio_surfkit_clientlib_webrtc_Peer$Candidate(x$1)) {
     var Candidate$1 = $as_Lio_surfkit_clientlib_webrtc_Peer$Candidate(x$1);
-    var x = this.peer$1;
-    var x$2 = Candidate$1.peer$1;
+    var x = this.remote$1;
+    var x$2 = Candidate$1.remote$1;
     if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.local$1;
+      var x$4 = Candidate$1.local$1;
+      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      var jsx$1 = false
+    };
+    if (jsx$1) {
       return $m_sr_BoxesRunTime$().equals__O__O__Z(this.candidate$1, Candidate$1.candidate$1)
     } else {
       return false
@@ -18461,10 +18649,14 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.equals__O__Z = (functio
 $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.peer$1;
+      return this.remote$1;
       break
     }
     case 1: {
+      return this.local$1;
+      break
+    }
+    case 2: {
       return this.candidate$1;
       break
     }
@@ -18476,8 +18668,11 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.productElement__I__O = 
 $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
-$c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.peer__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo = (function() {
-  return this.peer$1
+$c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCIceCandidate = (function(remote, local, candidate) {
+  this.remote$1 = remote;
+  this.local$1 = local;
+  this.candidate$1 = candidate;
+  return this
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
@@ -18485,6 +18680,9 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.hashCode__I = (function
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.local__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo = (function() {
+  return this.local$1
 });
 function $is_Lio_surfkit_clientlib_webrtc_Peer$Candidate(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lio_surfkit_clientlib_webrtc_Peer$Candidate)))
@@ -18513,7 +18711,8 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Candidate.prototype.$classData = $d_Lio_sur
 /** @constructor */
 function $c_Lio_surfkit_clientlib_webrtc_Peer$Error() {
   $c_O.call(this);
-  this.peer$1 = null;
+  this.remote$1 = null;
+  this.local$1 = null;
   this.reason$1 = null
 }
 $c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype = new $h_O();
@@ -18527,16 +18726,23 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype.productPrefix__T = (functio
   return "Error"
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype.productArity__I = (function() {
-  return 2
+  return 3
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
   } else if ($is_Lio_surfkit_clientlib_webrtc_Peer$Error(x$1)) {
     var Error$1 = $as_Lio_surfkit_clientlib_webrtc_Peer$Error(x$1);
-    var x = this.peer$1;
-    var x$2 = Error$1.peer$1;
+    var x = this.remote$1;
+    var x$2 = Error$1.remote$1;
     if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.local$1;
+      var x$4 = Error$1.local$1;
+      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      var jsx$1 = false
+    };
+    if (jsx$1) {
       return (this.reason$1 === Error$1.reason$1)
     } else {
       return false
@@ -18548,10 +18754,14 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype.equals__O__Z = (function(x$
 $c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.peer$1;
+      return this.remote$1;
       break
     }
     case 1: {
+      return this.local$1;
+      break
+    }
+    case 2: {
       return this.reason$1;
       break
     }
@@ -18563,11 +18773,9 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype.productElement__I__O = (fun
 $c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
-$c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype.peer__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo = (function() {
-  return this.peer$1
-});
-$c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__T = (function(peer, reason) {
-  this.peer$1 = peer;
+$c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__T = (function(remote, local, reason) {
+  this.remote$1 = remote;
+  this.local$1 = local;
   this.reason$1 = reason;
   return this
 });
@@ -18577,6 +18785,9 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype.hashCode__I = (function() {
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype.local__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo = (function() {
+  return this.local$1
 });
 function $is_Lio_surfkit_clientlib_webrtc_Peer$Error(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lio_surfkit_clientlib_webrtc_Peer$Error)))
@@ -18605,8 +18816,9 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Error.prototype.$classData = $d_Lio_surfkit
 /** @constructor */
 function $c_Lio_surfkit_clientlib_webrtc_Peer$Join() {
   $c_O.call(this);
-  this.room$1 = null;
-  this.peer$1 = null
+  this.remote$1 = null;
+  this.local$1 = null;
+  this.room$1 = null
 }
 $c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype = new $h_O();
 $c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.constructor = $c_Lio_surfkit_clientlib_webrtc_Peer$Join;
@@ -18619,17 +18831,24 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.productPrefix__T = (function
   return "Join"
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.productArity__I = (function() {
-  return 2
+  return 3
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
   } else if ($is_Lio_surfkit_clientlib_webrtc_Peer$Join(x$1)) {
     var Join$1 = $as_Lio_surfkit_clientlib_webrtc_Peer$Join(x$1);
-    if ((this.room$1 === Join$1.room$1)) {
-      var x = this.peer$1;
-      var x$2 = Join$1.peer$1;
-      return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
+    var x = this.remote$1;
+    var x$2 = Join$1.remote$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.local$1;
+      var x$4 = Join$1.local$1;
+      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      var jsx$1 = false
+    };
+    if (jsx$1) {
+      return (this.room$1 === Join$1.room$1)
     } else {
       return false
     }
@@ -18640,11 +18859,15 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.equals__O__Z = (function(x$1
 $c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.room$1;
+      return this.remote$1;
       break
     }
     case 1: {
-      return this.peer$1;
+      return this.local$1;
+      break
+    }
+    case 2: {
+      return this.room$1;
       break
     }
     default: {
@@ -18655,12 +18878,10 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.productElement__I__O = (func
 $c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
-$c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.peer__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo = (function() {
-  return this.peer$1
-});
-$c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.init___T__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo = (function(room, peer) {
+$c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__T = (function(remote, local, room) {
+  this.remote$1 = remote;
+  this.local$1 = local;
   this.room$1 = room;
-  this.peer$1 = peer;
   return this
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.hashCode__I = (function() {
@@ -18669,6 +18890,9 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.hashCode__I = (function() {
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.local__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo = (function() {
+  return this.local$1
 });
 function $is_Lio_surfkit_clientlib_webrtc_Peer$Join(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lio_surfkit_clientlib_webrtc_Peer$Join)))
@@ -18697,7 +18921,8 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Join.prototype.$classData = $d_Lio_surfkit_
 /** @constructor */
 function $c_Lio_surfkit_clientlib_webrtc_Peer$Offer() {
   $c_O.call(this);
-  this.peer$1 = null;
+  this.remote$1 = null;
+  this.local$1 = null;
   this.offer$1 = null
 }
 $c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype = new $h_O();
@@ -18711,16 +18936,23 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype.productPrefix__T = (functio
   return "Offer"
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype.productArity__I = (function() {
-  return 2
+  return 3
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
   } else if ($is_Lio_surfkit_clientlib_webrtc_Peer$Offer(x$1)) {
     var Offer$1 = $as_Lio_surfkit_clientlib_webrtc_Peer$Offer(x$1);
-    var x = this.peer$1;
-    var x$2 = Offer$1.peer$1;
+    var x = this.remote$1;
+    var x$2 = Offer$1.remote$1;
     if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.local$1;
+      var x$4 = Offer$1.local$1;
+      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      var jsx$1 = false
+    };
+    if (jsx$1) {
       return $m_sr_BoxesRunTime$().equals__O__O__Z(this.offer$1, Offer$1.offer$1)
     } else {
       return false
@@ -18732,10 +18964,14 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype.equals__O__Z = (function(x$
 $c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.peer$1;
+      return this.remote$1;
       break
     }
     case 1: {
+      return this.local$1;
+      break
+    }
+    case 2: {
       return this.offer$1;
       break
     }
@@ -18747,20 +18983,21 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype.productElement__I__O = (fun
 $c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
-$c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype.peer__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo = (function() {
-  return this.peer$1
+$c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription = (function(remote, local, offer) {
+  this.remote$1 = remote;
+  this.local$1 = local;
+  this.offer$1 = offer;
+  return this
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
   return this$2.productHash__s_Product__I__I(this, (-889275714))
 });
-$c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription = (function(peer, offer) {
-  this.peer$1 = peer;
-  this.offer$1 = offer;
-  return this
-});
 $c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype.local__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo = (function() {
+  return this.local$1
 });
 function $is_Lio_surfkit_clientlib_webrtc_Peer$Offer(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lio_surfkit_clientlib_webrtc_Peer$Offer)))
@@ -18789,8 +19026,9 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Offer.prototype.$classData = $d_Lio_surfkit
 /** @constructor */
 function $c_Lio_surfkit_clientlib_webrtc_Peer$Room() {
   $c_O.call(this);
+  this.remote$1 = null;
+  this.local$1 = null;
   this.name$1 = null;
-  this.peer$1 = null;
   this.config$1 = null;
   this.members$1 = null
 }
@@ -18805,28 +19043,23 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Room.prototype.productPrefix__T = (function
   return "Room"
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Room.prototype.productArity__I = (function() {
-  return 4
-});
-$c_Lio_surfkit_clientlib_webrtc_Peer$Room.prototype.init___T__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration__sjs_js_Array = (function(name, peer, config, members) {
-  this.name$1 = name;
-  this.peer$1 = peer;
-  this.config$1 = config;
-  this.members$1 = members;
-  return this
+  return 5
 });
 $c_Lio_surfkit_clientlib_webrtc_Peer$Room.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
   } else if ($is_Lio_surfkit_clientlib_webrtc_Peer$Room(x$1)) {
     var Room$1 = $as_Lio_surfkit_clientlib_webrtc_Peer$Room(x$1);
-    if ((this.name$1 === Room$1.name$1)) {
-      var x = this.peer$1;
-      var x$2 = Room$1.peer$1;
-      var jsx$1 = ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
+    var x = this.remote$1;
+    var x$2 = Room$1.remote$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.local$1;
+      var x$4 = Room$1.local$1;
+      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
     } else {
       var jsx$1 = false
     };
-    if ((jsx$1 && $m_sr_BoxesRunTime$().equals__O__O__Z(this.config$1, Room$1.config$1))) {
+    if (((jsx$1 && (this.name$1 === Room$1.name$1)) && $m_sr_BoxesRunTime$().equals__O__O__Z(this.config$1, Room$1.config$1))) {
       return $m_sr_BoxesRunTime$().equals__O__O__Z(this.members$1, Room$1.members$1)
     } else {
       return false
@@ -18838,18 +19071,22 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Room.prototype.equals__O__Z = (function(x$1
 $c_Lio_surfkit_clientlib_webrtc_Peer$Room.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.name$1;
+      return this.remote$1;
       break
     }
     case 1: {
-      return this.peer$1;
+      return this.local$1;
       break
     }
     case 2: {
-      return this.config$1;
+      return this.name$1;
       break
     }
     case 3: {
+      return this.config$1;
+      break
+    }
+    case 4: {
       return this.members$1;
       break
     }
@@ -18861,15 +19098,23 @@ $c_Lio_surfkit_clientlib_webrtc_Peer$Room.prototype.productElement__I__O = (func
 $c_Lio_surfkit_clientlib_webrtc_Peer$Room.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
-$c_Lio_surfkit_clientlib_webrtc_Peer$Room.prototype.peer__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo = (function() {
-  return this.peer$1
-});
 $c_Lio_surfkit_clientlib_webrtc_Peer$Room.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
   return this$2.productHash__s_Product__I__I(this, (-889275714))
 });
+$c_Lio_surfkit_clientlib_webrtc_Peer$Room.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__T__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration__sjs_js_Array = (function(remote, local, name, config, members) {
+  this.remote$1 = remote;
+  this.local$1 = local;
+  this.name$1 = name;
+  this.config$1 = config;
+  this.members$1 = members;
+  return this
+});
 $c_Lio_surfkit_clientlib_webrtc_Peer$Room.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Lio_surfkit_clientlib_webrtc_Peer$Room.prototype.local__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo = (function() {
+  return this.local$1
 });
 function $is_Lio_surfkit_clientlib_webrtc_Peer$Room(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lio_surfkit_clientlib_webrtc_Peer$Room)))
@@ -19119,6 +19364,270 @@ var $d_Lm_Signaling$PeerInfo = new $TypeData().initClass({
 });
 $c_Lm_Signaling$PeerInfo.prototype.$classData = $d_Lm_Signaling$PeerInfo;
 /** @constructor */
+function $c_Lm_Signaling$RTCIceCandidate() {
+  $c_O.call(this);
+  this.candidate$1 = null;
+  this.sdpMLineIndex$1 = 0;
+  this.sdpMid$1 = null
+}
+$c_Lm_Signaling$RTCIceCandidate.prototype = new $h_O();
+$c_Lm_Signaling$RTCIceCandidate.prototype.constructor = $c_Lm_Signaling$RTCIceCandidate;
+/** @constructor */
+function $h_Lm_Signaling$RTCIceCandidate() {
+  /*<skip>*/
+}
+$h_Lm_Signaling$RTCIceCandidate.prototype = $c_Lm_Signaling$RTCIceCandidate.prototype;
+$c_Lm_Signaling$RTCIceCandidate.prototype.productPrefix__T = (function() {
+  return "RTCIceCandidate"
+});
+$c_Lm_Signaling$RTCIceCandidate.prototype.productArity__I = (function() {
+  return 3
+});
+$c_Lm_Signaling$RTCIceCandidate.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Lm_Signaling$RTCIceCandidate(x$1)) {
+    var RTCIceCandidate$1 = $as_Lm_Signaling$RTCIceCandidate(x$1);
+    return (((this.candidate$1 === RTCIceCandidate$1.candidate$1) && (this.sdpMLineIndex$1 === RTCIceCandidate$1.sdpMLineIndex$1)) && (this.sdpMid$1 === RTCIceCandidate$1.sdpMid$1))
+  } else {
+    return false
+  }
+});
+$c_Lm_Signaling$RTCIceCandidate.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.candidate$1;
+      break
+    }
+    case 1: {
+      return this.sdpMLineIndex$1;
+      break
+    }
+    case 2: {
+      return this.sdpMid$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Lm_Signaling$RTCIceCandidate.prototype.init___T__I__T = (function(candidate, sdpMLineIndex, sdpMid) {
+  this.candidate$1 = candidate;
+  this.sdpMLineIndex$1 = sdpMLineIndex;
+  this.sdpMid$1 = sdpMid;
+  return this
+});
+$c_Lm_Signaling$RTCIceCandidate.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Lm_Signaling$RTCIceCandidate.prototype.hashCode__I = (function() {
+  var acc = (-889275714);
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.candidate$1));
+  acc = $m_sr_Statics$().mix__I__I__I(acc, this.sdpMLineIndex$1);
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.sdpMid$1));
+  return $m_sr_Statics$().finalizeHash__I__I__I(acc, 3)
+});
+$c_Lm_Signaling$RTCIceCandidate.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Lm_Signaling$RTCIceCandidate(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lm_Signaling$RTCIceCandidate)))
+}
+function $as_Lm_Signaling$RTCIceCandidate(obj) {
+  return (($is_Lm_Signaling$RTCIceCandidate(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "m.Signaling$RTCIceCandidate"))
+}
+function $isArrayOf_Lm_Signaling$RTCIceCandidate(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lm_Signaling$RTCIceCandidate)))
+}
+function $asArrayOf_Lm_Signaling$RTCIceCandidate(obj, depth) {
+  return (($isArrayOf_Lm_Signaling$RTCIceCandidate(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lm.Signaling$RTCIceCandidate;", depth))
+}
+var $d_Lm_Signaling$RTCIceCandidate = new $TypeData().initClass({
+  Lm_Signaling$RTCIceCandidate: 0
+}, false, "m.Signaling$RTCIceCandidate", {
+  Lm_Signaling$RTCIceCandidate: 1,
+  O: 1,
+  Lm_Model: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lm_Signaling$RTCIceCandidate.prototype.$classData = $d_Lm_Signaling$RTCIceCandidate;
+/** @constructor */
+function $c_Lm_Signaling$RTCIceServer() {
+  $c_O.call(this);
+  this.url$1 = null;
+  this.username$1 = null;
+  this.credential$1 = null
+}
+$c_Lm_Signaling$RTCIceServer.prototype = new $h_O();
+$c_Lm_Signaling$RTCIceServer.prototype.constructor = $c_Lm_Signaling$RTCIceServer;
+/** @constructor */
+function $h_Lm_Signaling$RTCIceServer() {
+  /*<skip>*/
+}
+$h_Lm_Signaling$RTCIceServer.prototype = $c_Lm_Signaling$RTCIceServer.prototype;
+$c_Lm_Signaling$RTCIceServer.prototype.productPrefix__T = (function() {
+  return "RTCIceServer"
+});
+$c_Lm_Signaling$RTCIceServer.prototype.productArity__I = (function() {
+  return 3
+});
+$c_Lm_Signaling$RTCIceServer.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Lm_Signaling$RTCIceServer(x$1)) {
+    var RTCIceServer$1 = $as_Lm_Signaling$RTCIceServer(x$1);
+    return (((this.url$1 === RTCIceServer$1.url$1) && (this.username$1 === RTCIceServer$1.username$1)) && (this.credential$1 === RTCIceServer$1.credential$1))
+  } else {
+    return false
+  }
+});
+$c_Lm_Signaling$RTCIceServer.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.url$1;
+      break
+    }
+    case 1: {
+      return this.username$1;
+      break
+    }
+    case 2: {
+      return this.credential$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Lm_Signaling$RTCIceServer.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Lm_Signaling$RTCIceServer.prototype.init___T__T__T = (function(url, username, credential) {
+  this.url$1 = url;
+  this.username$1 = username;
+  this.credential$1 = credential;
+  return this
+});
+$c_Lm_Signaling$RTCIceServer.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Lm_Signaling$RTCIceServer.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Lm_Signaling$RTCIceServer(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lm_Signaling$RTCIceServer)))
+}
+function $as_Lm_Signaling$RTCIceServer(obj) {
+  return (($is_Lm_Signaling$RTCIceServer(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "m.Signaling$RTCIceServer"))
+}
+function $isArrayOf_Lm_Signaling$RTCIceServer(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lm_Signaling$RTCIceServer)))
+}
+function $asArrayOf_Lm_Signaling$RTCIceServer(obj, depth) {
+  return (($isArrayOf_Lm_Signaling$RTCIceServer(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lm.Signaling$RTCIceServer;", depth))
+}
+var $d_Lm_Signaling$RTCIceServer = new $TypeData().initClass({
+  Lm_Signaling$RTCIceServer: 0
+}, false, "m.Signaling$RTCIceServer", {
+  Lm_Signaling$RTCIceServer: 1,
+  O: 1,
+  Lm_Model: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lm_Signaling$RTCIceServer.prototype.$classData = $d_Lm_Signaling$RTCIceServer;
+/** @constructor */
+function $c_Lm_Signaling$RTCSessionDescription() {
+  $c_O.call(this);
+  this.type$1 = null;
+  this.sdp$1 = null
+}
+$c_Lm_Signaling$RTCSessionDescription.prototype = new $h_O();
+$c_Lm_Signaling$RTCSessionDescription.prototype.constructor = $c_Lm_Signaling$RTCSessionDescription;
+/** @constructor */
+function $h_Lm_Signaling$RTCSessionDescription() {
+  /*<skip>*/
+}
+$h_Lm_Signaling$RTCSessionDescription.prototype = $c_Lm_Signaling$RTCSessionDescription.prototype;
+$c_Lm_Signaling$RTCSessionDescription.prototype.init___T__T = (function(type, sdp) {
+  this.type$1 = type;
+  this.sdp$1 = sdp;
+  return this
+});
+$c_Lm_Signaling$RTCSessionDescription.prototype.productPrefix__T = (function() {
+  return "RTCSessionDescription"
+});
+$c_Lm_Signaling$RTCSessionDescription.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Lm_Signaling$RTCSessionDescription.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Lm_Signaling$RTCSessionDescription(x$1)) {
+    var RTCSessionDescription$1 = $as_Lm_Signaling$RTCSessionDescription(x$1);
+    return ((this.type$1 === RTCSessionDescription$1.type$1) && (this.sdp$1 === RTCSessionDescription$1.sdp$1))
+  } else {
+    return false
+  }
+});
+$c_Lm_Signaling$RTCSessionDescription.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.type$1;
+      break
+    }
+    case 1: {
+      return this.sdp$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Lm_Signaling$RTCSessionDescription.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Lm_Signaling$RTCSessionDescription.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Lm_Signaling$RTCSessionDescription.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Lm_Signaling$RTCSessionDescription(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lm_Signaling$RTCSessionDescription)))
+}
+function $as_Lm_Signaling$RTCSessionDescription(obj) {
+  return (($is_Lm_Signaling$RTCSessionDescription(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "m.Signaling$RTCSessionDescription"))
+}
+function $isArrayOf_Lm_Signaling$RTCSessionDescription(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lm_Signaling$RTCSessionDescription)))
+}
+function $asArrayOf_Lm_Signaling$RTCSessionDescription(obj, depth) {
+  return (($isArrayOf_Lm_Signaling$RTCSessionDescription(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lm.Signaling$RTCSessionDescription;", depth))
+}
+var $d_Lm_Signaling$RTCSessionDescription = new $TypeData().initClass({
+  Lm_Signaling$RTCSessionDescription: 0
+}, false, "m.Signaling$RTCSessionDescription", {
+  Lm_Signaling$RTCSessionDescription: 1,
+  O: 1,
+  Lm_Model: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lm_Signaling$RTCSessionDescription.prototype.$classData = $d_Lm_Signaling$RTCSessionDescription;
+/** @constructor */
 function $c_Lupickle_AttributeTagged$$anonfun$annotate$2() {
   $c_sr_AbstractPartialFunction.call(this);
   this.$$outer$2 = null;
@@ -19331,80 +19840,87 @@ var $d_Lupickle_Generated$$anonfun$Tuple3R$1 = new $TypeData().initClass({
 });
 $c_Lupickle_Generated$$anonfun$Tuple3R$1.prototype.$classData = $d_Lupickle_Generated$$anonfun$Tuple3R$1;
 /** @constructor */
-function $c_Lupickle_Generated$$anonfun$Tuple4R$1() {
+function $c_Lupickle_Generated$$anonfun$Tuple5R$1() {
   $c_sr_AbstractPartialFunction.call(this);
   this.$$outer$2 = null;
-  this.evidence$17$1$2 = null;
-  this.evidence$18$1$2 = null;
-  this.evidence$19$1$2 = null;
-  this.evidence$20$1$2 = null
+  this.evidence$26$1$2 = null;
+  this.evidence$27$1$2 = null;
+  this.evidence$28$1$2 = null;
+  this.evidence$29$1$2 = null;
+  this.evidence$30$1$2 = null
 }
-$c_Lupickle_Generated$$anonfun$Tuple4R$1.prototype = new $h_sr_AbstractPartialFunction();
-$c_Lupickle_Generated$$anonfun$Tuple4R$1.prototype.constructor = $c_Lupickle_Generated$$anonfun$Tuple4R$1;
+$c_Lupickle_Generated$$anonfun$Tuple5R$1.prototype = new $h_sr_AbstractPartialFunction();
+$c_Lupickle_Generated$$anonfun$Tuple5R$1.prototype.constructor = $c_Lupickle_Generated$$anonfun$Tuple5R$1;
 /** @constructor */
-function $h_Lupickle_Generated$$anonfun$Tuple4R$1() {
+function $h_Lupickle_Generated$$anonfun$Tuple5R$1() {
   /*<skip>*/
 }
-$h_Lupickle_Generated$$anonfun$Tuple4R$1.prototype = $c_Lupickle_Generated$$anonfun$Tuple4R$1.prototype;
-$c_Lupickle_Generated$$anonfun$Tuple4R$1.prototype.init___Lupickle_Generated__O__O__O__O = (function($$outer, evidence$17$1, evidence$18$1, evidence$19$1, evidence$20$1) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$2 = $$outer
-  };
-  this.evidence$17$1$2 = evidence$17$1;
-  this.evidence$18$1$2 = evidence$18$1;
-  this.evidence$19$1$2 = evidence$19$1;
-  this.evidence$20$1$2 = evidence$20$1;
-  return this
-});
-$c_Lupickle_Generated$$anonfun$Tuple4R$1.prototype.applyOrElse__Lupickle_Js$Value__F1__O = (function(x4, default$2) {
-  if ($is_Lupickle_Js$Arr(x4)) {
-    var x2 = ((x4 === null) ? null : $as_Lupickle_Js$Arr(x4).value$1);
-    if (((x2 !== null) && (x2.lengthCompare__I__I(4) === 0))) {
+$h_Lupickle_Generated$$anonfun$Tuple5R$1.prototype = $c_Lupickle_Generated$$anonfun$Tuple5R$1.prototype;
+$c_Lupickle_Generated$$anonfun$Tuple5R$1.prototype.applyOrElse__Lupickle_Js$Value__F1__O = (function(x5, default$2) {
+  if ($is_Lupickle_Js$Arr(x5)) {
+    var x2 = ((x5 === null) ? null : $as_Lupickle_Js$Arr(x5).value$1);
+    if (((x2 !== null) && (x2.lengthCompare__I__I(5) === 0))) {
       var x1$2 = $as_Lupickle_Js$Value(x2.apply__I__O(0));
       var x2$2 = $as_Lupickle_Js$Value(x2.apply__I__O(1));
       var x3 = $as_Lupickle_Js$Value(x2.apply__I__O(2));
-      var x4$2 = $as_Lupickle_Js$Value(x2.apply__I__O(3));
+      var x4 = $as_Lupickle_Js$Value(x2.apply__I__O(3));
+      var x5$2 = $as_Lupickle_Js$Value(x2.apply__I__O(4));
       var this$1 = this.$$outer$2;
-      var evidence$1 = this.evidence$17$1$2;
+      var evidence$1 = this.evidence$26$1$2;
       var evidence$4 = $as_Lupickle_Types$Reader(evidence$1);
-      var jsx$3 = $s_Lupickle_Types$class__readJs__Lupickle_Types__Lupickle_Js$Value__Lupickle_Types$Reader__O(this$1, x1$2, evidence$4);
+      var jsx$4 = $s_Lupickle_Types$class__readJs__Lupickle_Types__Lupickle_Js$Value__Lupickle_Types$Reader__O(this$1, x1$2, evidence$4);
       var this$2 = this.$$outer$2;
-      var evidence$1$1 = this.evidence$18$1$2;
+      var evidence$1$1 = this.evidence$27$1$2;
       var evidence$4$1 = $as_Lupickle_Types$Reader(evidence$1$1);
-      var jsx$2 = $s_Lupickle_Types$class__readJs__Lupickle_Types__Lupickle_Js$Value__Lupickle_Types$Reader__O(this$2, x2$2, evidence$4$1);
+      var jsx$3 = $s_Lupickle_Types$class__readJs__Lupickle_Types__Lupickle_Js$Value__Lupickle_Types$Reader__O(this$2, x2$2, evidence$4$1);
       var this$3 = this.$$outer$2;
-      var evidence$1$2 = this.evidence$19$1$2;
+      var evidence$1$2 = this.evidence$28$1$2;
       var evidence$4$2 = $as_Lupickle_Types$Reader(evidence$1$2);
-      var jsx$1 = $s_Lupickle_Types$class__readJs__Lupickle_Types__Lupickle_Js$Value__Lupickle_Types$Reader__O(this$3, x3, evidence$4$2);
+      var jsx$2 = $s_Lupickle_Types$class__readJs__Lupickle_Types__Lupickle_Js$Value__Lupickle_Types$Reader__O(this$3, x3, evidence$4$2);
       var this$4 = this.$$outer$2;
-      var evidence$1$3 = this.evidence$20$1$2;
+      var evidence$1$3 = this.evidence$29$1$2;
       var evidence$4$3 = $as_Lupickle_Types$Reader(evidence$1$3);
-      return new $c_T4().init___O__O__O__O(jsx$3, jsx$2, jsx$1, $s_Lupickle_Types$class__readJs__Lupickle_Types__Lupickle_Js$Value__Lupickle_Types$Reader__O(this$4, x4$2, evidence$4$3))
+      var jsx$1 = $s_Lupickle_Types$class__readJs__Lupickle_Types__Lupickle_Js$Value__Lupickle_Types$Reader__O(this$4, x4, evidence$4$3);
+      var this$5 = this.$$outer$2;
+      var evidence$1$4 = this.evidence$30$1$2;
+      var evidence$4$4 = $as_Lupickle_Types$Reader(evidence$1$4);
+      return new $c_T5().init___O__O__O__O__O(jsx$4, jsx$3, jsx$2, jsx$1, $s_Lupickle_Types$class__readJs__Lupickle_Types__Lupickle_Js$Value__Lupickle_Types$Reader__O(this$5, x5$2, evidence$4$4))
     }
   };
-  return default$2.apply__O__O(x4)
+  return default$2.apply__O__O(x5)
 });
-$c_Lupickle_Generated$$anonfun$Tuple4R$1.prototype.isDefinedAt__O__Z = (function(x) {
+$c_Lupickle_Generated$$anonfun$Tuple5R$1.prototype.isDefinedAt__O__Z = (function(x) {
   return this.isDefinedAt__Lupickle_Js$Value__Z($as_Lupickle_Js$Value(x))
 });
-$c_Lupickle_Generated$$anonfun$Tuple4R$1.prototype.applyOrElse__O__F1__O = (function(x, default$2) {
+$c_Lupickle_Generated$$anonfun$Tuple5R$1.prototype.applyOrElse__O__F1__O = (function(x, default$2) {
   return this.applyOrElse__Lupickle_Js$Value__F1__O($as_Lupickle_Js$Value(x), default$2)
 });
-$c_Lupickle_Generated$$anonfun$Tuple4R$1.prototype.isDefinedAt__Lupickle_Js$Value__Z = (function(x4) {
-  if ($is_Lupickle_Js$Arr(x4)) {
-    var x2 = ((x4 === null) ? null : $as_Lupickle_Js$Arr(x4).value$1);
-    if (((x2 !== null) && (x2.lengthCompare__I__I(4) === 0))) {
+$c_Lupickle_Generated$$anonfun$Tuple5R$1.prototype.isDefinedAt__Lupickle_Js$Value__Z = (function(x5) {
+  if ($is_Lupickle_Js$Arr(x5)) {
+    var x2 = ((x5 === null) ? null : $as_Lupickle_Js$Arr(x5).value$1);
+    if (((x2 !== null) && (x2.lengthCompare__I__I(5) === 0))) {
       return true
     }
   };
   return false
 });
-var $d_Lupickle_Generated$$anonfun$Tuple4R$1 = new $TypeData().initClass({
-  Lupickle_Generated$$anonfun$Tuple4R$1: 0
-}, false, "upickle.Generated$$anonfun$Tuple4R$1", {
-  Lupickle_Generated$$anonfun$Tuple4R$1: 1,
+$c_Lupickle_Generated$$anonfun$Tuple5R$1.prototype.init___Lupickle_Generated__O__O__O__O__O = (function($$outer, evidence$26$1, evidence$27$1, evidence$28$1, evidence$29$1, evidence$30$1) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.evidence$26$1$2 = evidence$26$1;
+  this.evidence$27$1$2 = evidence$27$1;
+  this.evidence$28$1$2 = evidence$28$1;
+  this.evidence$29$1$2 = evidence$29$1;
+  this.evidence$30$1$2 = evidence$30$1;
+  return this
+});
+var $d_Lupickle_Generated$$anonfun$Tuple5R$1 = new $TypeData().initClass({
+  Lupickle_Generated$$anonfun$Tuple5R$1: 0
+}, false, "upickle.Generated$$anonfun$Tuple5R$1", {
+  Lupickle_Generated$$anonfun$Tuple5R$1: 1,
   sr_AbstractPartialFunction: 1,
   O: 1,
   F1: 1,
@@ -19412,7 +19928,7 @@ var $d_Lupickle_Generated$$anonfun$Tuple4R$1 = new $TypeData().initClass({
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lupickle_Generated$$anonfun$Tuple4R$1.prototype.$classData = $d_Lupickle_Generated$$anonfun$Tuple4R$1;
+$c_Lupickle_Generated$$anonfun$Tuple5R$1.prototype.$classData = $d_Lupickle_Generated$$anonfun$Tuple5R$1;
 /** @constructor */
 function $c_Lupickle_Implicits$$anonfun$4() {
   $c_sr_AbstractPartialFunction.call(this)
@@ -20794,80 +21310,82 @@ var $d_T3 = new $TypeData().initClass({
 });
 $c_T3.prototype.$classData = $d_T3;
 /** @constructor */
-function $c_T4() {
+function $c_T5() {
   $c_O.call(this);
   this.$$und1$1 = null;
   this.$$und2$1 = null;
   this.$$und3$1 = null;
-  this.$$und4$1 = null
+  this.$$und4$1 = null;
+  this.$$und5$1 = null
 }
-$c_T4.prototype = new $h_O();
-$c_T4.prototype.constructor = $c_T4;
+$c_T5.prototype = new $h_O();
+$c_T5.prototype.constructor = $c_T5;
 /** @constructor */
-function $h_T4() {
+function $h_T5() {
   /*<skip>*/
 }
-$h_T4.prototype = $c_T4.prototype;
-$c_T4.prototype.productPrefix__T = (function() {
-  return "Tuple4"
+$h_T5.prototype = $c_T5.prototype;
+$c_T5.prototype.productPrefix__T = (function() {
+  return "Tuple5"
 });
-$c_T4.prototype.productArity__I = (function() {
-  return 4
+$c_T5.prototype.productArity__I = (function() {
+  return 5
 });
-$c_T4.prototype.equals__O__Z = (function(x$1) {
+$c_T5.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
-  } else if ($is_T4(x$1)) {
-    var Tuple4$1 = $as_T4(x$1);
-    return ((($m_sr_BoxesRunTime$().equals__O__O__Z(this.$$und1$1, Tuple4$1.$$und1$1) && $m_sr_BoxesRunTime$().equals__O__O__Z(this.$$und2$1, Tuple4$1.$$und2$1)) && $m_sr_BoxesRunTime$().equals__O__O__Z(this.$$und3$1, Tuple4$1.$$und3$1)) && $m_sr_BoxesRunTime$().equals__O__O__Z(this.$$und4$1, Tuple4$1.$$und4$1))
+  } else if ($is_T5(x$1)) {
+    var Tuple5$1 = $as_T5(x$1);
+    return (((($m_sr_BoxesRunTime$().equals__O__O__Z(this.$$und1$1, Tuple5$1.$$und1$1) && $m_sr_BoxesRunTime$().equals__O__O__Z(this.$$und2$1, Tuple5$1.$$und2$1)) && $m_sr_BoxesRunTime$().equals__O__O__Z(this.$$und3$1, Tuple5$1.$$und3$1)) && $m_sr_BoxesRunTime$().equals__O__O__Z(this.$$und4$1, Tuple5$1.$$und4$1)) && $m_sr_BoxesRunTime$().equals__O__O__Z(this.$$und5$1, Tuple5$1.$$und5$1))
   } else {
     return false
   }
 });
-$c_T4.prototype.productElement__I__O = (function(n) {
-  return $s_s_Product4$class__productElement__s_Product4__I__O(this, n)
+$c_T5.prototype.productElement__I__O = (function(n) {
+  return $s_s_Product5$class__productElement__s_Product5__I__O(this, n)
 });
-$c_T4.prototype.toString__T = (function() {
-  return (((((((("(" + this.$$und1$1) + ",") + this.$$und2$1) + ",") + this.$$und3$1) + ",") + this.$$und4$1) + ")")
+$c_T5.prototype.toString__T = (function() {
+  return (((((((((("(" + this.$$und1$1) + ",") + this.$$und2$1) + ",") + this.$$und3$1) + ",") + this.$$und4$1) + ",") + this.$$und5$1) + ")")
 });
-$c_T4.prototype.init___O__O__O__O = (function(_1, _2, _3, _4) {
+$c_T5.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_T5.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_T5.prototype.init___O__O__O__O__O = (function(_1, _2, _3, _4, _5) {
   this.$$und1$1 = _1;
   this.$$und2$1 = _2;
   this.$$und3$1 = _3;
   this.$$und4$1 = _4;
+  this.$$und5$1 = _5;
   return this
 });
-$c_T4.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_T4.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_T4(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.T4)))
+function $is_T5(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.T5)))
 }
-function $as_T4(obj) {
-  return (($is_T4(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "scala.Tuple4"))
+function $as_T5(obj) {
+  return (($is_T5(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "scala.Tuple5"))
 }
-function $isArrayOf_T4(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.T4)))
+function $isArrayOf_T5(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.T5)))
 }
-function $asArrayOf_T4(obj, depth) {
-  return (($isArrayOf_T4(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.Tuple4;", depth))
+function $asArrayOf_T5(obj, depth) {
+  return (($isArrayOf_T5(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.Tuple5;", depth))
 }
-var $d_T4 = new $TypeData().initClass({
-  T4: 0
-}, false, "scala.Tuple4", {
-  T4: 1,
+var $d_T5 = new $TypeData().initClass({
+  T5: 0
+}, false, "scala.Tuple5", {
+  T5: 1,
   O: 1,
-  s_Product4: 1,
+  s_Product5: 1,
   s_Product: 1,
   s_Equals: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_T4.prototype.$classData = $d_T4;
+$c_T5.prototype.$classData = $d_T5;
 /** @constructor */
 function $c_jl_NumberFormatException() {
   $c_jl_IllegalArgumentException.call(this)
@@ -21833,68 +22351,10 @@ var $d_sjsr_UndefinedBehaviorError = new $TypeData().initClass({
 });
 $c_sjsr_UndefinedBehaviorError.prototype.$classData = $d_sjsr_UndefinedBehaviorError;
 /** @constructor */
-function $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1() {
-  $c_sr_AbstractFunction0$mcV$sp.call(this);
-  this.$$outer$3 = null
-}
-$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1.prototype = new $h_sr_AbstractFunction0$mcV$sp();
-$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1.prototype.constructor = $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1;
-/** @constructor */
-function $h_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1() {
-  /*<skip>*/
-}
-$h_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1.prototype = $c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1.prototype;
-$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1.prototype.init___Lio_surfkit_clientlib_webrtc_Peer = (function($$outer) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$3 = $$outer
-  };
-  return this
-});
-$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1.prototype.apply$mcV$sp__V = (function() {
-  var this$2 = $m_s_Console$();
-  var this$3 = this$2.outVar$2;
-  $as_Ljava_io_PrintStream(this$3.tl$1.get__O()).println__O__V("setRemoteDescription success");
-  var this$5 = $m_s_Console$();
-  var this$6 = this$5.outVar$2;
-  $as_Ljava_io_PrintStream(this$6.tl$1.get__O()).println__O__V("creating an answer..");
-  var jsx$1 = this.$$outer$3.pc$1;
-  var value = this.$$outer$3.io$surfkit$clientlib$webrtc$Peer$$p$f.receiveMedia$1;
-  jsx$1["createAnswer"]((function(arg$outer) {
-    return (function(answer$2) {
-      var x = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["createAnswer: ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([answer$2]));
-      var this$8 = $m_s_Console$();
-      var this$9 = this$8.outVar$2;
-      $as_Ljava_io_PrintStream(this$9.tl$1.get__O()).println__O__V(x);
-      arg$outer.$$outer$3.io$surfkit$clientlib$webrtc$Peer$$p$f.signaler$1.send__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(new $c_Lio_surfkit_clientlib_webrtc_Peer$Answer().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lorg_scalajs_dom_experimental_webrtc_RTCSessionDescription(arg$outer.$$outer$3.info$1, answer$2))
-    })
-  })(this), (function(arg$outer$1) {
-    return (function(err$2) {
-      arg$outer$1.$$outer$3.handleError__Lorg_scalajs_dom_raw_DOMError__V(err$2)
-    })
-  })(this), value)
-});
-$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1.prototype.apply__O = (function() {
-  this.apply$mcV$sp__V()
-});
-var $d_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1 = new $TypeData().initClass({
-  Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1: 0
-}, false, "io.surfkit.clientlib.webrtc.Peer$$anonfun$handleMessage$1", {
-  Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1: 1,
-  sr_AbstractFunction0$mcV$sp: 1,
-  sr_AbstractFunction0: 1,
-  O: 1,
-  F0: 1,
-  s_Function0$mcV$sp: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1.prototype.$classData = $d_Lio_surfkit_clientlib_webrtc_Peer$$anonfun$handleMessage$1;
-/** @constructor */
 function $c_Lm_Signaling$Answer() {
   $c_O.call(this);
-  this.peer$1 = null;
+  this.remote$1 = null;
+  this.local$1 = null;
   this.answer$1 = null
 }
 $c_Lm_Signaling$Answer.prototype = new $h_O();
@@ -21908,24 +22368,26 @@ $c_Lm_Signaling$Answer.prototype.productPrefix__T = (function() {
   return "Answer"
 });
 $c_Lm_Signaling$Answer.prototype.productArity__I = (function() {
-  return 2
-});
-$c_Lm_Signaling$Answer.prototype.init___Lm_Signaling$PeerInfo__Lm_Signaling$RTCSessionDescription = (function(peer, answer) {
-  this.peer$1 = peer;
-  this.answer$1 = answer;
-  return this
+  return 3
 });
 $c_Lm_Signaling$Answer.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
   } else if ($is_Lm_Signaling$Answer(x$1)) {
     var Answer$1 = $as_Lm_Signaling$Answer(x$1);
-    var x = this.peer$1;
-    var x$2 = Answer$1.peer$1;
+    var x = this.remote$1;
+    var x$2 = Answer$1.remote$1;
     if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      var x$3 = this.answer$1;
-      var x$4 = Answer$1.answer$1;
-      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+      var x$3 = this.local$1;
+      var x$4 = Answer$1.local$1;
+      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      var jsx$1 = false
+    };
+    if (jsx$1) {
+      var x$5 = this.answer$1;
+      var x$6 = Answer$1.answer$1;
+      return ((x$5 === null) ? (x$6 === null) : x$5.equals__O__Z(x$6))
     } else {
       return false
     }
@@ -21936,10 +22398,14 @@ $c_Lm_Signaling$Answer.prototype.equals__O__Z = (function(x$1) {
 $c_Lm_Signaling$Answer.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.peer$1;
+      return this.remote$1;
       break
     }
     case 1: {
+      return this.local$1;
+      break
+    }
+    case 2: {
       return this.answer$1;
       break
     }
@@ -21950,6 +22416,12 @@ $c_Lm_Signaling$Answer.prototype.productElement__I__O = (function(x$1) {
 });
 $c_Lm_Signaling$Answer.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Lm_Signaling$Answer.prototype.init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__Lm_Signaling$RTCSessionDescription = (function(remote, local, answer) {
+  this.remote$1 = remote;
+  this.local$1 = local;
+  this.answer$1 = answer;
+  return this
 });
 $c_Lm_Signaling$Answer.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
@@ -21986,7 +22458,8 @@ $c_Lm_Signaling$Answer.prototype.$classData = $d_Lm_Signaling$Answer;
 /** @constructor */
 function $c_Lm_Signaling$Candidate() {
   $c_O.call(this);
-  this.peer$1 = null;
+  this.remote$1 = null;
+  this.local$1 = null;
   this.candidate$1 = null
 }
 $c_Lm_Signaling$Candidate.prototype = new $h_O();
@@ -21996,23 +22469,36 @@ function $h_Lm_Signaling$Candidate() {
   /*<skip>*/
 }
 $h_Lm_Signaling$Candidate.prototype = $c_Lm_Signaling$Candidate.prototype;
+$c_Lm_Signaling$Candidate.prototype.init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__Lm_Signaling$RTCIceCandidate = (function(remote, local, candidate) {
+  this.remote$1 = remote;
+  this.local$1 = local;
+  this.candidate$1 = candidate;
+  return this
+});
 $c_Lm_Signaling$Candidate.prototype.productPrefix__T = (function() {
   return "Candidate"
 });
 $c_Lm_Signaling$Candidate.prototype.productArity__I = (function() {
-  return 2
+  return 3
 });
 $c_Lm_Signaling$Candidate.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
   } else if ($is_Lm_Signaling$Candidate(x$1)) {
     var Candidate$1 = $as_Lm_Signaling$Candidate(x$1);
-    var x = this.peer$1;
-    var x$2 = Candidate$1.peer$1;
+    var x = this.remote$1;
+    var x$2 = Candidate$1.remote$1;
     if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      var x$3 = this.candidate$1;
-      var x$4 = Candidate$1.candidate$1;
-      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+      var x$3 = this.local$1;
+      var x$4 = Candidate$1.local$1;
+      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      var jsx$1 = false
+    };
+    if (jsx$1) {
+      var x$5 = this.candidate$1;
+      var x$6 = Candidate$1.candidate$1;
+      return ((x$5 === null) ? (x$6 === null) : x$5.equals__O__Z(x$6))
     } else {
       return false
     }
@@ -22023,10 +22509,14 @@ $c_Lm_Signaling$Candidate.prototype.equals__O__Z = (function(x$1) {
 $c_Lm_Signaling$Candidate.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.peer$1;
+      return this.remote$1;
       break
     }
     case 1: {
+      return this.local$1;
+      break
+    }
+    case 2: {
       return this.candidate$1;
       break
     }
@@ -22037,11 +22527,6 @@ $c_Lm_Signaling$Candidate.prototype.productElement__I__O = (function(x$1) {
 });
 $c_Lm_Signaling$Candidate.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Lm_Signaling$Candidate.prototype.init___Lm_Signaling$PeerInfo__Lm_Signaling$RTCIceCandidate = (function(peer, candidate) {
-  this.peer$1 = peer;
-  this.candidate$1 = candidate;
-  return this
 });
 $c_Lm_Signaling$Candidate.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
@@ -22078,7 +22563,8 @@ $c_Lm_Signaling$Candidate.prototype.$classData = $d_Lm_Signaling$Candidate;
 /** @constructor */
 function $c_Lm_Signaling$Error() {
   $c_O.call(this);
-  this.peer$1 = null;
+  this.remote$1 = null;
+  this.local$1 = null;
   this.reason$1 = null
 }
 $c_Lm_Signaling$Error.prototype = new $h_O();
@@ -22092,16 +22578,29 @@ $c_Lm_Signaling$Error.prototype.productPrefix__T = (function() {
   return "Error"
 });
 $c_Lm_Signaling$Error.prototype.productArity__I = (function() {
-  return 2
+  return 3
+});
+$c_Lm_Signaling$Error.prototype.init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__T = (function(remote, local, reason) {
+  this.remote$1 = remote;
+  this.local$1 = local;
+  this.reason$1 = reason;
+  return this
 });
 $c_Lm_Signaling$Error.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
   } else if ($is_Lm_Signaling$Error(x$1)) {
     var Error$1 = $as_Lm_Signaling$Error(x$1);
-    var x = this.peer$1;
-    var x$2 = Error$1.peer$1;
+    var x = this.remote$1;
+    var x$2 = Error$1.remote$1;
     if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.local$1;
+      var x$4 = Error$1.local$1;
+      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      var jsx$1 = false
+    };
+    if (jsx$1) {
       return (this.reason$1 === Error$1.reason$1)
     } else {
       return false
@@ -22113,10 +22612,14 @@ $c_Lm_Signaling$Error.prototype.equals__O__Z = (function(x$1) {
 $c_Lm_Signaling$Error.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.peer$1;
+      return this.remote$1;
       break
     }
     case 1: {
+      return this.local$1;
+      break
+    }
+    case 2: {
       return this.reason$1;
       break
     }
@@ -22127,11 +22630,6 @@ $c_Lm_Signaling$Error.prototype.productElement__I__O = (function(x$1) {
 });
 $c_Lm_Signaling$Error.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Lm_Signaling$Error.prototype.init___Lm_Signaling$PeerInfo__T = (function(peer, reason) {
-  this.peer$1 = peer;
-  this.reason$1 = reason;
-  return this
 });
 $c_Lm_Signaling$Error.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
@@ -22168,8 +22666,9 @@ $c_Lm_Signaling$Error.prototype.$classData = $d_Lm_Signaling$Error;
 /** @constructor */
 function $c_Lm_Signaling$Join() {
   $c_O.call(this);
-  this.room$1 = null;
-  this.peer$1 = null
+  this.remote$1 = null;
+  this.local$1 = null;
+  this.room$1 = null
 }
 $c_Lm_Signaling$Join.prototype = new $h_O();
 $c_Lm_Signaling$Join.prototype.constructor = $c_Lm_Signaling$Join;
@@ -22178,26 +22677,34 @@ function $h_Lm_Signaling$Join() {
   /*<skip>*/
 }
 $h_Lm_Signaling$Join.prototype = $c_Lm_Signaling$Join.prototype;
-$c_Lm_Signaling$Join.prototype.init___T__Lm_Signaling$PeerInfo = (function(room, peer) {
-  this.room$1 = room;
-  this.peer$1 = peer;
-  return this
-});
 $c_Lm_Signaling$Join.prototype.productPrefix__T = (function() {
   return "Join"
 });
 $c_Lm_Signaling$Join.prototype.productArity__I = (function() {
-  return 2
+  return 3
+});
+$c_Lm_Signaling$Join.prototype.init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__T = (function(remote, local, room) {
+  this.remote$1 = remote;
+  this.local$1 = local;
+  this.room$1 = room;
+  return this
 });
 $c_Lm_Signaling$Join.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
   } else if ($is_Lm_Signaling$Join(x$1)) {
     var Join$1 = $as_Lm_Signaling$Join(x$1);
-    if ((this.room$1 === Join$1.room$1)) {
-      var x = this.peer$1;
-      var x$2 = Join$1.peer$1;
-      return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
+    var x = this.remote$1;
+    var x$2 = Join$1.remote$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.local$1;
+      var x$4 = Join$1.local$1;
+      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      var jsx$1 = false
+    };
+    if (jsx$1) {
+      return (this.room$1 === Join$1.room$1)
     } else {
       return false
     }
@@ -22208,11 +22715,15 @@ $c_Lm_Signaling$Join.prototype.equals__O__Z = (function(x$1) {
 $c_Lm_Signaling$Join.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.room$1;
+      return this.remote$1;
       break
     }
     case 1: {
-      return this.peer$1;
+      return this.local$1;
+      break
+    }
+    case 2: {
+      return this.room$1;
       break
     }
     default: {
@@ -22258,7 +22769,8 @@ $c_Lm_Signaling$Join.prototype.$classData = $d_Lm_Signaling$Join;
 /** @constructor */
 function $c_Lm_Signaling$Offer() {
   $c_O.call(this);
-  this.peer$1 = null;
+  this.remote$1 = null;
+  this.local$1 = null;
   this.offer$1 = null
 }
 $c_Lm_Signaling$Offer.prototype = new $h_O();
@@ -22272,24 +22784,26 @@ $c_Lm_Signaling$Offer.prototype.productPrefix__T = (function() {
   return "Offer"
 });
 $c_Lm_Signaling$Offer.prototype.productArity__I = (function() {
-  return 2
-});
-$c_Lm_Signaling$Offer.prototype.init___Lm_Signaling$PeerInfo__Lm_Signaling$RTCSessionDescription = (function(peer, offer) {
-  this.peer$1 = peer;
-  this.offer$1 = offer;
-  return this
+  return 3
 });
 $c_Lm_Signaling$Offer.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
   } else if ($is_Lm_Signaling$Offer(x$1)) {
     var Offer$1 = $as_Lm_Signaling$Offer(x$1);
-    var x = this.peer$1;
-    var x$2 = Offer$1.peer$1;
+    var x = this.remote$1;
+    var x$2 = Offer$1.remote$1;
     if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      var x$3 = this.offer$1;
-      var x$4 = Offer$1.offer$1;
-      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+      var x$3 = this.local$1;
+      var x$4 = Offer$1.local$1;
+      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      var jsx$1 = false
+    };
+    if (jsx$1) {
+      var x$5 = this.offer$1;
+      var x$6 = Offer$1.offer$1;
+      return ((x$5 === null) ? (x$6 === null) : x$5.equals__O__Z(x$6))
     } else {
       return false
     }
@@ -22300,10 +22814,14 @@ $c_Lm_Signaling$Offer.prototype.equals__O__Z = (function(x$1) {
 $c_Lm_Signaling$Offer.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.peer$1;
+      return this.remote$1;
       break
     }
     case 1: {
+      return this.local$1;
+      break
+    }
+    case 2: {
       return this.offer$1;
       break
     }
@@ -22314,6 +22832,12 @@ $c_Lm_Signaling$Offer.prototype.productElement__I__O = (function(x$1) {
 });
 $c_Lm_Signaling$Offer.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Lm_Signaling$Offer.prototype.init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__Lm_Signaling$RTCSessionDescription = (function(remote, local, offer) {
+  this.remote$1 = remote;
+  this.local$1 = local;
+  this.offer$1 = offer;
+  return this
 });
 $c_Lm_Signaling$Offer.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
@@ -22348,187 +22872,11 @@ var $d_Lm_Signaling$Offer = new $TypeData().initClass({
 });
 $c_Lm_Signaling$Offer.prototype.$classData = $d_Lm_Signaling$Offer;
 /** @constructor */
-function $c_Lm_Signaling$RTCIceCandidate() {
-  $c_O.call(this);
-  this.candidate$1 = null;
-  this.sdpMLineIndex$1 = 0;
-  this.sdpMid$1 = null
-}
-$c_Lm_Signaling$RTCIceCandidate.prototype = new $h_O();
-$c_Lm_Signaling$RTCIceCandidate.prototype.constructor = $c_Lm_Signaling$RTCIceCandidate;
-/** @constructor */
-function $h_Lm_Signaling$RTCIceCandidate() {
-  /*<skip>*/
-}
-$h_Lm_Signaling$RTCIceCandidate.prototype = $c_Lm_Signaling$RTCIceCandidate.prototype;
-$c_Lm_Signaling$RTCIceCandidate.prototype.productPrefix__T = (function() {
-  return "RTCIceCandidate"
-});
-$c_Lm_Signaling$RTCIceCandidate.prototype.productArity__I = (function() {
-  return 3
-});
-$c_Lm_Signaling$RTCIceCandidate.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Lm_Signaling$RTCIceCandidate(x$1)) {
-    var RTCIceCandidate$1 = $as_Lm_Signaling$RTCIceCandidate(x$1);
-    return (((this.candidate$1 === RTCIceCandidate$1.candidate$1) && (this.sdpMLineIndex$1 === RTCIceCandidate$1.sdpMLineIndex$1)) && (this.sdpMid$1 === RTCIceCandidate$1.sdpMid$1))
-  } else {
-    return false
-  }
-});
-$c_Lm_Signaling$RTCIceCandidate.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.candidate$1;
-      break
-    }
-    case 1: {
-      return this.sdpMLineIndex$1;
-      break
-    }
-    case 2: {
-      return this.sdpMid$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Lm_Signaling$RTCIceCandidate.prototype.init___T__I__T = (function(candidate, sdpMLineIndex, sdpMid) {
-  this.candidate$1 = candidate;
-  this.sdpMLineIndex$1 = sdpMLineIndex;
-  this.sdpMid$1 = sdpMid;
-  return this
-});
-$c_Lm_Signaling$RTCIceCandidate.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Lm_Signaling$RTCIceCandidate.prototype.hashCode__I = (function() {
-  var acc = (-889275714);
-  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.candidate$1));
-  acc = $m_sr_Statics$().mix__I__I__I(acc, this.sdpMLineIndex$1);
-  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.sdpMid$1));
-  return $m_sr_Statics$().finalizeHash__I__I__I(acc, 3)
-});
-$c_Lm_Signaling$RTCIceCandidate.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Lm_Signaling$RTCIceCandidate(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lm_Signaling$RTCIceCandidate)))
-}
-function $as_Lm_Signaling$RTCIceCandidate(obj) {
-  return (($is_Lm_Signaling$RTCIceCandidate(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "m.Signaling$RTCIceCandidate"))
-}
-function $isArrayOf_Lm_Signaling$RTCIceCandidate(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lm_Signaling$RTCIceCandidate)))
-}
-function $asArrayOf_Lm_Signaling$RTCIceCandidate(obj, depth) {
-  return (($isArrayOf_Lm_Signaling$RTCIceCandidate(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lm.Signaling$RTCIceCandidate;", depth))
-}
-var $d_Lm_Signaling$RTCIceCandidate = new $TypeData().initClass({
-  Lm_Signaling$RTCIceCandidate: 0
-}, false, "m.Signaling$RTCIceCandidate", {
-  Lm_Signaling$RTCIceCandidate: 1,
-  O: 1,
-  Lm_RTCSignal: 1,
-  Lm_Model: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lm_Signaling$RTCIceCandidate.prototype.$classData = $d_Lm_Signaling$RTCIceCandidate;
-/** @constructor */
-function $c_Lm_Signaling$RTCSessionDescription() {
-  $c_O.call(this);
-  this.type$1 = null;
-  this.sdp$1 = null
-}
-$c_Lm_Signaling$RTCSessionDescription.prototype = new $h_O();
-$c_Lm_Signaling$RTCSessionDescription.prototype.constructor = $c_Lm_Signaling$RTCSessionDescription;
-/** @constructor */
-function $h_Lm_Signaling$RTCSessionDescription() {
-  /*<skip>*/
-}
-$h_Lm_Signaling$RTCSessionDescription.prototype = $c_Lm_Signaling$RTCSessionDescription.prototype;
-$c_Lm_Signaling$RTCSessionDescription.prototype.init___T__T = (function(type, sdp) {
-  this.type$1 = type;
-  this.sdp$1 = sdp;
-  return this
-});
-$c_Lm_Signaling$RTCSessionDescription.prototype.productPrefix__T = (function() {
-  return "RTCSessionDescription"
-});
-$c_Lm_Signaling$RTCSessionDescription.prototype.productArity__I = (function() {
-  return 2
-});
-$c_Lm_Signaling$RTCSessionDescription.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Lm_Signaling$RTCSessionDescription(x$1)) {
-    var RTCSessionDescription$1 = $as_Lm_Signaling$RTCSessionDescription(x$1);
-    return ((this.type$1 === RTCSessionDescription$1.type$1) && (this.sdp$1 === RTCSessionDescription$1.sdp$1))
-  } else {
-    return false
-  }
-});
-$c_Lm_Signaling$RTCSessionDescription.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.type$1;
-      break
-    }
-    case 1: {
-      return this.sdp$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Lm_Signaling$RTCSessionDescription.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Lm_Signaling$RTCSessionDescription.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Lm_Signaling$RTCSessionDescription.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Lm_Signaling$RTCSessionDescription(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lm_Signaling$RTCSessionDescription)))
-}
-function $as_Lm_Signaling$RTCSessionDescription(obj) {
-  return (($is_Lm_Signaling$RTCSessionDescription(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "m.Signaling$RTCSessionDescription"))
-}
-function $isArrayOf_Lm_Signaling$RTCSessionDescription(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lm_Signaling$RTCSessionDescription)))
-}
-function $asArrayOf_Lm_Signaling$RTCSessionDescription(obj, depth) {
-  return (($isArrayOf_Lm_Signaling$RTCSessionDescription(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lm.Signaling$RTCSessionDescription;", depth))
-}
-var $d_Lm_Signaling$RTCSessionDescription = new $TypeData().initClass({
-  Lm_Signaling$RTCSessionDescription: 0
-}, false, "m.Signaling$RTCSessionDescription", {
-  Lm_Signaling$RTCSessionDescription: 1,
-  O: 1,
-  Lm_RTCSignal: 1,
-  Lm_Model: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lm_Signaling$RTCSessionDescription.prototype.$classData = $d_Lm_Signaling$RTCSessionDescription;
-/** @constructor */
 function $c_Lm_Signaling$Room() {
   $c_O.call(this);
+  this.remote$1 = null;
+  this.local$1 = null;
   this.name$1 = null;
-  this.peer$1 = null;
   this.config$1 = null;
   this.members$1 = null
 }
@@ -22543,31 +22891,33 @@ $c_Lm_Signaling$Room.prototype.productPrefix__T = (function() {
   return "Room"
 });
 $c_Lm_Signaling$Room.prototype.productArity__I = (function() {
-  return 4
+  return 5
 });
 $c_Lm_Signaling$Room.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
   } else if ($is_Lm_Signaling$Room(x$1)) {
     var Room$1 = $as_Lm_Signaling$Room(x$1);
-    if ((this.name$1 === Room$1.name$1)) {
-      var x = this.peer$1;
-      var x$2 = Room$1.peer$1;
-      var jsx$2 = ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
+    var x = this.remote$1;
+    var x$2 = Room$1.remote$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.local$1;
+      var x$4 = Room$1.local$1;
+      var jsx$2 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
     } else {
       var jsx$2 = false
     };
-    if (jsx$2) {
-      var x$3 = this.config$1;
-      var x$4 = Room$1.config$1;
-      var jsx$1 = ((x$3 === null) ? (x$4 === null) : $s_sc_GenSetLike$class__equals__sc_GenSetLike__O__Z(x$3, x$4))
+    if ((jsx$2 && (this.name$1 === Room$1.name$1))) {
+      var x$5 = this.config$1;
+      var x$6 = Room$1.config$1;
+      var jsx$1 = ((x$5 === null) ? (x$6 === null) : $s_sc_GenSetLike$class__equals__sc_GenSetLike__O__Z(x$5, x$6))
     } else {
       var jsx$1 = false
     };
     if (jsx$1) {
-      var x$5 = this.members$1;
-      var x$6 = Room$1.members$1;
-      return ((x$5 === null) ? (x$6 === null) : $s_sc_GenSetLike$class__equals__sc_GenSetLike__O__Z(x$5, x$6))
+      var x$7 = this.members$1;
+      var x$8 = Room$1.members$1;
+      return ((x$7 === null) ? (x$8 === null) : $s_sc_GenSetLike$class__equals__sc_GenSetLike__O__Z(x$7, x$8))
     } else {
       return false
     }
@@ -22578,18 +22928,22 @@ $c_Lm_Signaling$Room.prototype.equals__O__Z = (function(x$1) {
 $c_Lm_Signaling$Room.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.name$1;
+      return this.remote$1;
       break
     }
     case 1: {
-      return this.peer$1;
+      return this.local$1;
       break
     }
     case 2: {
-      return this.config$1;
+      return this.name$1;
       break
     }
     case 3: {
+      return this.config$1;
+      break
+    }
+    case 4: {
       return this.members$1;
       break
     }
@@ -22601,19 +22955,20 @@ $c_Lm_Signaling$Room.prototype.productElement__I__O = (function(x$1) {
 $c_Lm_Signaling$Room.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
-$c_Lm_Signaling$Room.prototype.init___T__Lm_Signaling$PeerInfo__sci_Set__sci_Set = (function(name, peer, config, members) {
-  this.name$1 = name;
-  this.peer$1 = peer;
-  this.config$1 = config;
-  this.members$1 = members;
-  return this
-});
 $c_Lm_Signaling$Room.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
   return this$2.productHash__s_Product__I__I(this, (-889275714))
 });
 $c_Lm_Signaling$Room.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Lm_Signaling$Room.prototype.init___Lm_Signaling$PeerInfo__Lm_Signaling$PeerInfo__T__sci_Set__sci_Set = (function(remote, local, name, config, members) {
+  this.remote$1 = remote;
+  this.local$1 = local;
+  this.name$1 = name;
+  this.config$1 = config;
+  this.members$1 = members;
+  return this
 });
 function $is_Lm_Signaling$Room(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lm_Signaling$Room)))
