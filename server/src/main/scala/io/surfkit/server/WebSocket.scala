@@ -4,6 +4,7 @@ import akka.actor._
 import akka.stream.OverflowStrategy
 import akka.stream.scaladsl._
 import akka.util.Timeout
+import m.Signaling.{Room, Join, PeerInfo}
 import m.{Model, ApiMessage}
 import scala.util._
 import scala.concurrent.duration._
@@ -16,30 +17,47 @@ trait WebSocket {
 
 object WebSocket {
 
+  var rooms = Map.empty[String,Set[PeerInfo]]
+
   def create(system: ActorSystem): WebSocket = {
-    val coreActor =
+    val serverActor =
       system.actorOf(Props(new Actor {
-        var subscribers = Set.empty[ActorRef]
+        var subscribers = Map.empty[String, ActorRef]
         def receive: Receive = {
           case Connect(id, subscriber) =>
             context.watch(subscriber)
-            subscribers += subscriber
+            subscribers += id -> subscriber
             // create user actor as a child of the subscriber
             println(s"$id joined!")
           case msg: ReceivedMessage =>
             println(s"Got message ${msg}")
             // broadcast to all...
-            subscribers.foreach(_ ! msg.toApiMessage)
+            val api = msg.toApiMessage
+            println(s"Api ${api}")
+            api.data match{
+              case Join(name, peer) =>
+                println(s"Join ${peer}")
+                rooms += name -> (rooms.get(name).getOrElse(Set.empty[PeerInfo]) + peer)
+                val r = Room(name = name, peer = peer, config = Set(), rooms(name))
+                subscribers.get(msg.id)foreach(_ ! r)
+              case _ =>
+                subscribers.values.foreach(_ ! api.data)
+            }
           case Disconnect(id) =>
+            // FIXME:..
+            val peer = m.Signaling.PeerInfo(id, "video")
+            rooms += "test" -> (rooms.get("test").getOrElse(Set.empty[PeerInfo]) - peer)
+
             println(s"$id left!")
             println(s"Kill actor ${id}")
+            subscribers -= id
           case Terminated(sub) =>
             println("Terminated")
-            subscribers -= sub // clean up dead subscribers
+
         }
       }))
 
-    def wsInSink(uuid: String) = Sink.actorRef[SocketEvent](coreActor, Disconnect(uuid))
+    def wsInSink(uuid: String) = Sink.actorRef[SocketEvent](serverActor, Disconnect(uuid))
 
     new WebSocket {
       def wsFlow(id: String): Flow[String, m.Model, Unit] = {
@@ -49,11 +67,11 @@ object WebSocket {
             .to(wsInSink(id))
         val out =
           Source.actorRef[ApiMessage](5, OverflowStrategy.fail)
-            .mapMaterializedValue(coreActor ! Connect(id, _))
+            .mapMaterializedValue(serverActor ! Connect(id, _))
 
         Flow.wrap(in, out)(Keep.none)
       }
-      def injectMessage(message: m.Model): Unit = coreActor ! message // non-streams interface
+      def injectMessage(message: m.Model): Unit = serverActor ! message // non-streams interface
     }
   }
 

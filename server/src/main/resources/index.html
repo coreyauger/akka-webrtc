@@ -11,8 +11,13 @@
 <body>
 
 <h1>WebRTC example</h1>
-
+<h3 id="peerId"></h3>
 <div id="playground">
+  <video id="local" autoplay ></video>
+  <video id="remote" autoplay ></video>
+
+  <button id="bGetMedia">Get Media</button>
+  <button id="bCall">Call</button>
 </div>
 
 <script type="text/javascript" src="js/adapter.js"></script>
