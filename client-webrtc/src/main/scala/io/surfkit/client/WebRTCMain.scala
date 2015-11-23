@@ -23,7 +23,7 @@ class WebSocketSignaler extends Peer.ModelTransformPeerSignaler[m.RTCSignal]{
 
   val localPeer = PeerInfo(id, `type`)
 
-  var ws = new dom.WebSocket(s"ws://localhost:8080/ws/${id}")
+  var ws = new dom.WebSocket(s"ws://${dom.document.location.hostname}:${dom.document.location.port}/ws/${id}")
   ws.onmessage = { x: MessageEvent =>
     println("WS onmessage")
     val msg = upickle.default.read[m.Model](x.data.toString)

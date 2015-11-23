@@ -8994,9 +8994,6 @@ function $c_Lio_surfkit_clientlib_webrtc_WebRTC() {
   this.peers$1 = null;
   this.peerStreamAdded$1 = null;
   this.peerStreamRemoved$1 = null;
-  this.rtcConfiguration$1 = null;
-  this.receiveMedia$1 = null;
-  this.peerConnectionConstraints$1 = null;
   this.hardMuted$1 = false;
   this.localStreams$1 = null;
   this.localScreens$1 = null;
@@ -9026,16 +9023,6 @@ $c_Lio_surfkit_clientlib_webrtc_WebRTC.prototype.init___Lio_surfkit_clientlib_we
   this.peerStreamRemoved$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(p$2$1) {
     $as_Lio_surfkit_clientlib_webrtc_Peer(p$2$1)
   }));
-  this.rtcConfiguration$1 = $m_Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration$().apply__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration([$m_Lorg_scalajs_dom_experimental_webrtc_RTCIceServer$().apply__sjs_js_UndefOr__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCIceServer("stun:stun.l.google.com:19302", (void 0), (void 0))]);
-  var x$5 = {
-    "OfferToReceiveAudio": true,
-    "OfferToReceiveVideo": true
-  };
-  this.receiveMedia$1 = $m_Lorg_scalajs_dom_experimental_webrtc_MediaConstraints$().apply__sjs_js_UndefOr__sjs_js_UndefOr__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints((void 0), (void 0), (void 0), x$5);
-  var x$9 = [{
-    "DtlsSrtpKeyAgreement": true
-  }];
-  this.peerConnectionConstraints$1 = $m_Lorg_scalajs_dom_experimental_webrtc_MediaConstraints$().apply__sjs_js_UndefOr__sjs_js_UndefOr__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints((void 0), (void 0), x$9, (void 0));
   return this
 });
 $c_Lio_surfkit_clientlib_webrtc_WebRTC.prototype.createPeer__Lio_surfkit_clientlib_webrtc_Peer$Props__Lio_surfkit_clientlib_webrtc_Peer = (function(props) {
@@ -9055,12 +9042,8 @@ $c_Lio_surfkit_clientlib_webrtc_WebRTC.prototype.createPeer__Lio_surfkit_clientl
   return peer
 });
 $c_Lio_surfkit_clientlib_webrtc_WebRTC.prototype.send__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V = (function(s) {
-  var x = new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["SEND => ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([s]));
-  var this$2 = $m_s_Console$();
-  var this$3 = this$2.outVar$2;
-  $as_Ljava_io_PrintStream(this$3.tl$1.get__O()).println__O__V(x);
-  var this$4 = this.signaler$1;
-  $s_Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler$class__send__Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(this$4, s)
+  var this$1 = this.signaler$1;
+  $s_Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler$class__send__Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(this$1, s)
 });
 $c_Lio_surfkit_clientlib_webrtc_WebRTC.prototype.Config__Lio_surfkit_clientlib_webrtc_LocalMedia$Config$ = (function() {
   return ((this.Config$module$1 === null) ? this.Config$lzycompute__p1__Lio_surfkit_clientlib_webrtc_LocalMedia$Config$() : this.Config$module$1)
@@ -12058,7 +12041,10 @@ var $d_sr_Nothing$ = new $TypeData().initClass({
 /** @constructor */
 function $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC() {
   $c_Lio_surfkit_clientlib_webrtc_WebRTC.call(this);
-  this.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f = null
+  this.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f = null;
+  this.rtcConfiguration$2 = null;
+  this.receiveMedia$2 = null;
+  this.peerConnectionConstraints$2 = null
 }
 $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC.prototype = new $h_Lio_surfkit_clientlib_webrtc_WebRTC();
 $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC.prototype.constructor = $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC;
@@ -12081,6 +12067,16 @@ $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC.prototype.startLocalVideo__Lorg_sca
 $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler = (function(signaler) {
   this.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f = signaler;
   $c_Lio_surfkit_clientlib_webrtc_WebRTC.prototype.init___Lio_surfkit_clientlib_webrtc_Peer$ModelTransformPeerSignaler.call(this, signaler);
+  this.rtcConfiguration$2 = $m_Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration$().apply__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration([$m_Lorg_scalajs_dom_experimental_webrtc_RTCIceServer$().apply__sjs_js_UndefOr__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCIceServer("stun:stun.l.google.com:19302", (void 0), (void 0)), $m_Lorg_scalajs_dom_experimental_webrtc_RTCIceServer$().apply__sjs_js_UndefOr__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_RTCIceServer("turn:turn.conversant.im:443", "turnuser", "trunpass")]);
+  var x$4 = {
+    "OfferToReceiveAudio": true,
+    "OfferToReceiveVideo": true
+  };
+  this.receiveMedia$2 = $m_Lorg_scalajs_dom_experimental_webrtc_MediaConstraints$().apply__sjs_js_UndefOr__sjs_js_UndefOr__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints((void 0), (void 0), (void 0), x$4);
+  var x$8 = [{
+    "DtlsSrtpKeyAgreement": true
+  }];
+  this.peerConnectionConstraints$2 = $m_Lorg_scalajs_dom_experimental_webrtc_MediaConstraints$().apply__sjs_js_UndefOr__sjs_js_UndefOr__sjs_js_UndefOr__sjs_js_UndefOr__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints((void 0), (void 0), x$8, (void 0));
   return this
 });
 $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC.prototype.joinRoom__T__s_concurrent_Future = (function(name) {
@@ -13385,6 +13381,9 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$28$lzy
   };
   return $as_Lupickle_Types$Reader(derive$macro$28$lzy$1.elem$1)
 });
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$19$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$32$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) {
+  return (((2 & bitmap$1$1.elem$1) === 0) ? this.derive$macro$19$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$32$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$19$lzy$1.elem$1))
+});
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$5$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$5$lzy$1, bitmap$1$1) {
   if (((4 & bitmap$1$1.elem$1) === 0)) {
     derive$macro$5$lzy$1.elem$1 = new $c_Lupickle_Types$Knot$Reader().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1$$anonfun$derive$macro$5$lzycompute$1$1().init___Lio_surfkit_client_WebSocketSignaler$$anonfun$1(this));
@@ -13392,20 +13391,11 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$5$lzyc
   };
   return $as_Lupickle_Types$Reader(derive$macro$5$lzy$1.elem$1)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$19$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$32$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) {
-  return (((2 & bitmap$1$1.elem$1) === 0) ? this.derive$macro$19$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$32$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$19$lzy$1.elem$1))
-});
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$32$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$32$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1) {
   return (((32 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$32$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1, derive$macro$32$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$32$lzy$1.elem$1))
 });
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$20$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$20$lzy$1, bitmap$0$1) {
   return (((4 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$20$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1, derive$macro$20$lzy$1, bitmap$0$1) : $as_Lupickle_Types$Reader(derive$macro$20$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$44$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$44$lzy$1, bitmap$0$1) {
-  return (((128 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$44$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1, derive$macro$44$lzy$1, bitmap$0$1) : $as_Lupickle_Types$Reader(derive$macro$44$lzy$1.elem$1))
-});
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$24$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$24$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1) {
-  return (((8 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$24$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1, derive$macro$24$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$24$lzy$1.elem$1))
 });
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.init___Lio_surfkit_client_WebSocketSignaler = (function($$outer) {
   if (($$outer === null)) {
@@ -13421,6 +13411,12 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$9$lzyc
     bitmap$1$1.elem$1 = (16 | bitmap$1$1.elem$1)
   };
   return $as_Lupickle_Types$Reader(derive$macro$9$lzy$1.elem$1)
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$24$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$24$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1) {
+  return (((8 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$24$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1, derive$macro$24$lzy$1, derive$macro$2$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$24$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$44$1__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$44$lzy$1, bitmap$0$1) {
+  return (((128 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$44$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1, derive$macro$44$lzy$1, bitmap$0$1) : $as_Lupickle_Types$Reader(derive$macro$44$lzy$1.elem$1))
 });
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$13$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, bitmap$0$1) {
   return (((2 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$13$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1, bitmap$0$1) : $as_Lupickle_Types$Reader(derive$macro$13$lzy$1.elem$1))
@@ -13482,11 +13478,11 @@ $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.derive$macro$19$lzy
   };
   return $as_Lupickle_Types$Reader(derive$macro$19$lzy$1.elem$1)
 });
-$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$5$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$5$lzy$1, bitmap$1$1) {
-  return (((4 & bitmap$1$1.elem$1) === 0) ? this.derive$macro$5$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$5$lzy$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$5$lzy$1.elem$1))
-});
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$36$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$13$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) {
   return (((8 & bitmap$1$1.elem$1) === 0) ? this.derive$macro$36$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$13$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$36$lzy$1.elem$1))
+});
+$c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$5$1__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$5$lzy$1, bitmap$1$1) {
+  return (((4 & bitmap$1$1.elem$1) === 0) ? this.derive$macro$5$lzycompute$1__p2__sr_ObjectRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$5$lzy$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$5$lzy$1.elem$1))
 });
 $c_Lio_surfkit_client_WebSocketSignaler$$anonfun$1.prototype.io$surfkit$client$WebSocketSignaler$$anonfun$$derive$macro$1$1__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader = (function(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$16$lzy$1, derive$macro$32$lzy$1, derive$macro$1$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) {
   return (((64 & bitmap$0$1.elem$1) === 0) ? this.derive$macro$1$lzycompute$1__p2__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_ObjectRef__sr_VolatileByteRef__sr_VolatileByteRef__Lupickle_Types$Reader(derive$macro$28$lzy$1, derive$macro$13$lzy$1, derive$macro$20$lzy$1, derive$macro$24$lzy$1, derive$macro$16$lzy$1, derive$macro$32$lzy$1, derive$macro$1$lzy$1, derive$macro$44$lzy$1, derive$macro$2$lzy$1, derive$macro$19$lzy$1, derive$macro$5$lzy$1, derive$macro$36$lzy$1, derive$macro$9$lzy$1, bitmap$0$1, bitmap$1$1) : $as_Lupickle_Types$Reader(derive$macro$1$lzy$1.elem$1))
@@ -16130,15 +16126,15 @@ $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC$$anonfun$joinRoom$1.prototype.apply
           var arg1$1 = array$1[index$1];
           var m = $as_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo(arg1$1);
           var jsx$1 = this.$$outer$2;
-          var x$4 = new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(m.id$1, m.type$1);
-          var x$5 = this.$$outer$2.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.localPeer$1;
-          var x$6 = this.$$outer$2;
-          var x$7 = x2.config$1;
-          var x$8 = this.$$outer$2.receiveMedia$1;
-          var x$9 = this.$$outer$2.peerConnectionConstraints$1;
-          var x$13 = $m_s_None$();
-          var x$14 = $m_ju_UUID$().randomUUID__ju_UUID().toString__T();
-          var peer = jsx$1.createPeer__Lio_surfkit_clientlib_webrtc_Peer$Props__Lio_surfkit_clientlib_webrtc_Peer(new $c_Lio_surfkit_clientlib_webrtc_Peer$Props().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerSignaler__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__T__Z__Z__s_Option__T(x$5, x$4, x$6, x$7, x$8, x$9, "video", false, false, x$13, x$14));
+          var x$12 = new $c_Lio_surfkit_clientlib_webrtc_Peer$PeerInfo().init___T__T(m.id$1, m.type$1);
+          var x$13 = this.$$outer$2.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.localPeer$1;
+          var x$14 = this.$$outer$2;
+          var x$15 = x2.config$1;
+          var x$16 = this.$$outer$2.receiveMedia$2;
+          var x$17 = this.$$outer$2.peerConnectionConstraints$2;
+          var x$21 = $m_s_None$();
+          var x$22 = $m_ju_UUID$().randomUUID__ju_UUID().toString__T();
+          var peer = jsx$1.createPeer__Lio_surfkit_clientlib_webrtc_Peer$Props__Lio_surfkit_clientlib_webrtc_Peer(new $c_Lio_surfkit_clientlib_webrtc_Peer$Props().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerSignaler__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__T__Z__Z__s_Option__T(x$13, x$12, x$14, x$15, x$16, x$17, "video", false, false, x$21, x$22));
           peer.start__V();
           i$1 = ((1 + i$1) | 0)
         };
@@ -16206,15 +16202,15 @@ $c_Lio_surfkit_clientlib_webrtc_SimpleWebRTC$$anonfun$joinRoom$1.prototype.apply
             var this$13 = this$12.outVar$2;
             $as_Ljava_io_PrintStream(this$13.tl$1.get__O()).println__O__V("Offer for new peer...");
             var jsx$3 = this.$$outer$2;
-            var x$15 = x3.local$1;
-            var x$16 = this.$$outer$2.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.localPeer$1;
-            var x$17 = this.$$outer$2;
-            var x$18 = this.$$outer$2.rtcConfiguration$1;
-            var x$19 = this.$$outer$2.receiveMedia$1;
-            var x$20 = this.$$outer$2.peerConnectionConstraints$1;
-            var x$24 = $m_s_None$();
-            var x$25 = $m_ju_UUID$().randomUUID__ju_UUID().toString__T();
-            var peer$2 = jsx$3.createPeer__Lio_surfkit_clientlib_webrtc_Peer$Props__Lio_surfkit_clientlib_webrtc_Peer(new $c_Lio_surfkit_clientlib_webrtc_Peer$Props().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerSignaler__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__T__Z__Z__s_Option__T(x$16, x$15, x$17, x$18, x$19, x$20, "video", false, false, x$24, x$25));
+            var x$23 = x3.local$1;
+            var x$24 = this.$$outer$2.io$surfkit$clientlib$webrtc$SimpleWebRTC$$signaler$f.localPeer$1;
+            var x$25 = this.$$outer$2;
+            var x$26 = this.$$outer$2.rtcConfiguration$2;
+            var x$27 = this.$$outer$2.receiveMedia$2;
+            var x$28 = this.$$outer$2.peerConnectionConstraints$2;
+            var x$32 = $m_s_None$();
+            var x$33 = $m_ju_UUID$().randomUUID__ju_UUID().toString__T();
+            var peer$2 = jsx$3.createPeer__Lio_surfkit_clientlib_webrtc_Peer$Props__Lio_surfkit_clientlib_webrtc_Peer(new $c_Lio_surfkit_clientlib_webrtc_Peer$Props().init___Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerInfo__Lio_surfkit_clientlib_webrtc_Peer$PeerSignaler__Lorg_scalajs_dom_experimental_webrtc_RTCConfiguration__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__Lorg_scalajs_dom_experimental_webrtc_MediaConstraints__T__Z__Z__s_Option__T(x$24, x$23, x$25, x$26, x$27, x$28, "video", false, false, x$32, x$33));
             peer$2.handleMessage__Lio_surfkit_clientlib_webrtc_Peer$Signaling__V(x3);
             break matchEnd5
           } else {
