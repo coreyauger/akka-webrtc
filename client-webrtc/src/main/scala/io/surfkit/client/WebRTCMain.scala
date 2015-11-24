@@ -93,13 +93,24 @@ object WebRTCMain extends js.JSApp {
     val txtPeerId = dom.document.getElementById("peerId")
     txtPeerId.innerHTML = signaler.id
 
-    val webRTC = new SimpleWebRTC[m.RTCSignal,WebSocketSignaler](signaler)
+    val props = WebRTC.Props(
+      rtcConfiguration = RTCConfiguration(
+        iceServers = js.Array[RTCIceServer](
+          RTCIceServer(url = "stun:stun.l.google.com:19302"),
+          RTCIceServer(url = "turn:turn.conversant.im:443", username="turnuser", credential = "trunpass")
+        )
+      )
+    )
+
+    val webRTC = new SimpleWebRTC[m.RTCSignal,WebSocketSignaler](signaler, props)
     webRTC.peerStreamAdded = { peer =>
       println("TODO: add the remote video to the page")
       val remoteVideoElm = dom.document.createElement("video").asInstanceOf[dom.html.Video]
       peer.stream.foreach{ s =>
         println(s"peerStreamAdded ADDING STREAM ${s}")
-        (remoteVideoElm.asInstanceOf[js.Dynamic]).srcObject = s
+        val remoteDyn = (remoteVideoElm.asInstanceOf[js.Dynamic])
+        remoteDyn.srcObject = s
+        remoteDyn.play()
       }
       dom.document.getElementById("playground").appendChild(remoteVideoElm)
     }
