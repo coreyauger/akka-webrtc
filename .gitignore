@@ -13,4 +13,4 @@ dist
 /RUNNING_PID
 /.settings
 *.log
-
+server/src/main/resources/js/client-webrtc-fastopt.*
