@@ -14,7 +14,7 @@ object Signaling{
   case class PeerInfo(id:String, `type`: String) extends Model
 
   case class Join(remote: PeerInfo, local: PeerInfo, room:String) extends RTCSignal
-  case class Room(remote: PeerInfo, local: PeerInfo, name:String, config:Set[RTCIceServer], members:Set[PeerInfo]) extends RTCSignal
+  case class Room(remote: PeerInfo, local: PeerInfo, name:String, members:Set[PeerInfo]) extends RTCSignal
 
   case class RTCIceServer(url:String,username:String,credential:String) extends Model
   case class RTCSessionDescription(`type`: String,sdp: String) extends Model

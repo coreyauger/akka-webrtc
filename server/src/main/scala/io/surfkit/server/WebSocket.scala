@@ -36,7 +36,7 @@ object WebSocket {
               case Join(remote, local, name) =>
                 println(s"Join ${local}")
                 rooms += name -> (rooms.get(name).getOrElse(Set.empty[PeerInfo]) + local)
-                val r = Room(remote, local, name = name, config = Set(), rooms(name))
+                val r = Room(remote, local, name = name, rooms(name))
                 subscribers.get(local.id) foreach(_ ! r)
               case s:m.RTCSignal =>
                 subscribers.get(s.remote.id) foreach(_ ! s)

@@ -25,7 +25,7 @@ class WebSocketSignaler extends Peer.ModelTransformPeerSignaler[m.RTCSignal]{
 
   var ws = new dom.WebSocket(s"ws://${dom.document.location.hostname}:${dom.document.location.port}/ws/${id}")
   ws.onmessage = { x: MessageEvent =>
-    println("WS onmessage")
+    println(s"WS onmessage ${x.data.toString}")
     val msg = upickle.default.read[m.Model](x.data.toString)
     receive(toPeerSignaling(msg.asInstanceOf[m.RTCSignal]))
   }
@@ -45,11 +45,10 @@ class WebSocketSignaler extends Peer.ModelTransformPeerSignaler[m.RTCSignal]{
   override def toPeerSignaling(model:m.RTCSignal):Peer.Signaling = model match{
     case m.Signaling.Join(r, l,name) =>
       Peer.Join(r, l, name)
-    case m.Signaling.Room(r, l, name, config, members) =>
+    case m.Signaling.Room(r, l, name, members) =>
       import js.JSConverters._
-      val servers = config.map(s => RTCIceServer(url = s.url, username = s.username, credential = s.credential))
       val peers = members.map(p => Peer.PeerInfo(id = p.id, `type` = p.`type`))
-      Peer.Room(r, l, name, RTCConfiguration(servers.toJSArray), peers.toJSArray)
+      Peer.Room(r, l, name, peers.toJSArray)
     case m.Signaling.Offer(r, l, offer) =>
       //println(s"toPeerSignaling offer ${offer}")
       val o = RTCSessionDescription(offer.`type`, offer.sdp)
@@ -66,10 +65,9 @@ class WebSocketSignaler extends Peer.ModelTransformPeerSignaler[m.RTCSignal]{
   override def fromPeerSignaling(s:Peer.Signaling):m.RTCSignal = s match{
     case Peer.Join(r, l, name) =>
       m.Signaling.Join(r, l, name)
-    case Peer.Room(r, l, name, config, members) =>
-      val servers = config.iceServers.map(s => m.Signaling.RTCIceServer(url = s.url, username = s.username, credential = s.credential))
+    case Peer.Room(r, l, name, members) =>
       val peers = members.map(p => m.Signaling.PeerInfo(id = p.id, `type` = p.`type`))
-      m.Signaling.Room(r, l, name, servers.toSet, peers.toSet)
+      m.Signaling.Room(r, l, name, peers.toSet)
     case Peer.Offer(r, l, offer) =>
       m.Signaling.Offer(r, l, m.Signaling.RTCSessionDescription(offer.`type`, offer.sdp))
     case Peer.Candidate(r, l, c) =>
@@ -83,7 +81,6 @@ class WebSocketSignaler extends Peer.ModelTransformPeerSignaler[m.RTCSignal]{
   }
 
   override def sendModel(s:m.RTCSignal) = ws.send(upickle.default.write(s))
-
 }
 
 object WebRTCMain extends js.JSApp {
