@@ -106,7 +106,7 @@ object WebRTCMain extends js.JSApp {
     webRTC.peerStreamAdded = { peer =>
       println("TODO: add the remote video to the page")
       val remoteVideoElm = dom.document.createElement("video").asInstanceOf[dom.html.Video]
-      peer.stream.foreach{ s =>
+      peer.streams.headOption.foreach{ s =>
         println(s"peerStreamAdded ADDING STREAM ${s}")
         val remoteDyn = (remoteVideoElm.asInstanceOf[js.Dynamic])
         remoteDyn.srcObject = s
