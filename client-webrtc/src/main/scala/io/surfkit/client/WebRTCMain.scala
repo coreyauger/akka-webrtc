@@ -115,16 +115,12 @@ object WebRTCMain extends js.JSApp {
       dom.document.getElementById("playground").appendChild(remoteVideoElm)
     }
 
-    val bGetMedia = dom.document.getElementById("bGetMedia").asInstanceOf[dom.html.Button]
-    bGetMedia.onclick = { me:MouseEvent =>
-      webRTC.startLocalVideo(MediaConstraints(true, true),local)
-
-    }
-
     val bCall = dom.document.getElementById("bCall").asInstanceOf[dom.html.Button]
     bCall.onclick = { me: MouseEvent =>
-      webRTC.joinRoom("test").foreach{ room: Peer.Room =>
-        println(s"You have joined the room... ${room.name}")
+      webRTC.startLocalVideo(MediaConstraints(true, true),local).foreach { s =>
+        webRTC.joinRoom("test").foreach { room: Peer.Room =>
+          println(s"You have joined the room... ${room.name}")
+        }
       }
     }
   }
