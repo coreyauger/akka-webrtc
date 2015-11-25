@@ -6694,7 +6694,7 @@ html body h1 {
     margin-top: 30px;
     margin-bottom: 10px;
 }
-html body form {
+html body .form {
     width: 268px;
     margin: 0 auto;
     padding-top: 10px;
