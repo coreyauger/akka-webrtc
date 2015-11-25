@@ -118,6 +118,7 @@ object WebRTCMain extends js.JSApp {
     val bGetMedia = dom.document.getElementById("bGetMedia").asInstanceOf[dom.html.Button]
     bGetMedia.onclick = { me:MouseEvent =>
       webRTC.startLocalVideo(MediaConstraints(true, true),local)
+
     }
 
     val bCall = dom.document.getElementById("bCall").asInstanceOf[dom.html.Button]
