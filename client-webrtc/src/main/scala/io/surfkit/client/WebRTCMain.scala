@@ -93,13 +93,22 @@ object WebRTCMain extends js.JSApp {
     val txtPeerId = dom.document.getElementById("peerId")
     txtPeerId.innerHTML = signaler.id
 
+
+
+
     val props = WebRTC.Props(
       rtcConfiguration = RTCConfiguration(
         iceServers = js.Array[RTCIceServer](
-          RTCIceServer(url = "stun:stun.l.google.com:19302"),
-          RTCIceServer(url = "turn:turn.conversant.im:443", username="turnuser", credential = "trunpass")
-        )
-      )
+            RTCIceServer(url = "stun:stun.l.google.com:19302"),
+            RTCIceServer(url = "turn:turn.conversant.im:443", username="turnuser", credential = "turnpass")
+          )
+      ),
+      receiveMedia = MediaConstraints(
+        mandatory = js.Dynamic.literal(OfferToReceiveAudio = true, OfferToReceiveVideo = true)
+      ),
+      peerConnectionConstraints = MediaConstraints(optional = js.Array[js.Dynamic](
+        js.Dynamic.literal(DtlsSrtpKeyAgreement = true)
+      ))
     )
 
     val webRTC = new SimpleWebRTC[m.RTCSignal,WebSocketSignaler](signaler, props)
