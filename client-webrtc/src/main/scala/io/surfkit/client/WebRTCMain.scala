@@ -69,7 +69,6 @@ class WebSocketSignaler extends Peer.ModelTransformPeerSignaler[m.RTCSignal]{
       val peers = members.map(p => m.Signaling.PeerInfo(id = p.id, `type` = p.`type`))
       m.Signaling.Room(r, l, name, peers.toSet)
     case Peer.Answer(r, l, answer) =>
-      println("2 PEER SIGNALING ANSWER")
       m.Signaling.Answer(r, l, m.Signaling.RTCSessionDescription(answer.`type`, answer.sdp))
     case Peer.Offer(r, l, offer) =>
       m.Signaling.Offer(r, l, m.Signaling.RTCSessionDescription(offer.`type`, offer.sdp))
@@ -81,7 +80,19 @@ class WebSocketSignaler extends Peer.ModelTransformPeerSignaler[m.RTCSignal]{
       m.Signaling.Error(m.Signaling.PeerInfo("", ""), m.Signaling.PeerInfo("", ""), "Unknown signaling type")
   }
 
-  override def sendModel(s:m.RTCSignal) = ws.send(upickle.default.write(s))
+  override def sendModel(s:m.RTCSignal) = {
+    try {
+      val json = upickle.default.write(s)
+      if (json.contains("Answer")) {
+        println("WEBSOCKET SENDING ANSWER")
+        println(json)
+      }
+      ws.send(json)
+    }catch{
+      case t:Throwable =>
+        println(s"[ERROR] - ${t}")
+    }
+  }
 }
 
 object WebRTCMain extends js.JSApp {
