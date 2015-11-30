@@ -98,8 +98,9 @@ object WebRTCMain extends js.JSApp {
 
     val rtcConfiguration = RTCConfiguration(
         iceServers = js.Array[RTCIceServer](
-            RTCIceServer(urls = "stun:stun.l.google.com:19302"),
-            RTCIceServer(urls = "turn:turn.conversant.im:443", username="turnuser", credential = "turnpass")
+            //RTCIceServer(urls = "stun:stun.l.google.com:19302"),
+            //RTCIceServer(urls = "turn:turn.conversant.im:443", username="turnuser", credential = "turnpass")
+            RTCIceServer(urls = "turn:turn.conversant.im:443")
           )
       )
 

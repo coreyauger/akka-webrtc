@@ -41,7 +41,7 @@ object WebSocket {
               case s:m.RTCSignal =>
                 subscribers.get(s.remote.id) foreach(_ ! s)
               case a =>
-                println(s"[WORN] - Ignoring message ${a}")
+                println(s"[WARN] - Ignoring message ${a}")
             }
           case Disconnect(id) =>
             // FIXME:..
@@ -66,7 +66,7 @@ object WebSocket {
             .map(ReceivedMessage(id, _))
             .to(wsInSink(id))
         val out =
-          Source.actorRef[ApiMessage](5, OverflowStrategy.fail)
+          Source.actorRef[ApiMessage](50, OverflowStrategy.backpressure)
             .mapMaterializedValue(serverActor ! Connect(id, _))
 
         Flow.wrap(in, out)(Keep.none)
