@@ -66,7 +66,7 @@ object WebSocket {
             .map(ReceivedMessage(id, _))
             .to(wsInSink(id))
         val out =
-          Source.actorRef[ApiMessage](50, OverflowStrategy.backpressure)
+          Source.actorRef[ApiMessage](50, OverflowStrategy.fail)
             .mapMaterializedValue(serverActor ! Connect(id, _))
 
         Flow.wrap(in, out)(Keep.none)
