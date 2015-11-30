@@ -96,22 +96,15 @@ object WebRTCMain extends js.JSApp {
 
 
 
-    val props = WebRTC.Props(
-      rtcConfiguration = RTCConfiguration(
+    val rtcConfiguration = RTCConfiguration(
         iceServers = js.Array[RTCIceServer](
-            RTCIceServer(url = "stun:stun.l.google.com:19302"),
-            RTCIceServer(url = "turn:turn.conversant.im:443", username="turnuser", credential = "turnpass")
+            RTCIceServer(urls = "stun:stun.l.google.com:19302"),
+            RTCIceServer(urls = "turn:turn.conversant.im:443", username="turnuser", credential = "turnpass")
           )
-      ),
-      receiveMedia = MediaConstraints(
-        mandatory = js.Dynamic.literal(OfferToReceiveAudio = true, OfferToReceiveVideo = true)
-      ),
-      peerConnectionConstraints = MediaConstraints(optional = js.Array[js.Dynamic](
-        js.Dynamic.literal(DtlsSrtpKeyAgreement = true)
-      ))
-    )
+      )
 
-    val webRTC = new SimpleWebRTC[m.RTCSignal,WebSocketSignaler](signaler, props)
+
+    val webRTC = new SimpleWebRTC[m.RTCSignal,WebSocketSignaler](signaler, rtcConfiguration)
     webRTC.peerStreamAdded = { peer =>
       println("TODO: add the remote video to the page")
       val remoteVideoElm = dom.document.createElement("video").asInstanceOf[dom.html.Video]
@@ -126,7 +119,7 @@ object WebRTCMain extends js.JSApp {
 
     val bCall = dom.document.getElementById("bCall").asInstanceOf[dom.html.Button]
     bCall.onclick = { me: MouseEvent =>
-      webRTC.startLocalVideo(MediaConstraints(true, true),local).foreach { s =>
+      webRTC.startLocalVideo(MediaStreamConstraints(true.asInstanceOf[js.Any], true.asInstanceOf[js.Any]),local).foreach { s =>
         webRTC.joinRoom("test").foreach { room: Peer.Room =>
           println(s"You have joined the room... ${room.name}")
         }
