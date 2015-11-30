@@ -4,7 +4,7 @@ import akka.actor._
 import akka.stream.OverflowStrategy
 import akka.stream.scaladsl._
 import akka.util.Timeout
-import m.Signaling.{Room, Join, PeerInfo}
+import m.Signaling.{Answer, Room, Join, PeerInfo}
 import m.{Model, ApiMessage}
 import scala.util._
 import scala.concurrent.duration._
@@ -38,6 +38,10 @@ object WebSocket {
                 rooms += name -> (rooms.get(name).getOrElse(Set.empty[PeerInfo]) + local)
                 val r = Room(remote, local, name = name, rooms(name))
                 subscribers.get(local.id) foreach(_ ! r)
+              case s:Answer =>
+                println(s"[INFO] - Answer")
+                println(s)
+                subscribers.get(s.remote.id) foreach(_ ! s)
               case s:m.RTCSignal =>
                 subscribers.get(s.remote.id) foreach(_ ! s)
               case a =>
