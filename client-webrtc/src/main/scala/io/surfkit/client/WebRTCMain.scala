@@ -68,12 +68,13 @@ class WebSocketSignaler extends Peer.ModelTransformPeerSignaler[m.RTCSignal]{
     case Peer.Room(r, l, name, members) =>
       val peers = members.map(p => m.Signaling.PeerInfo(id = p.id, `type` = p.`type`))
       m.Signaling.Room(r, l, name, peers.toSet)
+    case Peer.Answer(r, l, answer) =>
+      println("2 PEER SIGNALING ANSWER")
+      m.Signaling.Answer(r, l, m.Signaling.RTCSessionDescription(answer.`type`, answer.sdp))
     case Peer.Offer(r, l, offer) =>
       m.Signaling.Offer(r, l, m.Signaling.RTCSessionDescription(offer.`type`, offer.sdp))
     case Peer.Candidate(r, l, c) =>
       m.Signaling.Candidate(r, l, m.Signaling.RTCIceCandidate(c.candidate, c.sdpMLineIndex, c.sdpMid))
-    case Peer.Answer(r, l, answer) =>
-      m.Signaling.Answer(r, l, m.Signaling.RTCSessionDescription(answer.`type`, answer.sdp))
     case Peer.Error(r, l, error) =>
       m.Signaling.Error(r, l, error)
     case _ =>
