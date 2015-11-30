@@ -44,7 +44,7 @@ object WebSocket {
                 println(s)
                 subscribers.get(s.remote.id) foreach(_ ! s)
               case s:m.RTCSignal =>
-                println(s"[INFO] - ${s}")
+                //println(s"[INFO] - ${s}")
                 subscribers.get(s.remote.id) foreach(_ ! s)
               case a =>
                 println(s"[WARN] - Ignoring message ${a}")
