@@ -39,10 +39,12 @@ object WebSocket {
                 val r = Room(remote, local, name = name, rooms(name))
                 subscribers.get(local.id) foreach(_ ! r)
               case s:Answer =>
-                println(s"[INFO] - Answer")
+                println(s"[INFO] - ANSWER")
+                println(s"[INFO] - ANSWER")
                 println(s)
                 subscribers.get(s.remote.id) foreach(_ ! s)
               case s:m.RTCSignal =>
+                println(s"[INFO] - ${s}")
                 subscribers.get(s.remote.id) foreach(_ ! s)
               case a =>
                 println(s"[WARN] - Ignoring message ${a}")
