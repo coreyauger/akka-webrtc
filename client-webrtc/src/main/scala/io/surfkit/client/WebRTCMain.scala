@@ -14,6 +14,8 @@ import scala.scalajs.js
 import io.surfkit.clientlib.webrtc._
 
 import org.scalajs.dom.experimental.webrtc._
+import org.scalajs.dom.experimental.mediastream._
+import scala.scalajs.js.|
 import scala.concurrent.ExecutionContext.Implicits.global
 
 
@@ -95,11 +97,13 @@ object WebRTCMain extends js.JSApp {
     txtPeerId.innerHTML = signaler.id
 
 
+    val iceServers: String | js.Array[String] = "turn:turn.conversant.im:443"
+
     val rtcConfiguration = RTCConfiguration(
         iceServers = js.Array[RTCIceServer](
             //RTCIceServer(urls = "stun:stun.l.google.com:19302"),
             //RTCIceServer(urls = "turn:turn.conversant.im:443", username="turnuser", credential = "turnpass")
-            RTCIceServer(urls = "turn:turn.conversant.im:443")
+            RTCIceServer(urls = iceServers)
           )
       )
 
@@ -117,9 +121,10 @@ object WebRTCMain extends js.JSApp {
       dom.document.getElementById("playground").appendChild(remoteVideoElm)
     }
 
+    val constraintTrue: Boolean | MediaTrackConstraints = true
     val bCall = dom.document.getElementById("bCall").asInstanceOf[dom.html.Button]
     bCall.onclick = { me: MouseEvent =>
-      webRTC.startLocalVideo(MediaStreamConstraints(true.asInstanceOf[js.Any], true.asInstanceOf[js.Any]),local).foreach { s =>
+      webRTC.startLocalVideo(MediaStreamConstraints(constraintTrue, constraintTrue),local).foreach { s =>
         webRTC.joinRoom("test").foreach { room: Peer.Room =>
           println(s"You have joined the room... ${room.name}")
         }
