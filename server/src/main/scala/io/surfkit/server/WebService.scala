@@ -46,7 +46,7 @@ class Webservice(implicit fm: Materializer, system: ActorSystem) extends Directi
       //}
         .mapConcat {
       case TextMessage.Strict(msg) =>
-        println(msg)
+        println(s"mapConcat: ${msg}")
         TextMessage.Strict(msg.reverse) :: Nil
 
       case other: TextMessage =>
@@ -60,7 +60,9 @@ class Webservice(implicit fm: Materializer, system: ActorSystem) extends Directi
         Nil
     }
       .collect {
-        case TextMessage.Strict(msg) => msg // unpack incoming WS text messages...
+        case TextMessage.Strict(msg) =>
+          println(s"collect: ${msg}")
+          msg // unpack incoming WS text messages...
       }
       .via(wsFlow.wsFlow(sender))
       .map {
