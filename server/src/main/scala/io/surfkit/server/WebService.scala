@@ -47,7 +47,7 @@ class Webservice(implicit fm: Materializer, system: ActorSystem) extends Directi
         .mapConcat {
       case TextMessage.Strict(msg) =>
         println(s"mapConcat: ${msg}")
-        TextMessage.Strict(msg.reverse) :: Nil
+        TextMessage.Strict(msg) :: Nil
 
       case other: TextMessage =>
         println(s"Got other text $other")
