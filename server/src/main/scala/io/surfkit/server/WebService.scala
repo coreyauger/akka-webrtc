@@ -25,12 +25,6 @@ class Webservice(implicit fm: Materializer, system: ActorSystem) extends Directi
 
   val wsFlow = WebSocket.create(system)
 
- /* val jsonFrameSink: FoldSink[String, String] =
-    FoldSink("")(
-      (acc: String, c: String) =>
-        mergeWordCounts(acc, Map(c.subreddit -> c.toWordCount))
-    )*/
-
   // Frontend
   def index = (path("") | pathPrefix("index.htm")) {
       getFromResource("index.html")
@@ -51,18 +45,15 @@ class Webservice(implicit fm: Materializer, system: ActorSystem) extends Directi
 
   def websocketFlow(sender: String): Flow[Message, Message, Unit] =
     Flow[Message]
-      //.collect {
-      //  case TextMessage.Strict(msg) => msg // unpack incoming WS text messages...
-      //}
       .mapConcat {
         case TextMessage.Strict(msg) =>
-          println(s"mapConcat: ${msg}")
+          //println(s"mapConcat: ${msg}")
           TextMessage.Strict(msg) :: Nil
 
         case other: TextMessage =>
-          println(s"Got other text ^^^^^^^^^^^^^^^^")
+          //println(s"Got other text ^^^^^^^^^^^^^^^^")
           //other.textStream.runWith(Sink.ignore)
-          // FIXME: how do we do this correct ?
+          // FIXME: how do we do this without blocking :( ?
           val txt = Await.result(other.textStream.runWith(Sink.fold("")( (a, b) => a+b )).map{ msg =>
             TextMessage.Strict(msg)
           }, 1 second)
@@ -75,7 +66,7 @@ class Webservice(implicit fm: Materializer, system: ActorSystem) extends Directi
       }
       .collect {
         case TextMessage.Strict(msg) =>
-          println(s"collect: ${msg}")
+          //println(s"collect: ${msg}")
           msg // unpack incoming WS text messages...
       }
       .via(wsFlow.wsFlow(sender))
