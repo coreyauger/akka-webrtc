@@ -6,13 +6,13 @@ package io.surfkit.server
  */
 
 import akka.actor.{ActorRef, ActorSystem}
-import akka.http.scaladsl.model.ws.{ Message, TextMessage }
+import akka.http.scaladsl.model.ws.{ Message, TextMessage, BinaryMessage }
 import akka.stream.stage._
 import akka.http.scaladsl.server.Route
 import com.typesafe.config.ConfigFactory
 import akka.http.scaladsl.server.Directives
 import akka.stream.Materializer
-import akka.stream.scaladsl.Flow
+import akka.stream.scaladsl.{Sink, Flow}
 
 
 class Webservice(implicit fm: Materializer, system: ActorSystem) extends Directives {
@@ -41,6 +41,24 @@ class Webservice(implicit fm: Materializer, system: ActorSystem) extends Directi
 
   def websocketFlow(sender: String): Flow[Message, Message, Unit] =
     Flow[Message]
+      //.collect {
+      //  case TextMessage.Strict(msg) => msg // unpack incoming WS text messages...
+      //}
+        .mapConcat {
+      case TextMessage.Strict(msg) =>
+        println(msg)
+        TextMessage.Strict(msg.reverse) :: Nil
+
+      case other: TextMessage =>
+        println(s"Got other text $other")
+        other.textStream.runWith(Sink.ignore)
+        Nil
+
+      case other: BinaryMessage =>
+        println(s"Got other binary $other")
+        other.dataStream.runWith(Sink.ignore)
+        Nil
+    }
       .collect {
         case TextMessage.Strict(msg) => msg // unpack incoming WS text messages...
       }
