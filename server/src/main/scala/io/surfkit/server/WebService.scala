@@ -13,6 +13,10 @@ import com.typesafe.config.ConfigFactory
 import akka.http.scaladsl.server.Directives
 import akka.stream.Materializer
 import akka.stream.scaladsl.{Sink, Flow}
+import scala.concurrent.duration._
+import scala.concurrent.ExecutionContext.Implicits.global
+
+import scala.concurrent.{Await, Future}
 
 
 class Webservice(implicit fm: Materializer, system: ActorSystem) extends Directives {
@@ -20,6 +24,12 @@ class Webservice(implicit fm: Materializer, system: ActorSystem) extends Directi
   val configuration = ConfigFactory.load()
 
   val wsFlow = WebSocket.create(system)
+
+ /* val jsonFrameSink: FoldSink[String, String] =
+    FoldSink("")(
+      (acc: String, c: String) =>
+        mergeWordCounts(acc, Map(c.subreddit -> c.toWordCount))
+    )*/
 
   // Frontend
   def index = (path("") | pathPrefix("index.htm")) {
@@ -44,21 +54,25 @@ class Webservice(implicit fm: Materializer, system: ActorSystem) extends Directi
       //.collect {
       //  case TextMessage.Strict(msg) => msg // unpack incoming WS text messages...
       //}
-        .mapConcat {
-      case TextMessage.Strict(msg) =>
-        println(s"mapConcat: ${msg}")
-        TextMessage.Strict(msg) :: Nil
+      .mapConcat {
+        case TextMessage.Strict(msg) =>
+          println(s"mapConcat: ${msg}")
+          TextMessage.Strict(msg) :: Nil
 
-      case other: TextMessage =>
-        println(s"Got other text $other")
-        other.textStream.runWith(Sink.ignore)
-        Nil
+        case other: TextMessage =>
+          println(s"Got other text ^^^^^^^^^^^^^^^^")
+          //other.textStream.runWith(Sink.ignore)
+          // FIXME: how do we do this correct ?
+          val txt = Await.result(other.textStream.runWith(Sink.fold("")( (a, b) => a+b )).map{ msg =>
+            TextMessage.Strict(msg)
+          }, 1 second)
+          txt :: Nil
 
-      case other: BinaryMessage =>
-        println(s"Got other binary $other")
-        other.dataStream.runWith(Sink.ignore)
-        Nil
-    }
+        case other: BinaryMessage =>
+          println(s"Got other binary $other")
+          other.dataStream.runWith(Sink.ignore)
+          Nil
+      }
       .collect {
         case TextMessage.Strict(msg) =>
           println(s"collect: ${msg}")
