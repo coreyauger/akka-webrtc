@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebRTC example</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <style type="text/css">
+
+
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+<div style="background: transparent url(&quot;https://app.conversant.im/assets/images/registration/catherine-large.jpg&quot;) no-repeat fixed center center;" id="background"></div>
+<div class="menu-bar">
+  <svg class="hamburger">
+    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+  </svg>
+  <img class="logo" src="http://rtc.io/presentations/WDCNZ2014/images/webrtc-logo-small.png" alt="logo">
+  <img class="mobile-logo" src="http://rtc.io/presentations/WDCNZ2014/images/webrtc-logo-small.png" alt="logo">
+  <span><a href="#">Your peer id: <span id="peerId"></span></a></span>
+</div>
+  <video id="local" class="paper local" autoplay style="display:none;" ></video>
+<div class="login">
+  <h3 id="login-header">Scala WebRTC A</h3>
+  <span id="error" class="error">&nbsp;</span>
+  <div class="form">
+    <div class="group">
+      <input autocomplete="off" id="room" name="room" placeholder="room name" required="" type="text">
+      <span class="bar"></span>
+      <label>room name</label>
+    </div>
+
+      <div id="playground" class="grid remote">
+      </div>
+    <div class="actionButton" id="bJoin"><i class="fa fa-user"></i></div>
+    <div class="actionButton" id="bCall" style="left: 380px;"><i class="fa fa-phone"></i></div>
+  </div>
+
+</div>
+  <div id="console">
+
+  </div>
+</div>
+
+
+<script type="text/javascript" src="js/adapter.js"></script>
+<script type="text/javascript" src="js/client-webrtc-fastopt.js"></script>
+<script language="JavaScript">
+  io.surfkit.client.WebRTCMain().advanced()
+</script>
+
+</body>
+</html>

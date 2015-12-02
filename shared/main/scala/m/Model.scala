@@ -20,7 +20,7 @@ object Signaling{
   case class RTCSessionDescription(`type`: String,sdp: String) extends Model
   case class RTCIceCandidate(candidate: String, sdpMLineIndex: Int, sdpMid: String ) extends Model
 
-  case class Offer(remote: PeerInfo, local: PeerInfo, offer: RTCSessionDescription) extends RTCSignal
+  case class Offer(remote: PeerInfo, local: PeerInfo, offer: RTCSessionDescription, room: String) extends RTCSignal
   case class Answer(remote: PeerInfo, local: PeerInfo, answer: RTCSessionDescription) extends RTCSignal
   case class Candidate(remote: PeerInfo, local: PeerInfo, candidate: RTCIceCandidate) extends RTCSignal
   case class Error(remote: PeerInfo, local: PeerInfo, reason: String) extends RTCSignal

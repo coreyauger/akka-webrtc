@@ -55,10 +55,10 @@ object WebSocket {
                 println(s"[WARN] - Ignoring message ${a}")
             }
           case Disconnect(id) =>
-            // FIXME:..
             val peer = m.Signaling.PeerInfo(id, "video")
-            rooms += "test" -> (rooms.get("test").getOrElse(Set.empty[PeerInfo]) - peer)
-
+            rooms = rooms.map{
+              case (name, set) => name -> (set - peer)
+            }
             println(s"$id left!")
             println(s"Kill actor ${id}")
             subscribers -= id

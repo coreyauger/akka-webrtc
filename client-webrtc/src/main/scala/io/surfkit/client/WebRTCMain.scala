@@ -15,6 +15,7 @@ import io.surfkit.clientlib.webrtc._
 
 import org.scalajs.dom.experimental.webrtc._
 import org.scalajs.dom.experimental.mediastream._
+import scala.scalajs.js.annotation.JSExport
 import scala.scalajs.js.|
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -51,10 +52,10 @@ class WebSocketSignaler extends Peer.ModelTransformPeerSignaler[m.RTCSignal]{
       import js.JSConverters._
       val peers = members.map(p => Peer.PeerInfo(id = p.id, `type` = p.`type`))
       Peer.Room(r, l, name, peers.toJSArray)
-    case m.Signaling.Offer(r, l, offer) =>
+    case m.Signaling.Offer(r, l, offer, room) =>
       //println(s"toPeerSignaling offer ${offer}")
       val o = RTCSessionDescription(offer.`type`, offer.sdp)
-      Peer.Offer(r, l, RTCSessionDescription(offer.`type`, offer.sdp))
+      Peer.Offer(r, l, RTCSessionDescription(offer.`type`, offer.sdp), room)
     case m.Signaling.Candidate(r, l, c) =>
       Peer.Candidate(r, l, RTCIceCandidate(c.candidate, c.sdpMLineIndex, c.sdpMid))
     case m.Signaling.Answer(r, l, answer) =>
@@ -72,8 +73,8 @@ class WebSocketSignaler extends Peer.ModelTransformPeerSignaler[m.RTCSignal]{
       m.Signaling.Room(r, l, name, peers.toSet)
     case Peer.Answer(r, l, answer) =>
       m.Signaling.Answer(r, l, m.Signaling.RTCSessionDescription(answer.`type`, answer.sdp))
-    case Peer.Offer(r, l, offer) =>
-      m.Signaling.Offer(r, l, m.Signaling.RTCSessionDescription(offer.`type`, offer.sdp))
+    case Peer.Offer(r, l, offer, room) =>
+      m.Signaling.Offer(r, l, m.Signaling.RTCSessionDescription(offer.`type`, offer.sdp), room)
     case Peer.Candidate(r, l, c) =>
       m.Signaling.Candidate(r, l, m.Signaling.RTCIceCandidate(c.candidate, c.sdpMLineIndex, c.sdpMid))
     case Peer.Error(r, l, error) =>
@@ -129,6 +130,70 @@ object WebRTCMain extends js.JSApp {
           println(s"You have joined the room... ${room.name}")
         }
       }
+    }
+  }
+
+
+  @JSExport
+  def advanced(): Unit = {
+    println("ADVANCED...")
+    val signaler = new WebSocketSignaler
+
+    val local = dom.document.getElementById("local").asInstanceOf[dom.html.Video]
+
+    val txtPeerId = dom.document.getElementById("peerId")
+    txtPeerId.innerHTML = signaler.id
+
+
+    val iceServers: String | js.Array[String] = "turn:turn.conversant.im:443"
+
+    val rtcConfiguration = RTCConfiguration(
+      iceServers = js.Array[RTCIceServer](
+            //RTCIceServer(urls = "stun:stun.l.google.com:19302"),
+            //RTCIceServer(urls = "turn:turn.conversant.im:443", username="turnuser", credential = "turnpass")
+            RTCIceServer(urls = iceServers)
+          )
+    )
+
+
+    val webRTC = new SMWebRTC[m.RTCSignal,WebSocketSignaler](signaler, rtcConfiguration)
+    webRTC.peerStreamAdded = { peer =>
+      println("TODO: add the remote video to the page")
+      val remoteVideoElm = dom.document.createElement("video").asInstanceOf[dom.html.Video]
+      peer.streams.headOption.foreach{ s =>
+        println(s"peerStreamAdded ADDING STREAM ${s}")
+        val remoteDyn = (remoteVideoElm.asInstanceOf[js.Dynamic])
+        remoteDyn.srcObject = s
+        remoteDyn.play()
+      }
+      dom.document.getElementById("playground").appendChild(remoteVideoElm)
+    }
+
+    val constraintTrue: Boolean | MediaTrackConstraints = true
+    val bJoin = dom.document.getElementById("bJoin").asInstanceOf[dom.html.Button]
+    bJoin.onclick = { me: MouseEvent =>
+      val txtRoom = dom.document.getElementById("room").asInstanceOf[dom.html.Input]
+      webRTC.joinRoom(txtRoom.value)
+    }
+
+    val bCall = dom.document.getElementById("bCall").asInstanceOf[dom.html.Button]
+    bCall.onclick = { me: MouseEvent =>
+      val txtRoom = dom.document.getElementById("room").asInstanceOf[dom.html.Input]
+      webRTC.call(txtRoom.value)
+    }
+
+    webRTC.onJoinRoom = { (name, peers) =>
+      println(s"Joined Room ${name}")
+      println("members ============")
+      peers.foreach(println)
+      println("====================")
+    }
+
+    webRTC.onRing = { (name, peer) =>
+      println("Ring Ring !!!")
+      println(s"Call coming from room ${name}")
+      println("Auto Answer")
+      webRTC.call(name)
     }
   }
 }

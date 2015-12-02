@@ -26,8 +26,11 @@ class Webservice(implicit fm: Materializer, system: ActorSystem) extends Directi
   val wsFlow = WebSocket.create(system)
 
   // Frontend
-  def index = (path("") | pathPrefix("index.htm")) {
+  def index = (path("") | pathPrefix("index.html")) {
       getFromResource("index.html")
+    }
+  def advanced =(path("") | pathPrefix("advanced.html")) {
+      getFromResource("advanced.html")
     }
   def css = (pathPrefix("css") & path(Segment)) { resource => getFromResource(s"css/$resource") }
   def fonts = (pathPrefix("fonts") & path(Segment)) { resource => getFromResource(s"fonts/$resource") }
@@ -36,7 +39,7 @@ class Webservice(implicit fm: Materializer, system: ActorSystem) extends Directi
 
   def route: Route =
     get {
-      index ~ css ~ fonts ~ img ~ js
+      index ~ advanced ~ css ~ fonts ~ img ~ js
     } ~
         path( "ws" / """\d+""".r) {  id =>
           println("Hanndling WS connection")
