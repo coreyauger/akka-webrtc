@@ -54,12 +54,11 @@ class WebSocketSignaler extends Peer.ModelTransformPeerSignaler[m.RTCSignal]{
       Peer.Room(r, l, name, peers.toJSArray)
     case m.Signaling.Offer(r, l, offer, room) =>
       //println(s"toPeerSignaling offer ${offer}")
-      val o = RTCSessionDescription(offer.`type`, offer.sdp)
-      Peer.Offer(r, l, RTCSessionDescription(offer.`type`, offer.sdp), room)
+      Peer.Offer(r, l, new RTCSessionDescription(RTCSessionDescriptionInit(offer.`type`.asInstanceOf[RTCSdpType], offer.sdp)), room)
     case m.Signaling.Candidate(r, l, c) =>
-      Peer.Candidate(r, l, RTCIceCandidate(c.candidate, c.sdpMLineIndex, c.sdpMid))
+      Peer.Candidate(r, l, new RTCIceCandidate(RTCIceCandidateInit(c.candidate, c.sdpMid, c.sdpMLineIndex.toDouble)))
     case m.Signaling.Answer(r, l, answer) =>
-      Peer.Answer(r, l, RTCSessionDescription(answer.`type`, answer.sdp))
+      Peer.Answer(r, l, new RTCSessionDescription(RTCSessionDescriptionInit(answer.`type`.asInstanceOf[RTCSdpType], answer.sdp)))
     case m.Signaling.Error(r, l, error) =>
       Peer.Error(r, l, error)
     case _ =>
@@ -72,11 +71,11 @@ class WebSocketSignaler extends Peer.ModelTransformPeerSignaler[m.RTCSignal]{
       val peers = members.map(p => m.Signaling.PeerInfo(id = p.id, `type` = p.`type`))
       m.Signaling.Room(r, l, name, peers.toSet)
     case Peer.Answer(r, l, answer) =>
-      m.Signaling.Answer(r, l, m.Signaling.RTCSessionDescription(answer.`type`, answer.sdp))
+      m.Signaling.Answer(r, l, m.Signaling.RTCSessionDescription(answer.`type`.toString, answer.sdp))
     case Peer.Offer(r, l, offer, room) =>
-      m.Signaling.Offer(r, l, m.Signaling.RTCSessionDescription(offer.`type`, offer.sdp), room)
+      m.Signaling.Offer(r, l, m.Signaling.RTCSessionDescription(offer.`type`.toString, offer.sdp), room)
     case Peer.Candidate(r, l, c) =>
-      m.Signaling.Candidate(r, l, m.Signaling.RTCIceCandidate(c.candidate, c.sdpMLineIndex, c.sdpMid))
+      m.Signaling.Candidate(r, l, m.Signaling.RTCIceCandidate(c.candidate, c.sdpMLineIndex.toInt, c.sdpMid))
     case Peer.Error(r, l, error) =>
       m.Signaling.Error(r, l, error)
     case _ =>
