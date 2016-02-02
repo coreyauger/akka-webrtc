@@ -24,7 +24,7 @@ class WebSocketSignaler extends Peer.ModelTransformPeerSignaler[m.RTCSignal]{
   val id = (Math.random() * 1000).toInt.toString
   val `type` = "video"
 
-  val localPeer = PeerInfo(id, `type`)
+  var localPeer = PeerInfo(id, `type`)
 
   var ws = new dom.WebSocket(s"ws://${dom.document.location.hostname}:${dom.document.location.port}/ws/${id}")
   ws.onmessage = { x: MessageEvent =>
