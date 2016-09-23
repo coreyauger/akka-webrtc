@@ -10,9 +10,9 @@ packageDescription in Debian := "surkit.io"
 
 maintainer in Debian := "Corey Auger coreyauger@gmail.com"
 
-name := """scala-webrtc-example"""
+name := """akka-webrtc"""
 
-version := "1.0-SNAPSHOT"
+version := "0.0.1-SNAPSHOT"
 
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
@@ -53,7 +53,7 @@ lazy val scalaJsDom = uri("../scala-js-dom")
 
 lazy val commonSettings = Seq(
     organization := "im.surfkit",
-    version := "1.0-SNAPSHOT",
+    version := "0.0.1-SNAPSHOT",
     name := "surfkit",
     scalaVersion := "2.11.7"
   )
@@ -70,7 +70,6 @@ lazy val clientDeps = Def.setting(Seq(
   "com.github.japgolly.scalajs-react" %%% "extra"            % "0.9.0",
   "com.github.japgolly.scalacss"      %%% "core"             % "0.3.0",
   "com.github.japgolly.scalacss"      %%% "ext-react"        % "0.3.0",
-//  "org.scala-js"                      %%% "scalajs-dom"      % "0.8.0",   // NOTE: for now we use our custom build (Has WebRTC API)
   "com.lihaoyi"                       %%% "scalatags"        % "0.5.1",
   "com.lihaoyi"                       %%% "upickle"          % "0.3.4"
 ))
